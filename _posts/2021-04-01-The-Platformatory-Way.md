@@ -24,6 +24,8 @@ This is easier said than done. Embracing platforms is not without problems.
 We feel it makes a lot of sense for companies to walk not only the cloud native path – which is that everything in the longer run must be built in the cloud, for the cloud, but also adopt a multi-cloud posture so as to hedge your bets and preserve flexibility towards aligning contracts that meet the bottomline. 
  
 We also have one noteworthy addition, and that is to adopt an open-source first policy.
+
+<img src="{{ site.url }}/assets/sp_blogs/ksql_connect_demo/intro.jpg" alt="hultzsch" class="inline" height=500/>
  
 This is rooted in solid fundamentals:
  
