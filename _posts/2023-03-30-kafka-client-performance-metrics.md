@@ -304,12 +304,63 @@ RUN curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest \
 2. We copy over the JMX agent jar and corresponding YAML configuration file tailored for Kafka.
 3. We install Prometheus binary.
 
-Prometheus is typically configured for pull based metrics. In our case, we run the prometheus binary in a push-based fashion.
+Prometheus is typically configured for pull based metrics. In our case, we run the prometheus binary in a push-based fashion. We have a JMX server running in port `7071` for the duration of the Job. We configure Prometheus to run in agent mode, where it will fetch metrics from the JMX server and push to a pre-configured write endpoint in the Prometheus server.
+
+```bash
+./prometheus --enable-feature=agent --config.file="/prom/prometheus.yml" --log.level=error
+```
+
+Let's take a quick look at the prometheus agent configuration.
+
+```yaml
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
 
 
-I’d argue that we didn’t gain much from this transition. I still have to change the config parameters for the next run, kubectl apply it, and track the metrics. We can do better.
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "jmx"  # <---- (1)
 
-<TODO: define testing loop>
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ["localhost:7071"] # <---- (2)
+        labels:
+          env: 'dev'  # <---- (3)
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: hostname
+        regex: '([^:]+)(:[0-9]+)?'
+        replacement: '${1}'
+remote_write:
+  - url: 'http://your-prometheus-url/api/v1/write'  # <---- (4)
+```
+
+1. Name of the prometheus Job.
+2. The target from which we scrape the metrics.
+3. A unique identifier for every run.
+4. The Prometheus server url to write the metrics to.
+
+**NOTE** that the Prometheus server should have "remote write receiver" [enabled](https://prometheus.io/docs/prometheus/latest/feature_flags/#remote-write-receiver) for the prometheus agent to send JMX metrics.
+
+I’d argue that we didn’t gain much from this transition, except for the Prometheus integration. I still have to change the config parameters for the next run, kubectl apply it, and track the metrics. We can do better. We could run a Helm chart with a parameterized set of input values and ship off these metrics to Prometheus. Before we go into the details of the Helm chart, let's define how a typical testing loop looks like.
+
+1. Come up with a baseline test on standard hardware / test conditions
+2. Identify specific scenarios (these translate into producer and consumer configs)
+3. Configure accordingly and run the test
+4. Look at the client "blackbox" profile for throughput, latency
+5. Look at the client "whitebox" profile - extended JMX metrics
+6. Look at the server-side "blackbox" profile - throughput, latency
+7. Look at the server-side "whitebox" profile - extended JMX metrics
+8. Look at the log levels both client and server side - if needed, increase it to look at specific problems, if any
+
+Repeat-rinse steps 3 - 8 and infer performance based on deviation from the baseline.
 
 
 ## Take 3 - Helm chart
@@ -320,9 +371,15 @@ We take the following artifacts,
 3. Consumer perf test job
 4. Prometheus config
 
-<TODO: capabilities>
+And templatize them, package them as a Helm chart. We model every iteration in our OODA loop as a new helm release with its own set of helm values.
 
-And templatize them, package them as a Helm chart. We model every iteration in our OODA loop as a new helm release with its own set of helm values. For instance, here’s a performance test release with values optimized for throughput.
+The Helm chart does the following:
+1. Run a distributed set of producer jobs(defined by the `producer.count` parameter)
+2. run a distributed consumer - simplest is to have an array of consumers (and topics) defined so we don't get into managing concurrency; instead, we just create `consumer.count` number of consumer Jobs to paralelly consume from the topic.
+
+**Note** that we will need the consumer to run with a countdown latch or timeout.
+
+Here’s a performance test release with values optimized for throughput.
 
 ```yaml
 topic:
@@ -384,9 +441,14 @@ consumer:
   timeout: 100000
 ```
 
+### A quick aside on Prometheus and Grafana
+
 **NOTE** that this post doesn't cover Prometheus and Grafana setup. We assume you already have them running. The Helm chart does ship with an optional dependent chart to install [Kube Prometheus stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack).
 
 Once you have Prometheus and Grafana installed, you need to [add Prometheus as a data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/) in Grafana and import the Producer and Consumer Grafana dashboards from [here](https://github.com/confluentinc/jmx-monitoring-stacks/blob/7.2-post/jmxexporter-prometheus-grafana/assets/grafana/provisioning/dashboards/kafka-producer.json) and [here](https://github.com/confluentinc/jmx-monitoring-stacks/blob/7.2-post/jmxexporter-prometheus-grafana/assets/grafana/provisioning/dashboards/kafka-consumer.json).
+
+
+### Running the performance tests
 
 Once we have the scaffold ready, we run a helm release using the following command,
 
