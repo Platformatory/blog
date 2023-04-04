@@ -443,10 +443,27 @@ consumer:
 
 ### A quick aside on Prometheus and Grafana
 
-**NOTE** that this post doesn't cover Prometheus and Grafana setup. We assume you already have them running. The Helm chart does ship with an optional dependent chart to install [Kube Prometheus stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack).
+The code accompanying this post ships with a custom Helm chart which piggy backs on the [Kube Prometheus stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) to install Prometheus, Grafana and a couple of associated producer and consumer dashboards. This chart will also wire Prometheus as a datasource for the Grafana installation.
 
-Once you have Prometheus and Grafana installed, you need to [add Prometheus as a data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/) in Grafana and import the Producer and Consumer Grafana dashboards from [here](https://github.com/confluentinc/jmx-monitoring-stacks/blob/7.2-post/jmxexporter-prometheus-grafana/assets/grafana/provisioning/dashboards/kafka-producer.json) and [here](https://github.com/confluentinc/jmx-monitoring-stacks/blob/7.2-post/jmxexporter-prometheus-grafana/assets/grafana/provisioning/dashboards/kafka-consumer.json).
+You can install this setup using the following command.
 
+```bash
+helm upgrade --install prom-stack ./kube-prometheus-kafka-chart
+```
+
+The Prometheus console can be viewed in the browser by issuing a port-forward command.
+
+```bash
+ kubectl port-forward svc/prometheus-operated 9090:9090
+ ```
+
+We can do something similar for the Grafana web console as well.
+
+```bash
+kubectl port-forward svc/prom-stack-grafana 8080:80
+```
+
+Grafana requires credentials, which are `admin` and `platformatory`(the default password in the Helm chart).
 
 ### Running the performance tests
 
@@ -458,9 +475,19 @@ helm upgrade --install march-25-2023-durability-producer ./confluent-performance
 
 This is how a typical producer dashboard would look like.
 
-<TODO: producer dashboard>
+![Producer Dashboard 1](../assets/blog-images/kafka-perf-suite/producer-dashboard-01.png)
+
+![Producer Dashboard 2](../assets/blog-images/kafka-perf-suite/producer-dashboard-02.png)
+
+![Producer Dashboard 3](../assets/blog-images/kafka-perf-suite/producer-dashboard-03.png)
 
 Next, we run the corresponding consumer job using the Helm chart.
+
+![Consumer Dashboard 1](../assets/blog-images/kafka-perf-suite/consumer-dashboard-01.png)
+
+![Consumer Dashboard 2](../assets/blog-images/kafka-perf-suite/consumer-dashboard-02.png)
+
+![Consumer Dashboard 3](../assets/blog-images/kafka-perf-suite/consumer-dashboard-03.png)
 
 ```bash
 helm upgrade --install march-25-2023-durability-consumer ./confluent-performance-suite  --values durability-consumer-values.yml
@@ -468,8 +495,23 @@ helm upgrade --install march-25-2023-durability-consumer ./confluent-performance
 
 ...and process the consumer dashboard.
 
-<TODO: consumer dashboard>
+### Shipping metrics to other systems
 
-The Helm chart and the associated code mentioned in this post can be found [here](https://github.com/Platformatory/confluent-performance-suite).
+The performance metrics Helm chart has provision to write openmetrics to any system which supports the Prometheus remote write feature. This configuration can be changed in the `values.yaml` as illustrated below:
 
+```yaml
+prometheus:
+  remote_write:
+  - url: "http://prom-stack-kube-prometheus-prometheus:9090/api/v1/write"
+```
 
+As a quick example, if you want to use New Relic to process the metrics, your configuration would look like this:
+
+```yaml
+prometheus:
+  remote_write:
+  - url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server=kafka-perf-test
+    bearer_token: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+The Helm charts and the associated code mentioned in this post can be found [here](https://github.com/Platformatory/confluent-performance-suite).
