@@ -42,11 +42,11 @@ We observed a few shortcomings with Openmessaging benchmarks.
 
 ## Apache Trogdor
 
-[Apache Trogdor](https://github.com/apache/kafka/blob/trunk/TROGDOR.md) is a test framework for Kafka. Although it does excellent performance testing, Trogdor emphasizes a lot of [fault testing](https://cwiki.apache.org/confluence/display/KAFKA/Fault+Injection). The idea is to run a Trogdor agent in every cluster node and a Trogdor coordinator daemon which manages the agents and tasks in the cluster. The agent can simulate a fault by crashing one of the brokers. We measure the message durability, adjust the parameters and re-run the process again. Confluent cloud [uses Trogdor](https://www.confluent.io/blog/cloud-kafka-as-a-service/) to performance test its infrastructure.
+[Apache Trogdor](https://github.com/apache/kafka/tree/trunk/trogdor) is a test framework for Kafka. Although it does excellent performance testing, Trogdor emphasizes a lot of [fault testing](https://cwiki.apache.org/confluence/display/KAFKA/Fault+Injection). The idea is to run a Trogdor agent in every cluster node and a Trogdor coordinator daemon which manages the agents and tasks in the cluster. The agent can simulate a fault by crashing one of the brokers. We measure the message durability, adjust the parameters and re-run the process again. Confluent cloud [uses Trogdor](https://www.confluent.io/blog/cloud-kafka-as-a-service/) to performance test its infrastructure.
 
 Again, we found the following things lacking in Trogdor.
 
-1. No way to measure end to end latency. The [RoundTripWorkload](https://github.com/apache/kafka/blob/trunk/TROGDOR.md#roundtripworkload) is a close match for what we were looking for, but doesn’t quite cut it.
+1. No way to measure end to end latency. The [RoundTripWorkload](https://github.com/apache/kafka/tree/trunk/trogdor#roundtripworkload) is a close match for what we were looking for, but doesn’t quite cut it.
 2. It doesn’t emit metrics which can be visualized. There is a provision to show the status of a submitted task. This gives a snapshot of the task(a task is a specific, defined benchmark scenario), like time taken, number of messages sent, 99th percentile latency etc.
 3. We have to run the agent and coordinator daemon processes in the cluster. Sometimes, due to various limitations, we might not be able to do so.
 
@@ -80,7 +80,7 @@ $ kafka-topics \ # <-------- (1)
   --command-config kafka.properties  # <-------- (6)
 ```
 
-1. `kafka-topics` is the CLI tool which ships with your [confluent platform package](https://docs.confluent.io/platform/current/installation/installing_cp/zip-tar.html#prod-kafka-cli-install).
+1. `kafka-topics` is the CLI tool which ships with [Apache Kafka](https://kafka.apache.org/downloads)(as `kafka-topics.sh`) and [confluent platform package](https://docs.confluent.io/platform/current/installation/installing_cp/zip-tar.html#prod-kafka-cli-install).
 2. Name of the topic you want to create
 3. The bootstrap server URL. You get this from your confluent cloud account.
 4. Replication factor for your topic. Please update it with your desired replication factor.
@@ -203,10 +203,10 @@ kafka-metrics-count:count:{client-id=consumer-perf-consumer-24667-1}            
 ```
 The typical way to run Kafka benchmarks is to take a set of parameters for the producer and consumer, do a set of sample runs with those parameters, and record the metrics we get. We repeat this loop until we get the desired numbers. This can be likened to an OODA (Observe Orient Decide Act) loop, where the mapping looks like this:
 
-Observe - Look at the printed metrics for each run.
-Orient - Find out what configuration tweak led to this set of outcomes.
-Decide - Figure what configuration parameters to change for next run.
-Act - Run the benchmarks CLI program.
+- Observe - Look at the printed metrics for each run.
+- Orient - Find out what configuration tweak led to this set of outcomes.
+- Decide - Figure what configuration parameters to change for next run.
+- Act - Run the benchmarks CLI program.
 
 Applying the OODA loop to the plain vanilla kafka benchmark CLI tools can get messy quickly. For instance, what should I be doing to run 20 parallel producers? Also, how can I move all these metrics to a central location for later analysis/charting?
 What numbers did we get the last time we ran for a particular set of config values?
