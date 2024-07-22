@@ -75,6 +75,15 @@ authors:
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
       description: "Director & Practitioner, North America;"
+  Shivaprakash:
+      name: Shivaprakash Akki
+      display_name: Shivaprakash Akki
+      avatar: 'assets/images/avatar.png'
+      gravatar: b1cc14991db7a456fcd761680bbc8f81
+      email: akkishiva@platformatory.com
+      web: https://www.platformatory.io
+      twitter: https://twitter.com/platformatory
+      description: "DevOps engineer at Platformatory specializing in Site Reliability Engineering (SRE) and Infrastructure."
 
 # Plugins
 plugins:

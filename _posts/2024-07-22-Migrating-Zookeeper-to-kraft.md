@@ -1,12 +1,14 @@
 ---
 layout: post
 title:  "Migrating Zookeeper to Kraft"
-author: Shivaprakash Akki
+categories: [Kafka Migration, Kafka Architecture, KRaft, Distributed Systems]
+teaser: Ready to simplify your Kafka setup? Discover why moving from ZooKeeper to KRaft could be a game-changer for your infrastructure. This guide walks you through each step of the migration process, from retrieving your cluster ID to completing the transition. Unlock the benefits of KRaft and streamline your Kafka management today!
+author: Shivaprakash
 image: assets/blog-images/migrations/0_TB4m7ZfPMgHF_ljN.png
 toc: true
 ---
 
-#### **Introduction**
+# **Introduction**
 
 In its evolution, Kafka has recently shifted away from relying on ZooKeeper to manage its essential metadata and now embraces a quorum-based controller using Kafka Raft, or KRaft (pronounced 'craft'), which has been generally available since Confluent Platform version 7.4.
 
@@ -14,7 +16,7 @@ Apache Kafka has traditionally entrusted ZooKeeper with crucial tasks such as st
 
 Recognizing these challenges and seeking to streamline Kafka's architecture, the Kafka community introduced [KIP-500](https://cwiki.apache.org/confluence/display/KAFKA/KIP-500%3A+Replace+ZooKeeper+with+a+Self-Managed+Metadata+Quorum). This initiative aims to phase out ZooKeeper and introduce a more efficient metadata quorum solution. This blog post is dedicated to guiding you through the transition from ZooKeeper to KRaft. We will provide a step-by-step roadmap for migrating your Kafka deployment to KRaft.
 
-**Why Bye to ZooKeeper ?**
+# **Why Bye to ZooKeeper ?**
 
 ZooKeeper data is replicated across a number of nodes forming an ensemble, using the ZooKeeper Atomic Broadcast (ZAB) protocol to ensure data consistency across all nodes. However, integrating ZooKeeper with Kafka involves managing a separate distributed system alongside Kafka itself, which introduces additional complexities in deployment, management, and troubleshooting.
 
@@ -22,25 +24,25 @@ Moreover, ZooKeeper introduces scalability bottlenecks that limit the number of 
 
 In contrast, other distributed systems like MongoDB, Cassandra, and Elasticsearch handle metadata management internally, eliminating the need for external tools like ZooKeeper. This streamlined approach significantly simplifies deployment and operational management—imagine handling just one distributed system instead of two! Furthermore, internal metadata management enhances scalability and efficiency, optimizing operations and providing stronger guarantees for Kafka's functionality.
 
-**Hello from KRaft!**
+# **Hello from KRaft!**
 
 To address challenges with ZooKeeper, the Kafka community introduced KRaft, a new way to handle metadata directly within Kafka itself. Unlike ZooKeeper, which required managing a separate system alongside Kafka, KRaft integrates metadata management into Kafka using an event-driven approach.
 
 KRaft uses a quorum-based controller with an event-driven implementation of the Raft protocol. This controller manages an event log stored in a special topic named "__cluster_metadata." Unlike regular topics, data in "__cluster_metadata" is written synchronously to disk, ensuring reliability required by Raft.
 
-**Advantages of KRaft**
+## **Advantages of KRaft**
 
 
 
-* **Simplicity: **KRaft streamlines Kafka’s architecture by eliminating the need for a separate coordination service like ZooKeeper. Users and operators only need to manage one system, and KRaft uses the same configuration, failure handling, and security mechanisms as Kafka’s data plane, making it easier to learn and operate.
-* **Scalability: **KRaft enhances Kafka’s scalability by reducing the load on the metadata store. In KRaft mode, only a subset of brokers, known as the controller quorum, handles metadata. This setup minimizes connections and requests to the metadata store, enabling Kafka to support more brokers and topics without impacting performance.
-* **Availability: **KRaft improves Kafka’s availability by allowing the system to handle partial failures. Only a quorum of controllers is needed to process requests, so if some controllers are down or disconnected, the remaining ones can still maintain cluster operations. This makes Kafka more resilient to network issues and data center failures.
-* **Simplified Deployment and Management: **With KRaft, you no longer need to manage a separate ZooKeeper cluster, reducing operational complexity and costs. Kafka users can continue using existing tools and APIs, such as the Admin API and kafka-reassign-partitions tool, for managing their clusters.
-* **Increased Security: **KRaft supports encryption and authentication for client-server communication using SSL/TLS or SASL, ensuring that Kafka metadata is protected from unauthorized access or tampering.
+* Simplicity: KRaft streamlines Kafka’s architecture by eliminating the need for a separate coordination service like ZooKeeper. Users and operators only need to manage one system, and KRaft uses the same configuration, failure handling, and security mechanisms as Kafka’s data plane, making it easier to learn and operate.
+* Scalability: KRaft enhances Kafka’s scalability by reducing the load on the metadata store. In KRaft mode, only a subset of brokers, known as the controller quorum, handles metadata. This setup minimizes connections and requests to the metadata store, enabling Kafka to support more brokers and topics without impacting performance.
+* Availability: KRaft improves Kafka’s availability by allowing the system to handle partial failures. Only a quorum of controllers is needed to process requests, so if some controllers are down or disconnected, the remaining ones can still maintain cluster operations. This makes Kafka more resilient to network issues and data center failures.
+* Simplified Deployment and Management: With KRaft, you no longer need to manage a separate ZooKeeper cluster, reducing operational complexity and costs. Kafka users can continue using existing tools and APIs, such as the Admin API and kafka-reassign-partitions tool, for managing their clusters.
+* Increased Security: KRaft supports encryption and authentication for client-server communication using SSL/TLS or SASL, ensuring that Kafka metadata is protected from unauthorized access or tampering.
 
 By adopting KRaft, Kafka enhances its scalability, simplifies operations, and integrates metadata management directly into its architecture, offering a more efficient alternative to ZooKeeper.
 
-**How to migrate from ZooKeeper to KRaft**
+# **How to migrate from ZooKeeper to KRaft**
 
 While KRaft has been production-ready for several releases now, with continuous feature enhancements, the majority of existing Kafka clusters still rely on ZooKeeper. However, there's growing interest among users to migrate to KRaft to overcome the limitations associated with ZooKeeper, as discussed earlier.
 
@@ -48,7 +50,7 @@ Moreover, ZooKeeper will be deprecated within the Kafka project, with support ex
 
 Before beginning the migration process, our Kafka brokers are currently operating in ZooKeeper-mode and are connected to the ZooKeeper ensemble where metadata is stored. Let's follow the steps below to migrate to KRaft.
 
-**Step 1: Retrieve the cluster ID**
+## **Step 1: Retrieve the cluster ID**
 
 
 
@@ -58,7 +60,7 @@ Before beginning the migration process, our Kafka brokers are currently operatin
 ![Image-2](../assets/blog-images/migrations/Image2.png)
 
 
-**Step 2: Configure a KRaft controller quorum**
+## **Step 2: Configure a KRaft controller quorum**
 
 
 
@@ -87,7 +89,7 @@ listeners=CONTROLLER://:9093
 
 
 
-**Step 3: Format storage with the ID you saved previously**
+## **Step 3: Format storage with the ID you saved previously**
 
 
 
@@ -97,7 +99,7 @@ listeners=CONTROLLER://:9093
 ![Image-1](../assets/blog-images/migrations/image1.png)
 
 
-**Step 4: Start each controller**
+## **Step 4: Start each controller**
 
 
 
@@ -106,7 +108,7 @@ listeners=CONTROLLER://:9093
 ./bin/kafka-server-start.sh ./etc/kafka/kraft/controller.properties
 ```
 
-**Step 5: Enable migration on the brokers**
+## **Step 5: Enable migration on the brokers**
 
 
 
@@ -144,7 +146,7 @@ listener.security.protocol.map=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
   controller.listener.names=CONTROLLER
 ```
 
-**Step 6: Migrate the brokers**
+## **Step 6: Migrate the brokers**
 
 
 
@@ -187,7 +189,7 @@ listener.security.protocol.map=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
 ```
 
 
-**Step 7: Take KRaft controllers out of migration mode**
+## **Step 7: Take KRaft controllers out of migration mode**
 
 
 
@@ -213,7 +215,7 @@ listeners=CONTROLLER://:9093
 
 
 
-**Conclusion**
+# **Conclusion**
 
 In this article, we've explored the role of ZooKeeper in Kafka and why Kafka has opted to transition to a quorum-based controller, KRaft. The Apache Kafka community has deprecated ZooKeeper for storing cluster metadata, with plans for complete removal in the upcoming version release. This signifies that users will need to transition towards KRaft-based clusters in the near future. Given the prevalence of ZooKeeper-based clusters currently in production, migrating to KRaft involves significant manual intervention, including configuration updates and rolling node restarts.
 
