@@ -1,4 +1,4 @@
-![Image1](./assets/blog-images/oauth-oidc-blog/openid.jpg)
+![Image1](../assets/blog-images/oauth-oidc-blog/openid.jpg)
 
 ### **OAuth2: What You Need to Know?**
 
@@ -12,7 +12,7 @@ In this blog post, we will discuss how configuring identity providers on Conflue
 
 Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization. OAuth is a widely-used standard that provides temporary access tokens to clients. These tokens allow clients to access and use Confluent Cloud resources and data on behalf of a user or application.
 
-![Image2](./assets/blog-images/oauth-oidc-blog/oauth.png)
+![Image2](../assets/blog-images/oauth-oidc-blog/oauth.png)
 
 Here is a summary of the steps in the OAuth 2.0 flow:
 
