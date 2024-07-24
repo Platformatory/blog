@@ -118,10 +118,7 @@ In next screen enter the details for the okta :
 
 ![Image5](../assets/blog-images/oauth-oidc-blog/idp2.png)
 
-This creates the provider, but we still have to configure identity pools. Do this by clicking the identity provider link.
-
-![Image6](../assets/blog-images/oauth-oidc-blog/pool.png)
-From this screen, we can create a new identity pool by pressing the **Add identity pool** button.
+This creates the provider, but we still have to configure identity pools. Do this by clicking the identity provider link.From this screen, we can create a new identity pool by pressing the **Add pool** button.
 
 ![Image7](../assets/blog-images/oauth-oidc-blog/pool.png)
 
@@ -130,9 +127,9 @@ From this screen, we can create a new identity pool by pressing the **Add identi
 - An *identity pool* is a group of external identities that are assigned a certain level of access based on policy. \
 For details, see [Use Identity Pools with Your OAuth/OIDC Identity Provider on Confluent Cloud](https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/identity-providers/oauth/identity-pools.html#add-oauth-identity-pools).
 
-- In the example below, we are assigning the operator role to the identity pool pool-Pkge. This means that users accessing this cluster through the pool will only have view permissions and will not be able to create, delete, or edit any resources.
+- In the example below, we are assigning the Cluster Admin role to the identity pool pool-mPqE. This means that users accessing this cluster through the pool will have full Admin permissions and will be able to create, delete, and edit any resources.
 
-![Image8](../assets/blog-images/oauth-oidc-blog/pool.png)
+![Image8](../assets/blog-images/oauth-oidc-blog/configurerole.png)
 
 # **Configure the Kafka Client**
 
