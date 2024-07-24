@@ -134,7 +134,7 @@ For details, see [Use Identity Pools with Your OAuth/OIDC Identity Provider on C
 
 ![Image8](../assets/blog-images/oauth-oidc-blog/pool.png)
 
-# ** ****Configure the Kafka Client**
+# ****Configure the Kafka Client**
 
 ##  **Set Client ID and Client Secret:**
 
@@ -191,7 +191,7 @@ Set up the Cluster Admin role for the cluster in Confluent Cloud. Using this rol
 
 - **Operator**
 
-setup the operator role. With this role, I am able to view and describe topics, but I do not have permissions to create topics.
+Set up the operator role. With this role, you can view and describe topics, but you do not have permissions to create them.
 
 ![Image11](../assets/blog-images/oauth-oidc-blog/operatorexample.png)
 
