@@ -63,7 +63,7 @@ In this blog post, we will discuss how configuring identity providers on Conflue
 
 By setting up an application in Okta, you configure the authentication methods, such as OpenID Connect (OIDC), that will be used to secure the connection to your Confluent Cloud cluster. This ensures that only authorized clients can access the resources.The setup process in Okta generates a Client ID and Client Secret, which are essential for authenticating your application with Confluent Cloud. These credentials are used to request access tokens, which are then used to access Confluent Cloud resources securely.
 
-![Enter image alt description](Images/2nD_Image_2.png)
+![Image1](../assets/blog-images/oauth-oidc-blog/application.png)
 
  **How to Set Up Application Integration in Okta?**
 
@@ -89,7 +89,7 @@ By setting up an application in Okta, you configure the authentication methods, 
 
  By configuring these elements, you ensure that tokens are aligned with your security policies and access requirements, allowing for effective control over resource access.
 
-![Enter image alt description](Images/ppF_Image_3.png)
+![Image2](../assets/blog-images/oauth-oidc-blog/authorization.png)
 
 # **Let’s Configure Confluent cloud**
 
@@ -98,11 +98,11 @@ By setting up an application in Okta, you configure the authentication methods, 
 To configure Confluent Cloud we have to first register the IdP.
 Go to Accounts & access from the menu in the top right, and select the Identity providers tab.
 
-![Enter image alt description](Images/Vtp_Image_4.png)
+![Image3](../assets/blog-images/oauth-oidc-blog/idp.png)
 
 Select the **Add Identity Providers** button and choose Okta, then press **Next**.
 
-![Enter image alt description](Images/Yji_Image_5.png)
+![Image4](../assets/blog-images/oauth-oidc-blog/okta.png)
 
 In next screen enter the details for the okta :
 
@@ -116,14 +116,14 @@ In next screen enter the details for the okta :
 - **Issuer URI**: Enter the issuer URI for your Okta identity provider.
 - Example: https://mycompany.okta.com/oauth2/default
 
-![Enter image alt description](Images/yJ8_Image_6.png)
+![Image5](../assets/blog-images/oauth-oidc-blog/idp2.png)
 
 This creates the provider, but we still have to configure identity pools. Do this by clicking the identity provider link.
 
-![Enter image alt description](Images/72n_Image_7.png)
+![Image6](../assets/blog-images/oauth-oidc-blog/pool.png)
 From this screen, we can create a new identity pool by pressing the **Add identity pool** button.
 
-![Enter image alt description](Images/Zdh_Image_8.png)
+![Image7](../assets/blog-images/oauth-oidc-blog/pool.png)
 
 **Configure your identity pool and access policy.**
 
@@ -132,15 +132,15 @@ For details, see [Use Identity Pools with Your OAuth/OIDC Identity Provider on C
 
 - In the example below, we are assigning the operator role to the identity pool pool-Pkge. This means that users accessing this cluster through the pool will only have view permissions and will not be able to create, delete, or edit any resources.
 
-![Enter image alt description](Images/6fn_Image_9.png)
+![Image8](../assets/blog-images/oauth-oidc-blog/pool.png)
 
 # ** ****Configure the Kafka Client**
 
-## 1. **Set Client ID and Client Secret:**
+##  **Set Client ID and Client Secret:**
 
 Use the Client ID and Client Secret from Okta to configure your Kafka client.
 
-## 2. **Client Configuration in Kafka:**
+## **Client Configuration in Kafka:**
 
 Update your Kafka client configuration to include these settings: \
 properties
@@ -159,11 +159,8 @@ scope='openid' \
     extension_identityPoolId='<your-identity-pool-id>';
 
 ```
-Example:
 
-![Enter image alt description](Images/UEC_Image_10.png)
-
-## 3. **Request a JSON Web Token (JWT)**
+## **Request a JSON Web Token (JWT)**
 
 1. **Authenticate using Client Credentials:**
 
@@ -178,7 +175,7 @@ curl --request POST \
 ```
 Example:
 
-![Enter image alt description](Images/E8E_Image_11.png)
+![Image9](../assets/blog-images/oauth-oidc-blog/cctoken.png)
 
 2. **Retrieve the Access Token:**
 
@@ -190,21 +187,21 @@ Example:
 
 Set up the Cluster Admin role for the cluster in Confluent Cloud. Using this role I am able to create and delete the topics.
 
-![Enter image alt description](Images/6tU_Image_12.png)
+![Image10](../assets/blog-images/oauth-oidc-blog/clusterAdminexample.png)
 
 - **Operator**
 
 setup the operator role. With this role, I am able to view and describe topics, but I do not have permissions to create topics.
 
-![Enter image alt description](Images/szo_Image_13.png)
+![Image11](../assets/blog-images/oauth-oidc-blog/operatorexample.png)
 
 # **Summary of the steps in the OAuth 2.0 flow:**
 
-![Enter image alt description](Images/Yk9_Image_14.png)
+![Image12](../assets/blog-images/oauth-oidc-blog/oauth.png)
 
 Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization. OAuth is a widely-used standard that provides temporary access tokens to clients. These tokens allow clients to access and use Confluent Cloud resources and data on behalf of a user or application.
 
-## **1. Establish Trust Between Confluent and Your Identity Provider**
+## **Establish Trust Between Confluent and Your Identity Provider**
 
 - **Add the Identity Provider:**
 
@@ -222,7 +219,7 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 - Define which claims from the JWT will be used for authentication and authorization. Common claims include sub (subject), aud (audience), and custom claims like user roles or groups.
 
-## **2. Configure Your Identity Pool and Access Policy**
+## **Configure Your Identity Pool and Access Policy**
 
 - **Identity Pool:**
 
@@ -232,7 +229,7 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 - Define what resources the identities in the pool can access and what actions they can perform.
 
-## **3. Configure Clients**
+## **Configure Clients**
 
 - **Client ID and Client Secret:**
 
@@ -262,7 +259,7 @@ sasl.jaas.config= \
     extension_identityPoolId='pool-mPqE';
 ```
  \
-## **4. Validate the Token**
+## **Validate the Token**
 
 - **Confluent Cloud Token Validation:**
 
@@ -288,6 +285,6 @@ Confluent Cloud validates the JWT received from the Kafka client. It checks the 
 ** \
 **The JWT includes claims such as sub for the user ID, aud for the audience, and groups for any group memberships, which Confluent Cloud uses to determine access rights.
 
-## **Conclusion**
+# **Conclusion**
 
 OAuth 2.0 and Okta together offer a robust framework for managing secure and efficient access to your resources. By integrating Okta as your identity provider, you simplify the authentication process and enhance security, allowing you to control access through OAuth tokens and scopes. Configuring Okta with Confluent Cloud and your Kafka client ensures that your systems are protected from unauthorized access while maintaining smooth and manageable workflows. Embracing this setup not only strengthens your security measures but also optimizes the overall efficiency of your access management, providing a seamless experience for both administrators and users.
