@@ -159,9 +159,9 @@ scope='openid' \
 
 ## **Request a JSON Web Token (JWT)**
 
-1. **Authenticate using Client Credentials:**
+**Authenticate using Client Credentials:**
 
-Use the Client ID and Client Secret to request a JWT from Okta via the OAuth 2.0 Client Credentials Grant.
+Use the Client ID and Client Secret to request a JWT from Okta via the OAuth 2.0 Client Credentials Grant.The response will contain an access_token which is a JWT.
 
 ```
 curl --request POST \
@@ -174,9 +174,7 @@ Example:
 
 ![Image9](../assets/blog-images/oauth-oidc-blog/cctoken.png)
 
-2. **Retrieve the Access Token:**
-
-- The response will contain an access_token which is a JWT.
+ 
 
 # **Testing with different roles:**
 
