@@ -134,7 +134,7 @@ For details, see [Use Identity Pools with Your OAuth/OIDC Identity Provider on C
 
 ![Image8](../assets/blog-images/oauth-oidc-blog/pool.png)
 
-# ****Configure the Kafka Client**
+# **Configure the Kafka Client**
 
 ##  **Set Client ID and Client Secret:**
 
