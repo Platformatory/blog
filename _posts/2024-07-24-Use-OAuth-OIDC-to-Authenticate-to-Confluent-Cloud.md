@@ -1,4 +1,4 @@
-![Image1](./assets/blog-images/oauth-oidc-blog/oauth and openid.jpg)
+![Image1](./assets/blog-images/oauth-oidc-blog/openid.jpg)
 
 ### **OAuth2: What You Need to Know?**
 
