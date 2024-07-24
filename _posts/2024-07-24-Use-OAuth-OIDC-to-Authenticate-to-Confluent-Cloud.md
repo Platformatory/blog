@@ -1,6 +1,15 @@
-![Image1](../assets/blog-images/oauth-oidc-blog/openid.jpg)
+---
+layout: post
+title:  "Migrating Zookeeper to Kraft"
+categories: [Kafka Migration, Kafka Architecture, KRaft, Distributed Systems]
+teaser: Ready to simplify your Kafka setup? Discover why moving from ZooKeeper to KRaft could be a game-changer for your infrastructure. This guide walks you through each step of the migration process, from retrieving your cluster ID to completing the transition. Unlock the benefits of KRaft and streamline your Kafka management today!
+author: Shivaprakash
+image: assets/blog-images/oauth-oidc-blog/openid.jpg
+toc: true
+---
 
-### **OAuth2: What You Need to Know?**
+
+# **OAuth2: What You Need to Know?**
 
 In the digital age, securing access to sensitive data and resources is paramount. Traditional authentication methods often require users to share their long-term credentials with third-party applications, posing significant security risks. Enter OAuth 2.0, a powerful authorization framework designed to address these concerns by allowing users to grant third-party websites or applications access to their protected resources without revealing their long-term credentials or identity.
 
@@ -14,9 +23,9 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 ![Image2](../assets/blog-images/oauth-oidc-blog/oauth.png)
 
-Here is a summary of the steps in the OAuth 2.0 flow:
+# summary of the steps in the OAuth 2.0 flow:
 
-### **1. Establish Trust Between Confluent and Your Identity Provider**
+## 1. Establish Trust Between Confluent and Your Identity Provider
 
 - **Add the Identity Provider:**
 
@@ -34,7 +43,7 @@ Here is a summary of the steps in the OAuth 2.0 flow:
 
 - Define which claims from the JWT will be used for authentication and authorization. Common claims include `sub` (subject), `aud` (audience), and custom claims like user roles or groups.
 
-### **2. Configure Your Identity Pool and Access Policy**
+## **2. Configure Your Identity Pool and Access Policy**
 
 - **Identity Pool:**
 
@@ -44,7 +53,7 @@ Here is a summary of the steps in the OAuth 2.0 flow:
 
 - Define what resources the identities in the pool can access and what actions they can perform.
 
-### **3. Configure Clients**
+## **3. Configure Clients**
 
 - **Client ID and Client Secret:**
 
@@ -73,8 +82,8 @@ sasl.jaas.config= \
     extension_logicalCluster='lkc-37vn0o' \
     extension_identityPoolId='pool-mPqE';
 ```
- \
-**4. Validate the Token**
+
+## **4. Validate the Token**
 
 - **Confluent Cloud Token Validation:**
 
@@ -100,9 +109,9 @@ Confluent Cloud validates the JWT received from the Kafka client. It checks the 
 ** \
 **The JWT includes claims such as `sub` for the user ID, `aud` for the audience, and `groups` for any group memberships, which Confluent Cloud uses to determine access rights.
 
-**Pros and Cons of Using OAuth**
+# **Pros and Cons of Using OAuth**
 
-#### **Pros:**
+## **Pros:**
 
 **Security:**
 
@@ -122,7 +131,7 @@ Confluent Cloud validates the JWT received from the Kafka client. It checks the 
 
 - Users authenticate with a trusted authorization server, improving confidence in the security of their credentials.
 
-#### **Cons:**
+## **Cons:**
 
 **Complexity:**
 
@@ -136,7 +145,7 @@ Confluent Cloud validates the JWT received from the Kafka client. It checks the 
 
 - This dependency introduces additional points of failure. If the identity provider experiences downtime or issues, it can affect the entire authentication flow. This identity provider could be any service, not necessarily Okta, and the reliance on this external service adds a layer of dependency that needs to be managed carefully.
 
-### **When to Use OAuth**
+## **When to Use OAuth**
 
 - When you need secure, token-based authentication.
 
