@@ -64,7 +64,7 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 ![Image2](../assets/blog-images/oauth-oidc-blog/oauth.png)
 
-## 1. Establish Trust Between Confluent and Your Identity Provider
+## **Establish Trust Between Confluent and Your Identity Provider
 
 **Add the Identity Provider:**
 
@@ -82,7 +82,7 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 - Define which claims from the JWT will be used for authentication and authorization. Common claims include `sub` (subject), `aud` (audience), and custom claims like user roles or groups.
 
-## **2. Configure Your Identity Pool and Access Policy**
+## **Configure Your Identity Pool and Access Policy**
 
 **Identity Pool:**
 
@@ -92,7 +92,7 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 - Define what resources the identities in the pool can access and what actions they can perform.
 
-## **3. Configure Clients**
+## **Configure Clients**
 
 **Client ID and Client Secret:**
 
@@ -122,7 +122,7 @@ sasl.jaas.config= \
     extension_identityPoolId='pool-mPqE';
 ```
 
-## **4. Validate the Token**
+## **Validate the Token**
 
 **Confluent Cloud Token Validation:**
 
