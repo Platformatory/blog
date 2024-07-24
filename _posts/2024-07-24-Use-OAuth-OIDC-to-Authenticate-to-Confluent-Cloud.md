@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Migrating Zookeeper to Kraft"
-categories: [Kafka Migration, Kafka Architecture, KRaft, Distributed Systems]
-teaser: Ready to simplify your Kafka setup? Discover why moving from ZooKeeper to KRaft could be a game-changer for your infrastructure. This guide walks you through each step of the migration process, from retrieving your cluster ID to completing the transition. Unlock the benefits of KRaft and streamline your Kafka management today!
+title:  "Seamless Authentication to Confluent Cloud Using OAuth/OIDC with Okta as Identity Provider"
+categories: [Kafka Architecture, Distributed Systems, Security]
+teaser: Want to streamline your Kafka authentication? Learn how to effortlessly integrate Confluent Cloud with OAuth/OIDC using Okta as your identity provider. This guide covers everything you need to set up secure and seamless authentication, ensuring smooth access to your Kafka resources. Discover the power of modern authentication and simplify your Kafka management today!
 author: Shivaprakash
 image: assets/blog-images/oauth-oidc-blog/openid.jpg
 toc: true
@@ -21,9 +21,54 @@ In this blog post, we will discuss how configuring identity providers on Conflue
 
 Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization. OAuth is a widely-used standard that provides temporary access tokens to clients. These tokens allow clients to access and use Confluent Cloud resources and data on behalf of a user or application.
 
-![Image2](../assets/blog-images/oauth-oidc-blog/oauth.png)
+
+# **Pros and Cons of Using OAuth**
+
+## **Pros:**
+
+**Security:**
+
+- Reduces the risk associated with sharing long-term credentials.
+
+- Limits the access granted to third-party applications, minimizing potential damage from compromised tokens.
+
+**Granular Access Control:**
+
+- Users can grant specific permissions (scopes) to third-party applications.
+
+- Tokens can have limited lifetimes and scopes, offering fine-grained control over access.
+
+**User Experience:**
+
+- Simplifies the process of granting access to third-party applications.
+
+- Users authenticate with a trusted authorization server, improving confidence in the security of their credentials.
+
+## **Cons:**
+
+**Complexity:**
+
+- Setting up OAuth can be complex, especially if you’re not familiar with it.
+
+- The configuration involves multiple components such as authorization servers, scopes, tokens, and client credentials, which can be challenging to manage without prior experience.
+
+**Dependency:**
+
+- OAuth relies on an identity provider for authentication.
+
+- This dependency introduces additional points of failure. If the identity provider experiences downtime or issues, it can affect the entire authentication flow. This identity provider could be any service, not necessarily Okta, and the reliance on this external service adds a layer of dependency that needs to be managed carefully.
+
+## **When to Use OAuth**
+
+- When you need secure, token-based authentication.
+
+- If you are using Confluent Cloud in an enterprise setting where centralized identity management is important.
+
+- When you need to integrate with other systems that support OAuth.
 
 # summary of the steps in the OAuth 2.0 flow:
+
+![Image2](../assets/blog-images/oauth-oidc-blog/oauth.png)
 
 ## 1. Establish Trust Between Confluent and Your Identity Provider
 
@@ -106,49 +151,7 @@ Confluent Cloud validates the JWT received from the Kafka client. It checks the 
   "sub": "0oah03x6a2AjiQJZl697"
 }
 ```
-** \
-**The JWT includes claims such as `sub` for the user ID, `aud` for the audience, and `groups` for any group memberships, which Confluent Cloud uses to determine access rights.
 
-# **Pros and Cons of Using OAuth**
+The JWT includes claims such as `sub` for the user ID, `aud` for the audience, and `groups` for any group memberships, which Confluent Cloud uses to determine access rights.
 
-## **Pros:**
 
-**Security:**
-
-- Reduces the risk associated with sharing long-term credentials.
-
-- Limits the access granted to third-party applications, minimizing potential damage from compromised tokens.
-
-**Granular Access Control:**
-
-- Users can grant specific permissions (scopes) to third-party applications.
-
-- Tokens can have limited lifetimes and scopes, offering fine-grained control over access.
-
-**User Experience:**
-
-- Simplifies the process of granting access to third-party applications.
-
-- Users authenticate with a trusted authorization server, improving confidence in the security of their credentials.
-
-## **Cons:**
-
-**Complexity:**
-
-- Setting up OAuth can be complex, especially if you’re not familiar with it.
-
-- The configuration involves multiple components such as authorization servers, scopes, tokens, and client credentials, which can be challenging to manage without prior experience.
-
-**Dependency:**
-
-- OAuth relies on an identity provider for authentication.
-
-- This dependency introduces additional points of failure. If the identity provider experiences downtime or issues, it can affect the entire authentication flow. This identity provider could be any service, not necessarily Okta, and the reliance on this external service adds a layer of dependency that needs to be managed carefully.
-
-## **When to Use OAuth**
-
-- When you need secure, token-based authentication.
-
-- If you are using Confluent Cloud in an enterprise setting where centralized identity management is important.
-
-- When you need to integrate with other systems that support OAuth.
