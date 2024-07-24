@@ -64,7 +64,7 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 ![Image2](../assets/blog-images/oauth-oidc-blog/oauth.png)
 
-## **Establish Trust Between Confluent and Your Identity Provider
+## **Establish Trust Between Confluent and Your Identity Provider**
 
 **Add the Identity Provider:**
 
