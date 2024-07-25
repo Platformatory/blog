@@ -83,7 +83,7 @@ By setting up an application in Okta, you configure the authentication methods, 
 
 ![Image2](../assets/blog-images/oauth-oidc-blog/authorization.png)
 
-# **Let’s Set Up Confluent Cloud: A Step-by-Step Guide to Configuration**
+# **Integrating Okta with Confluent Cloud: A Configuration Walkthrough**
 
  **Steps to Configure an Okta Identity Provider in Confluent Cloud**
 
