@@ -271,3 +271,10 @@ The JWT includes claims such as sub for the user ID, aud for the audience, and g
 # **Conclusion**
 
 OAuth 2.0 and Okta together offer a robust framework for managing secure and efficient access to your resources. By integrating Okta as your identity provider, you simplify the authentication process and enhance security, allowing you to control access through OAuth tokens and scopes. Configuring Okta with Confluent Cloud and your Kafka client ensures that your systems are protected from unauthorized access while maintaining smooth and manageable workflows. Embracing this setup not only strengthens your security measures but also optimizes the overall efficiency of your access management, providing a seamless experience for both administrators and users.
+
+# References
+
+- [https://developer.okta.com/docs/guides/authorization/](https://developer.okta.com/docs/guides/authorization/)
+- [https://help.okta.com/en-us/content/topics/security/api_access.htm](https://help.okta.com/en-us/content/topics/security/api_access.htm)
+- [Confluent Blog on Configuring Azure AD DS with OAuth](https://www.confluent.io/blog/configuring-azure-ad-ds-with-oauth-for-confluent/?_ga=2.45404768.551716354.1721102650-2109976434.1715347071&_gac=1.153683402.1721276426.CjwKCAjw1920BhA3EiwAJT3lSYsLUrc8CdJ17pl0KiBPfRTXVwM5AX8-ts-2V4-f-s1NnVp94tJETBoCE5AQAvD_BwE&_gl=1*rgtxzr*_gcl_aw*R0NMLjE3MjEyNzY0MjcuQ2p3S0NBancxOTIwQmhBM0Vpd0FKVDNsU1lzTFVyYzhDZEoxN3BsMEtpQlBmUlRYVndNNUFYOC10cy0yVjQtZi1zMU5uVnA5NHRKRVRCb0NFNUFRQXZEX0J3RQ..*_gcl_au*MjExOTgwMjgxNi4xNzE1MzQ3MDcx*_ga*MjEwOTk3NjQzNC4xNzE1MzQ3MDcx*_ga_D2D3EGKSGD*MTcyMTI5NDI4Mi4yNi4xLjE3MjEyOTgyMzUuMzcuMC4w#setting-up-azure-ad-as-an-idp)
+- [https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/identity-providers/oauth/overview.html#oauth-overview](https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/identity-providers/oauth/overview.html#oauth-overview)
