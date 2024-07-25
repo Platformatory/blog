@@ -175,7 +175,7 @@ Set up the Cluster Admin role for the cluster in Confluent Cloud. With this role
 ![Image10](../assets/blog-images/oauth-oidc-blog/ClusterAdmin.png)
 
 - **Operator**
-Set up the Operator role. With this role, you can view and describe topics, but you do not have permission to create them.
+Set up the Operator role. This role allows you to view and describe topics but does not grant permissions to create or delete them.
 
 ![Image11](../assets/blog-images/oauth-oidc-blog/Operatorrole.png)
 
