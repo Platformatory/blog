@@ -9,7 +9,6 @@ toc: true
 ---
 
 
-
 # **OAuth2: What You Need to Know?**
 
 In the digital age, securing access to sensitive data and resources is paramount. Traditional authentication methods often require users to share their long-term credentials with third-party applications, posing significant security risks. Enter OAuth 2.0, a powerful authorization framework designed to address these concerns by allowing users to grant third-party websites or applications access to their protected resources without revealing their long-term credentials or identity.
@@ -22,7 +21,7 @@ In this blog post, we will discuss how configuring identity providers on Conflue
 
 # **Pros and Cons of Using OAuth**
 
-## **Pros:**
+## **Pros**
 
 **Security:**
 
@@ -39,7 +38,7 @@ In this blog post, we will discuss how configuring identity providers on Conflue
 - Simplifies the process of granting access to third-party applications.
 - Users authenticate with a trusted authorization server, improving confidence in the security of their credentials.
 
-## **Cons:**
+## **Cons**
 
 **Complexity:**
 
@@ -175,18 +174,15 @@ Example:
 ![Image9](../assets/blog-images/oauth-oidc-blog/cctoken.png)
 
  
-
 # **Testing with different roles:**
 
 - **Cluster Administrator**
-
-Set up the Cluster Admin role for the cluster in Confluent Cloud. Using this role I am able to create and delete the topics.
+Set up the Cluster Admin role for the cluster in Confluent Cloud. With this role, I am able to create and delete topics.
 
 ![Image10](../assets/blog-images/oauth-oidc-blog/clusterAdminexample.png)
 
 - **Operator**
-
-Set up the operator role. With this role, you can view and describe topics, but you do not have permissions to create them.
+Set up the Operator role. With this role, you can view and describe topics, but you do not have permission to create them.
 
 ![Image11](../assets/blog-images/oauth-oidc-blog/operatorexample.png)
 
@@ -198,43 +194,43 @@ Confluent OAuth uses the OAuth 2.0 protocol for authentication and authorization
 
 ## **Establish Trust Between Confluent and Your Identity Provider**
 
-- **Add the Identity Provider:**
+**Add the Identity Provider:**
 
 - Ensure that the identity provider (e.g., Okta) is registered with Confluent Cloud. This usually involves providing some configuration details to Confluent Cloud.
 
-- **Define the Type of Identity Provider:**
+**Define the Type of Identity Provider:**
 
 - Specify whether the identity provider is OAuth 2.0 or OIDC (OpenID Connect). Each provider might have specific requirements for integration.
 
-- **Create a Trust Relationship:**
+**Create a Trust Relationship:**
 
 - This involves configuring Confluent Cloud to trust tokens issued by your identity provider. You might need to upload or specify the public keys or JWKS (JSON Web Key Set) URL from your identity provider.
 
-- **Add Claims for Authentication and Authorization:**
+**Add Claims for Authentication and Authorization:**
 
 - Define which claims from the JWT will be used for authentication and authorization. Common claims include sub (subject), aud (audience), and custom claims like user roles or groups.
 
 ## **Configure Your Identity Pool and Access Policy**
 
-- **Identity Pool:**
+**Identity Pool:**
 
 - Create an identity pool in Confluent Cloud, which groups external identities and assigns them access based on policies. You might need to configure mappings to ensure the correct access levels.
 
-- **Access Policy:**
+**Access Policy:**
 
 - Define what resources the identities in the pool can access and what actions they can perform.
 
 ## **Configure Clients**
 
-- **Client ID and Client Secret:**
+**Client ID and Client Secret:**
 
 - Obtain these from your identity provider. They are used to authenticate the client (Kafka producer/consumer) with the identity provider.
 
-- **Client Credentials Grant:**
+**Client Credentials Grant:**
 
 - The client uses the Client ID and Client Secret to request an access token (JWT) from the identity provider.
 
-- **Producer/Consumer Configuration Example:**
+**Producer/Consumer Configuration Example:**
 
 Use the following Kafka client settings for OAuth 2.0 authentication:
 
@@ -256,7 +252,7 @@ sasl.jaas.config= \
  \
 ## **Validate the Token**
 
-- **Confluent Cloud Token Validation:**
+**Confluent Cloud Token Validation:**
 
 Confluent Cloud validates the JWT received from the Kafka client. It checks the token against the trusted JWKS and verifies the claims to map to the appropriate authorization policy.
 
