@@ -273,8 +273,7 @@ Confluent Cloud validates the JWT received from the Kafka client. It checks the 
   "sub": "0oah03x6a2AjiQJZl697"
 }
 ```
-** \
-**The JWT includes claims such as sub for the user ID, aud for the audience, and groups for any group memberships, which Confluent Cloud uses to determine access rights.
+The JWT includes claims such as sub for the user ID, aud for the audience, and groups for any group memberships, which Confluent Cloud uses to determine access rights.
 
 # **Conclusion**
 
