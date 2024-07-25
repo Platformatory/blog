@@ -172,12 +172,12 @@ Example:
 - **Cluster Administrator**
 Set up the Cluster Admin role for the cluster in Confluent Cloud. With this role, I am able to create and delete topics.
 
-![Image10](../assets/blog-images/oauth-oidc-blog/clusterAdminexample.png)
+![Image10](../assets/blog-images/oauth-oidc-blog/ClusterAdmin.png)
 
 - **Operator**
 Set up the Operator role. With this role, you can view and describe topics, but you do not have permission to create them.
 
-![Image11](../assets/blog-images/oauth-oidc-blog/operatorexample.png)
+![Image11](../assets/blog-images/oauth-oidc-blog/Operatorrole.png)
 
 # **Breaking Down the OAuth 2.0 Flow**
 
