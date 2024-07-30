@@ -1,11 +1,12 @@
 ---
 layout: post
-title:  "The Kafka benchmarking suite"
-categories: [ Kafka, Kubernetes, Performance, Helm ]
+title: "The Kafka benchmarking suite"
+categories: [Kafka, Kubernetes, Performance, Helm]
 featured: false
 image: assets/blog-images/kafka-perf-suite/kafka-benchmark-metrics-featured.png
 teaser: "Distributed testing grid for Kafka on top of Kubernetes"
 authors: badri,p6
+toc: true   
 ---
 
 There are numerous parameters we have to consider tweaking when benchmarking a Kafka cluster. Irrespective of these parameters, we optimize along the following dimensions:
@@ -70,6 +71,7 @@ Kafka offers a set of performance testing tools for the producer, consumer and a
 You should have a Kafka cluster which needs to be benchmarked(Duh!). Arguably the fastest way to get your hands on a fairly production ready Kafka cluster is to sign up for a Confluent cloud account and spin up a new cluster.
 
 ## Benchmarking using kafka provided tools
+
 For those of you who are new to benchmarking using Kafka perf-tools, here’s a brief recap.
 First, you create a new topic where you want to send your records.
 
@@ -169,14 +171,13 @@ $ kafka-consumer-perf-test \
   --consumer.config kafka.properties  # <-- (4)
   --print-metrics \
   --timeout=100000  # <-- (5)
-  ```
+```
 
 1. We use the same topic.
 2. We have to specify the bootstrap server.
 3. The number of messages we want to consume.
 4. We refer to the same kafka.properties file.
 5. The amount of time the consumer process waits before the broker returns records.
-
 
 Here’s a sample output from a consumer perf test run.
 
@@ -205,6 +206,7 @@ consumer-fetch-manager-metrics:records-per-request-avg:{client-id=consumer-perf-
 consumer-fetch-manager-metrics:records-per-request-avg:{client-id=consumer-perf-consumer-24667-1}                            : 1000.000
 kafka-metrics-count:count:{client-id=consumer-perf-consumer-24667-1}                                                         : 61.000
 ```
+
 The typical way to run Kafka benchmarks is to take a set of parameters for the producer and consumer, do a set of sample runs with those parameters, and record the metrics we get. We repeat this loop until we get the desired numbers. This can be likened to an OODA (Observe Orient Decide Act) loop, where the mapping looks like this:
 
 - Observe - Look at the printed metrics for each run.
@@ -236,40 +238,40 @@ spec:
   template:
     spec:
       initContainers: # <-------- (3)
-      - name: topics
-        image: confluentinc/cp-kafka:7.3.2  # <-------- (4)
-        command:
-        - /bin/sh
-        - -c
-        - |
-          kafka-topics \
-            --if-not-exists \
-            --topic mytopic  \
-            --create \
-            --bootstrap-server xxx-yyyy.us-west4.gcp.confluent.cloud:9092 \
-            --replication-factor 3  \
-            --partitions 1  \
-            --command-config /mnt/kafka.properties
-        volumeMounts:
-        - name: kafka-properties # <-------- (5)
-          mountPath: /mnt
+        - name: topics
+          image: confluentinc/cp-kafka:7.3.2 # <-------- (4)
+          command:
+            - /bin/sh
+            - -c
+            - |
+              kafka-topics \
+                --if-not-exists \
+                --topic mytopic  \
+                --create \
+                --bootstrap-server xxx-yyyy.us-west4.gcp.confluent.cloud:9092 \
+                --replication-factor 3  \
+                --partitions 1  \
+                --command-config /mnt/kafka.properties
+          volumeMounts:
+            - name: kafka-properties # <-------- (5)
+              mountPath: /mnt
       containers:
-      - name: producer
-        image: confluentinc/cp-kafka:7.3.2
-        command:
-        - /bin/sh
-        - -c
-        - |
-          kafka-producer-perf-test \ # <-------- (6)
-          --topic perf-test \
-          --num-records 10000 \
-          --record-size 1024 \
-          --throughput -1 \
-          --producer-props acks=1 client.id=foo  batch.size=1000 linger.ms=100 compression.type=lz4 \
-          --producer.config /mnt/kafka.properties
-        volumeMounts:
-        - name: kafka-properties
-          mountPath: /mnt
+        - name: producer
+          image: confluentinc/cp-kafka:7.3.2
+          command:
+            - /bin/sh
+            - -c
+            - |
+              kafka-producer-perf-test \ # <-------- (6)
+              --topic perf-test \
+              --num-records 10000 \
+              --record-size 1024 \
+              --throughput -1 \
+              --producer-props acks=1 client.id=foo  batch.size=1000 linger.ms=100 compression.type=lz4 \
+              --producer.config /mnt/kafka.properties
+          volumeMounts:
+            - name: kafka-properties
+              mountPath: /mnt
       volumes:
         - name: kafka-properties
           secret:
@@ -323,12 +325,11 @@ global:
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
 
-
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "jmx"  # <---- (1)
+  - job_name: "jmx" # <---- (1)
 
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
@@ -336,14 +337,14 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:7071"] # <---- (2)
         labels:
-          env: 'dev'  # <---- (3)
+          env: "dev" # <---- (3)
     relabel_configs:
       - source_labels: [__address__]
         target_label: hostname
-        regex: '([^:]+)(:[0-9]+)?'
-        replacement: '${1}'
+        regex: "([^:]+)(:[0-9]+)?"
+        replacement: "${1}"
 remote_write:
-  - url: 'http://your-prometheus-url/api/v1/write'  # <---- (4)
+  - url: "http://your-prometheus-url/api/v1/write" # <---- (4)
 ```
 
 1. Name of the prometheus Job.
@@ -366,8 +367,8 @@ I’d argue that we didn’t gain much from this transition, except for the Prom
 
 Repeat-rinse steps 3 - 8 and infer performance based on deviation from the baseline.
 
-
 ## Take 3 - Helm chart
+
 We take the following artifacts,
 
 1. The kafka.config secret
@@ -378,6 +379,7 @@ We take the following artifacts,
 And templatize them, package them as a Helm chart. We model every iteration in our OODA loop as a new helm release with its own set of helm values.
 
 The Helm chart does the following:
+
 1. Run a distributed set of producer jobs(defined by the `producer.count` parameter)
 2. run a distributed consumer - simplest is to have an array of consumers (and topics) defined so we don't get into managing concurrency; instead, we just create `consumer.count` number of consumer Jobs to paralelly consume from the topic.
 
@@ -412,7 +414,7 @@ consumer:
   messagesCount: 1000
   count: 1
   timeout: 100000
-  ```
+```
 
 And here’s another set of values optimized for high durability.
 
@@ -459,7 +461,7 @@ The Prometheus console can be viewed in the browser by issuing a port-forward co
 
 ```bash
  kubectl port-forward svc/prometheus-operated 9090:9090
- ```
+```
 
 We can do something similar for the Grafana web console as well.
 
@@ -506,7 +508,7 @@ The performance metrics Helm chart has provision to write openmetrics to any sys
 ```yaml
 prometheus:
   remote_write:
-  - url: "http://prom-stack-kube-prometheus-prometheus:9090/api/v1/write"
+    - url: "http://prom-stack-kube-prometheus-prometheus:9090/api/v1/write"
 ```
 
 As a quick example, if you want to use New Relic to process the metrics, your configuration would look like this:
@@ -514,8 +516,8 @@ As a quick example, if you want to use New Relic to process the metrics, your co
 ```yaml
 prometheus:
   remote_write:
-  - url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server=kafka-perf-test
-    bearer_token: xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    - url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server=kafka-perf-test
+      bearer_token: xxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 The Helm charts and the associated code mentioned in this post can be found [here](https://github.com/Platformatory/kafka-performance-suite).

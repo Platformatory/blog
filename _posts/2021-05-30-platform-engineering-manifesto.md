@@ -7,12 +7,13 @@ categories:
 image: assets/blog-images/platform-strategy.svg
 featured: true
 hidden: true
+cat_box_title: Contact Us
 ctas:
   - title: Get In Touch
     description: "Have questions or need assistance? Our team is here to help"
-    url: "/contact/"    
+    url: "/contact/"
 
-teaser: Platform Eng    ineering is dead. Long live platform engineering!
+teaser: Platform Engineering is dead. Long live platform engineering!
 toc: true
 ---
 

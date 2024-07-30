@@ -7,24 +7,23 @@ License: https://www.wowthemes.net/freebies-license/
     html { font-size:18px; } /* Increase the font size on higher resolutions */
     .container {max-width:80%;}
 }
-/* .mainheading {
-    padding: 1rem 0rem;
-} */
+.mainheading, .mainheading:hover {
+    color: inherit;
+    text-decoration: none;
+}
 
 li a {
     color: #111111;
     transition: all 0.2s;
-    text-decoration: underline;
+    text-decoration: none;
 }
 .lead h3{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-li a{
-    font-weight: bold       ;
-}
+
 li a:hover {       
     color: #038252;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 .wrapfooter{
     display: flex;
@@ -42,6 +41,7 @@ li a:hover {
 }
 .wrapfooter .read-btn:hover{
     background-color: #039d62;
+    text-decoration: none;
 }
 .wrapfooter .read-btn:hover span{
     margin-left: 5px;
@@ -83,7 +83,7 @@ pre {
 
 @media (max-width:768px) {
     .site-content{
-        padding-top:    7rem !important;
+        padding-top: 7rem !important;
     }
 }
 
@@ -264,9 +264,34 @@ section.recent-posts {
     font-size: 0.95rem;
 }
 
-.toc ul {
-    list-style: decimal;
+.toc-container{
+    padding: 0 12px;
+    border: 2px solid #bcbcbc;
+    transition: 2s;         
+}
+.toc ul li{    
+    padding: 4px 0;
+    
+}
+.toc ul li a:hover {
+    color: rgba(0, 0, 0, 0.842);
+
+}
+.toc ul li a {  
+    color: rgba(0, 0, 0, 0.505); 
+    font-size: 1rem;
+    /* text-decoration: none;            */
+}
+.toc h3{
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 1em;
+}
+.toc ul {   
+    list-style: none;
     font-weight: 500;
+    color: #545454;
+    padding-left: 14px      ;
 }
 
 .author-meta {
@@ -368,7 +393,12 @@ span.post-read-more a:hover {
     margin-right: 5px;
 }
 
+.mainheading h1.sitetitle span{
+    border: 3px solid #bcbcbc;
+    padding: 0 8px;
+}
 .mainheading h1.sitetitle {
+    margin-bottom: 0;       
     font-weight: 600;
     font-family: fangsong;
     /* font-family: Merriweather; */
@@ -377,11 +407,31 @@ span.post-read-more a:hover {
 .mainheading .lead {
     font-size: 0.9em;   
     text-align: center;      
-}
+}       
 
 .mainheading h1.posttitle {
     font-weight: 700;
     margin-bottom: 1rem;
+}
+
+@media (max-width:780px) {
+    .toc-container{
+        margin: 0 12px;
+    }
+    .mainheading h1.sitetitle span{
+        border: 1px solid #bcbcbc;
+        padding: 0 4px;
+    }
+    .navbar-expand-lg.navbar-light.bg-white.fixed-top> div{
+        justify-content: space-evenly;
+    }
+    
+    .mainheading h1.sitetitle{  
+        font-size: 1.5em !important;
+    }
+    .mainheading .lead {
+        font-size: 0.8em !important;
+    }
 }
 
 .footer {
@@ -423,9 +473,16 @@ blockquote {
     display: block;
     margin-bottom: 1.5rem;
 }
-.post-ctas ul {
-    padding: 10px !important;
-    background-color: #f1f1f1;
+.post-ctas h3{
+    padding-top: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em;
+    color: #212529;
+}
+.post-ctas {     
+    padding: 0px 10px 10px !important;
+    border: 2px solid #bcbcbc;
+    /* background-color: #f1f1f1; */
 }
 .post-ctas ul> li {
     display: flex !important;
@@ -444,7 +501,7 @@ blockquote {
     font-weight: 600;
 }
 .post-ctas a:hover{
-    text-decoration: underline;
+    /* text-decoration: underline; */
     color: #0000007c;
 }
 
@@ -569,8 +626,8 @@ blockquote {
 
 .share,
 .share a {
-    color: rgba(0, 0, 0, .44);
-    fill: rgba(0, 0, 0, .44);
+    color: rgba(0, 0, 0, .505);
+    fill: rgba(0, 0, 0, .505);
 }
 
 .graybg {

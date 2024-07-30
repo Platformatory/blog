@@ -5,7 +5,7 @@ author: ashwin
 categories: [ Airflow, Command processing, Event Driven Workflows, Kafka, Kafka Consumer, Docker]
 image: assets/blog-images/command_processing_blog/EventDrivenArchitecture.png
 featured: false
-hidden: true
+hidden: false
 teaser: Reactive Command processing in real time using Apache Kafka and by utilising Workflow architecture in Apache Airflow
 toc: true
 ---

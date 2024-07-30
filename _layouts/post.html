@@ -8,17 +8,31 @@ post_class: post-template
 <!-- Begin Article
 ================================================== -->
 <div class="">
-    <div class="row">           
+    <div class="row">
 
         <!-- Post Share -->
-        <div class="col-md-2 pl-0 d-none d-md-block">
+        <!-- <div class="col-md-2 pl-0 d-none d-md-block">
             {% include share.html %}
+        </div> -->
+        <div class="col-md-2 p-0">
+            <div class="toc-container">     
+                <!-- Toc if any -->
+                {% if page.toc   %}
+                {% if page.beforetoc %}
+                <p><em>{{page.beforetoc}}</em></p>
+                {% endif %}
+                <div class="toc mb-4 lead">
+                    <h3 class="font-weight-bold">Summary</h3>
+                    {% include toc.html html=content %}
+                </div>
+                {% endif %}
+                <!-- End Toc -->
+            </div>
         </div>
-
         <!-- Post -->
         {% assign author = site.authors[page.author] %}
 
-        <div class="col-md-8 flex- flex-md-     ">
+        <div class="{% if page.ctas %}col-md-8{% else %} col-md-10 {% endif %}">
             <div class="mainheading">
 
                 <!-- Author Box -->
@@ -87,7 +101,7 @@ post_class: post-template
 
             <!-- Post Content -->
             <div class="article-post">
-                
+
                 {{content}}
             </div>
 
@@ -210,29 +224,14 @@ post_class: post-template
 
         </div>
         <!-- End Post -->
-        <div class="col-md-2 flex-first flex-md-unordered p-0">
-            <div >
-                <!-- Toc if any -->
-                {% if page.toc %}
-                {% if page.beforetoc %}
-                <p><em>{{page.beforetoc}}</em></p>
-                {% endif %}
-                <div class="toc mt-4 mb-4 lead">
-                    <h3 class="font-weight-bold">Summary</h3>
-                    {% include toc.html html=content %}
-                </div>
-                {% endif %}
-                <!-- End Toc -->
-               
-            </div>
-         {% if page.ctas%}
+        {% if page.ctas%}
+        <div class="col-md-2 p-0">
             {% include postcta.html %}
+        </div>
         {% endif %}
-    </div>
-
-    <div class="col-md-2 d-md-none d-block pl-0">
-        {% include share.html %}
-    </div>
+        <!-- <div class="col-md-2 d-md-none d-block pl-0">
+            {% include share.html %}
+        </div> -->
 
     </div>
 </div>

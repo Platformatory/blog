@@ -5,7 +5,7 @@ authors: ashwin,avinash
 categories: [Platform Engineering, Data, Infrastructure, Kafka, Apache Flink, Kubernetes]
 image: assets/blog-images/flink_deployment/flink-application.png
 featured: false
-hidden: true
+hidden: false
 teaser: Overview of available deployment patterns for Flink Cluster
 toc: true
 ---

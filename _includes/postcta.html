@@ -1,15 +1,16 @@
 <div class="share sticky-top sticky-top-offset post-ctas">
+  <h3 class="font-weight-bold">{{page.cat_box_title}}</h3>
   <ul>
     {% for cta in page.ctas%}
     <li class="ml-1 mr-1">
-        {% if cta.description %}
+      {% if cta.description %}
       <p class="m-0 mt-1">{{cta.description}}</p>
       {% endif %}
       <a target="_blank" href="{%if cta.url %}{{cta.url}}{%endif%}">
         {{cta.title}}
       </a>
-      
     </li>
     {% endfor %}
   </ul>
 </div>
+  
