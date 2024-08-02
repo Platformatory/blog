@@ -61,42 +61,36 @@ Tools like Terraform, Pulumi and JulieOps are popular for automating these tasks
 
 Apache Kafka is a robust platform for real-time data streaming, capable of handling trillions of events. Kafka is a distributed system with servers (brokers) and clients that communicate via a TCP network protocol. Here are some key Kafka components:
 
-### **Brokers**
+**Brokers**
 
 - **Role:** Brokers are servers in Kafka that store event streams from various sources.
-
 - **Cluster Composition:** A Kafka cluster typically comprises multiple brokers.
 
 - **Bootstrap Servers:** Each broker acts as a bootstrap server, meaning that connecting to one broker allows access to the entire cluster.
 
-### **Topics**
+**Topics**
 
 - **Data Flow:** Data is written to topics by producers and read by consumers.
-
 - **Partitioning:** Data is partitioned into topics, and partitions are distributed across the cluster.
 
-### **Kafka Connect**
+**Kafka Connect**
 
 - **Purpose:** Kafka Connect allows for the integration of Kafka with external systems.
-
 - **Types of Connectors:** Includes Source Connectors (for importing data) and Sink Connectors (for exporting data).
 
-### **Schema Registry**
+**Schema Registry**
 
 - **Function:** Schema Registry is a centralized repository for managing and validating schemas for Kafka messages.
-
 - **Benefits:** Ensures data consistency and compatibility as schemas evolve over time.
 
-### **Kafka Streams**
+**Kafka Streams**
 
 - **Capability:** Kafka Streams is a library for real-time stream processing.
-
 - **Usage:** Performs data transformations, aggregations, and other processing tasks.
 
-### **kSQL**
+**kSQL**
 
 - **Interface:** kSQL provides a SQL-like interface for real-time data processing on Kafka topics.
-
 - **Functions:** Supports filtering, aggregations, joins, windowing operations, and real-time analytics.
 
 # **IaC Tools for Kafka**
