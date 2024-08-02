@@ -113,12 +113,9 @@ Want a quick start? checkout our sample JulieOps repo in [here](https://github.c
 ## **Pulumi for Infrastructure as Code**
 
 Choosing the right Infrastructure as Code (IaC) tool is essential, as each offers distinct benefits. IaC automates infrastructure provisioning and reduces human error. Pulumi, for example, can provision a wide range of cloud resources available in Confluent Cloud. To use the Confluent Cloud provider in Pulumi, it must be configured with the appropriate credentials to deploy and update resources.
+Similarly, Pulumi's Kafka provider can be used to manage any Kafka resources on various platforms like AWS, Azure Native, GCP, Digital Ocean, and Aiven. It also requires credentials for deploying and updating resources. In this section, we’ll focus on using Pulumi to provision Confluent Cloud Topics and Connectors.
 
-Similarly, Pulumi's Kafka provider can be used to manage any Kafka resources. Like the Confluent Cloud provider, it also requires credentials for deploying and updating resources. In this section, we’ll focus on using Pulumi to provision Confluent Cloud Topics and Connectors.
-
-Pulumi supports multiple programming languages, including Python, TypeScript, Go, C#, Java, and YAML. For this blog post, we'll use TypeScript. Pulumi enables automation of the deployment process, leading to faster and more reliable infrastructure provisioning.
-
-The Pulumi provider we use is based on the official Terraform Provider from Confluent Inc., ensuring broad compatibility across various languages and platforms.
+Pulumi supports multiple programming languages, including Python, TypeScript, Go, C#, Java, and YAML. For this blog post, we'll use TypeScript. Pulumi enables automation of the deployment process, leading to faster and more reliable infrastructure provisioning. The Pulumi provider we use is based on the official Terraform Provider from Confluent Inc., ensuring broad compatibility across various languages and platforms.
 
 **Provisioning Kafka Topics**
 
@@ -223,7 +220,7 @@ If the credentials are not set up, follow the steps for topic provisioning to se
 
 ## **Terraform for Infrastructure as Code**
 
-Terraform is a popular IaC tool that supports a wide range of cloud, datacenter, and service providers, including Azure, AWS, Oracle, Google Cloud, and Kubernetes. It uses HashiCorp Configuration Language (HCL) to describe and provision infrastructure. The Pulumi provider for Confluent is built on top of the Confluent Terraform Provider.
+Terraform is a popular IaC tool that supports a wide range of cloud, datacenter, and service providers, including Azure, AWS, Oracle, Google Cloud, Digital Ocean, Redpanda, Aiven, and Kubernetes. It uses HashiCorp Configuration Language (HCL) to describe and provision infrastructure. The Pulumi provider for Confluent is built on top of the Confluent Terraform Provider.
 
 **Provisioning Kafka Topics with Terraform**
 
@@ -287,10 +284,8 @@ terraform apply
 
 # **Features of IaC Tools: JulieOps, Terraform, and Pulumi**
 
-![Image1](../assets/blog-images/oauth-oidc-blog/markdown-image.png)
+![Image1](../assets/blog-images/oauth-oidc-blog/markdown-image-488626.png)
 
 # **Conclusion**
 
-While Terraform is a well-established leader in the Infrastructure as Code (IaC) space, Pulumi is quickly gaining popularity. Terraform’s long-standing presence and extensive resource support make it a reliable choice for many. Pulumi’s appeal lies in its ease of use, diverse language support, and an active, growing community. For those with coding experience but new to IaC tools, Pulumi’s support for languages like Python, TypeScript, JavaScript, Go, C#, F#, Java, and YAML might make it a more accessible and engaging option.
-
-Ultimately, the choice of IaC tool depends on your specific needs. If you prioritize stability and a broad resource base, Terraform may be the suitable choice. If you value efficiency and the ability to use a familiar programming language, Pulumi might be the better fit. Both tools offer effective solutions for managing infrastructure code, each with its unique strengths.
+Choosing the right Infrastructure as Code (IaC) tool depends on your specific needs. Terraform is known for its stability and extensive resource support, making it a reliable choice for many. Pulumi offers ease of use and supports multiple programming languages, appealing to those with coding experience. JulieOps focuses on managing Kafka resources within Confluent Cloud. Each tool has its unique strengths, offering effective solutions for managing infrastructure code.
