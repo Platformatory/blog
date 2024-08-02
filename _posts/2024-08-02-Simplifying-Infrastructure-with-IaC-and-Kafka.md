@@ -109,7 +109,7 @@ JulieOps, formally known as Kafka Topology Builder, is an open source project li
 
 [julie-ops](https://julieops.readthedocs.io/en/latest/#) tool helps us to provision Kafka-related tasks in Cloud Infrastructure as a code. The related tasks are usually [Topics](https://julieops.readthedocs.io/en/latest/futures/what-topic-management.html), [Access Control](https://julieops.readthedocs.io/en/latest/futures/what-acl-management.html), [Handling schemas](https://julieops.readthedocs.io/en/latest/futures/what-schema-management.html), [ksql artifacts](https://julieops.readthedocs.io/en/latest/futures/what-ksql-management.html) etc. All these tasks are configured as [topologies](https://julieops.readthedocs.io/en/latest/the-descriptor-files.html?highlight=topology) in julie-ops.
 
-### **Pre-Requisites**
+**Pre-Requisites**
 
 - You need julie-ops installed locally or in docker
 
@@ -131,7 +131,7 @@ JulieOps, formally known as Kafka Topology Builder, is an open source project li
 schema.registry.basic.auth.user.info="<SCHEMA_REGISTRY_API_KEY>":"<SCHEMA_REGISTRY_API_SECRET>"
 
 ```
-### **How to run**
+**How to run**
 
 ```
 julie-ops --broker <BROKERS> --clientConfig <PROPERTIES_FILE> --topology <TOPOLOGY_FILE>
@@ -163,7 +163,7 @@ Pulumi supports multiple programming languages, including Python, TypeScript, Go
 
 The Pulumi provider we use is based on the official Terraform Provider from Confluent Inc., ensuring broad compatibility across various languages and platforms.
 
-### **Provisioning Kafka Topics**
+**Provisioning Kafka Topics**
 
 To provision Kafka topics with Pulumi, follow these steps:
 
@@ -264,7 +264,7 @@ pulumi up
 ```
 If the credentials are not set up, follow the steps for topic provisioning to set them up.
 
-**Terraform for Infrastructure as Code**
+## **Terraform for Infrastructure as Code**
 
 Terraform is a popular IaC tool that supports a wide range of cloud, datacenter, and service providers, including Azure, AWS, Oracle, Google Cloud, and Kubernetes. It uses HashiCorp Configuration Language (HCL) to describe and provision infrastructure. The Pulumi provider for Confluent is built on top of the Confluent Terraform Provider.
 
