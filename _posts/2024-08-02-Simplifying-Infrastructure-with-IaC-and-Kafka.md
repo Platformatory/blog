@@ -26,19 +26,16 @@ So, **what exactly is IaC?** It means defining your infrastructure through code.
 **Centralized Inventory Management**
 
 - Developers can request resource creation, but admins or leads still need to approve these requests.
-
 - Tracking changes can be challenging. While code can be maintained in version control systems like Git, keeping an accurate and up-to-date inventory requires careful management.
 
 **Reproducibility and Scalability**
 
 - Without IaC, replicating resources and configurations from a pre-production environment to production is complex and error-prone.
-
 - IaC simplifies bulk provisioning and deletion, making it easier to scale infrastructure up or down as needed.
 
 **Automated Provisioning**
 
 - Manual provisioning through a graphical user interface (UI) is labor-intensive and prone to errors.
-
 - IaC enables automated provisioning, which is essential for implementing continuous integration and continuous deployment (CI/CD) practices in DevOps.
 
 **The Solution: Infrastructure as Code (IaC)**
@@ -46,13 +43,9 @@ So, **what exactly is IaC?** It means defining your infrastructure through code.
 Infrastructure as Code (IaC) solves these problems by using code to manage and provision infrastructure across different environments. Here’s how IaC can help:
 
 - **Faster Provisioning:** Automates the setup and configuration of infrastructure, speeding up the process.
-
 - **Reduced Human Error:** Cuts down on manual work, which lowers the chance of mistakes.
-
 - **Idempotency:** Guarantees that the infrastructure setup will be the same each time the code is run, even if it's run multiple times.
-
 - **Fewer Configuration Steps:** Streamlines deployment by putting all configurations into code.
-
 - **Elimination of Configuration Drift:** Keeps environments consistent and prevents discrepancies.
 
 Tools like Terraform, Pulumi and JulieOps are popular for automating these tasks and making infrastructure management easier.
@@ -65,7 +58,6 @@ Apache Kafka is a robust platform for real-time data streaming, capable of handl
 
 - **Role:** Brokers are servers in Kafka that store event streams from various sources.
 - **Cluster Composition:** A Kafka cluster typically comprises multiple brokers.
-
 - **Bootstrap Servers:** Each broker acts as a bootstrap server, meaning that connecting to one broker allows access to the entire cluster.
 
 **Topics**
@@ -98,9 +90,7 @@ Apache Kafka is a robust platform for real-time data streaming, capable of handl
 Using IaC tools to configure and manage Kafka infrastructure can significantly simplify the process. Tools like Julie Ops, Terraform, and Pulumi can be used to automate the setup of Kafka components such as topics, connectors, and more. Here's how they help:
 
 - **Julie Ops:** Focuses on managing Kafka configurations using GitOps principles.
-
 - **Terraform:** Provides a declarative approach to infrastructure management, allowing you to define Kafka resources in code.
-
 - **Pulumi:** Uses programming languages to define and manage infrastructure, offering flexibility in configuring Kafka components.
 
 ## **JulieOps**
@@ -270,9 +260,9 @@ Terraform is a popular IaC tool that supports a wide range of cloud, datacenter,
 
 **Provisioning Kafka Topics with Terraform**
 
-**Initialize the Provider \
-**Start by specifying the Confluent provider in your Terraform configuration: \
+**Initialize the Provider**
 
+Start by specifying the Confluent provider in your Terraform configuration: 
 
 ```
 terraform {
@@ -286,9 +276,9 @@ terraform {
 ```
 This installs the Confluent Cloud provider.
 
-**Configure Confluent Secrets \
-**Set up your Confluent credentials: \
+**Configure Confluent Secrets** 
 
+Set up your Confluent credentials: 
 
 ```
 provider "confluent" {
@@ -296,9 +286,9 @@ provider "confluent" {
   cloud_api_secret = var.confluent_cloud_api_secret # Optionally, use CONFLUENT_CLOUD_API_SECRET env var
 }
 ```
-**Define Kafka Topics \
-**Configure the Kafka topics: \
+**Define Kafka Topics**
 
+Configure the Kafka topics: 
 
 ```
 resource "confluent_kafka_topic" "dev_topics" {
@@ -318,9 +308,9 @@ resource "confluent_kafka_topic" "dev_topics" {
   }
 }
 ```
-**Run Terraform Commands \
-**Initialize and apply your Terraform configuration: \
+**Run Terraform Commands**
 
+Initialize and apply your Terraform configuration: 
 
 ```
 terraform init
