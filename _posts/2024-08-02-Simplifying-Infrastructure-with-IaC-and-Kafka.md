@@ -21,9 +21,9 @@ Infrastructure as Code (IaC) is crucial for organizations because it simplifies 
 
 So, **what exactly is IaC?** It means defining your infrastructure through code. Whenever you need to make changes or add new resources, you modify the code, and the IaC tool will handle the configuration and deployment of those resources automatically.
 
-**How Infrastructure as Code (IaC) Solves Key Challenges**
+## **How Infrastructure as Code (IaC) Solves Key Challenges**
 
-**Challenges**
+### **Challenges**
 
 **Centralized Inventory Management**
 
@@ -40,7 +40,7 @@ So, **what exactly is IaC?** It means defining your infrastructure through code.
 - Manual provisioning through a graphical user interface (UI) is labor-intensive and prone to errors.
 - IaC enables automated provisioning, which is essential for implementing continuous integration and continuous deployment (CI/CD) practices in DevOps.
 
-**The Solution: Infrastructure as Code (IaC)**
+### **The Solution: Infrastructure as Code (IaC)**
 
 Infrastructure as Code (IaC) solves these problems by using code to manage and provision infrastructure across different environments. Here’s how IaC can help:
 
