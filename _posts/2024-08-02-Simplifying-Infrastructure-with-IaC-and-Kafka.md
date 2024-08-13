@@ -324,7 +324,7 @@ terraform init
 
 # **Features of IaC Tools: JulieOps, Terraform, and Pulumi**
 
-![Image1](../assets/blog-images/oauth-oidc-blog/markdown-image-488626.png)
+![Image1](../assets/blog-images/oauth-oidc-blog/markdown-image-385179.png)
 
 # **Conclusion**
 
