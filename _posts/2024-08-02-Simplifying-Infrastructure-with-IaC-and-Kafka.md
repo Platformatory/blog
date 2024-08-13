@@ -161,7 +161,7 @@ Want a quick start? checkout our sample JulieOps repo in [here](https://github.c
 
 ## **Pulumi for Infrastructure as Code**
 
-Choosing the right Infrastructure as Code (IaC) tool is essential, as each offers distinct benefits. While this section focuses on using Pulumi with Confluent Cloud to provision and manage Kafka Topics and Connectors, Pulumi’s flexibility extends beyond cloud environments. It can be used to manage Kubernetes clusters, which can handle workloads on any infrastructure, including on-premise. Thus, while Pulumi doesn’t directly manage on-premise infrastructure like it does with cloud resources, it enables management of on-premise workloads through Kubernetes.
+Choosing the right Infrastructure as Code (IaC) tool is essential, as each offers distinct benefits. While this section focuses on using Pulumi with Confluent Cloud to provision and manage Kafka Topics, Pulumi’s flexibility extends beyond cloud environments. It can be used to manage Kubernetes clusters, which can handle workloads on any infrastructure, including on-premise. Thus, while Pulumi doesn’t directly manage on-premise infrastructure like it does with cloud resources, it enables management of on-premise workloads through Kubernetes.
 
 Pulumi supports multiple programming languages, including Python, TypeScript/JavaScript, Go, C#, Java, and YAML, which is a data serialization format used for configuration files. For this blog post, we’ll use TypeScript. Pulumi enables automation of the deployment process, leading to faster and more reliable infrastructure provisioning. The Pulumi provider we use is based on the official Terraform Provider from Confluent Inc., ensuring broad compatibility across various languages and platforms.
 
