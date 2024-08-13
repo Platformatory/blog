@@ -5,7 +5,7 @@ categories: [Apache Kafka, Mission-Critical Applications, High Availability Syst
 teaser: Dive into our journey of deploying Apache Kafka at scale for fintech clients, navigating challenges and implementing solutions for mission-critical success
 authors: Arun
 featured: false
-hidden: false
+hidden: true
 image: assets/blog-images/running-kafka-at-scale/kafka.png
 toc: true
 ---

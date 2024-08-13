@@ -1,12 +1,13 @@
 ---
 layout: post
-title:  "Architecture primer for upstart SaaS founders"
+title:  "Building whatever (X) as a service: XaaS"
 author: p6
 categories: [ Platform Engineering, Data, SaaS, API Metering ]
 image: assets/blog-images/mainfesto.jpg
 featured: true
 hidden: true
-teaser: 5 areas to plan upfront & build right
+weight: -11
+teaser: An architecture primer for SaaS upstarts.
 toc: true
 ---
 
