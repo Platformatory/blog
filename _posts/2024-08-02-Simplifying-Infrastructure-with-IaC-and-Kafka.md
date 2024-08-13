@@ -328,4 +328,4 @@ terraform init
 
 # **Conclusion**
 
-Choosing the right Infrastructure as Code (IaC) tool depends on your specific needs. Terraform is known for its stability and extensive resource support, making it a reliable choice for many. Pulumi offers ease of use and supports multiple programming languages, appealing to those with coding experience. JulieOps focuses on managing Kafka resources within Confluent Cloud. Each tool has its unique strengths, offering effective solutions for managing infrastructure code.
+Choosing the right Infrastructure as Code (IaC) tool depends on your specific needs. Terraform is known for its stability and extensive resource support, making it a reliable choice for many. Pulumi offers ease of use and supports multiple programming languages, appealing to those with coding experience. JulieOps focuses on managing Kafka resources within Cloud. Each tool has its unique strengths, offering effective solutions for managing infrastructure code.
