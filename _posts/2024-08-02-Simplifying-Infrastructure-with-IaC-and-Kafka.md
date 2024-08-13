@@ -107,7 +107,7 @@ projects:
 ```
 **Kafka Client Configurations**
   
-  - In this section, we’ll configure the necessary properties to connect to a Kafka cluster and Schema Registry using the provided credentials and settings. This setup is crucial for using tools like JulieOps to manage and interact with Kafka resources effectively. The following configuration file, named client.properties, will set up the connection parameters for Kafka and Schema Registry, ensuring secure and authenticated communication. 
+  - In this section, we’ll configure the necessary properties to connect to a Kafka cluster and Schema Registry using the provided credentials and settings. This setup is crucial for using tools like JulieOps to manage and interact with Kafka resources effectively. The following configuration file, named Kafka-client.properties, will set up the connection parameters for Kafka and Schema Registry, ensuring secure and authenticated communication. 
   
 ```
   bootstrap.servers="<BOOTSTRAP_SERVER_URL>"
