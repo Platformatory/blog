@@ -4,13 +4,14 @@ title: "Monitoring: How to monitor AWS MSK Cluster"
 authors: Zeenia
 categories: [Apache Kafka, Docker Compose, AWS MSK cluster, Prometheus, Grafana]
 image: assets/blog-images/msk_monitoring/Prometheu.png
-featured: false
-hidden: false
+featured: true
+hidden: true
+weight: -10
 teaser: Monitoring, How to monitor AWS MSK Cluster
-toc: true
 ---
 
 # Monitoring: How to monitor AWS MSK Kafka Cluster
+
 ### Introduction
 Amazon Managed Streaming for Apache Kafka (MSK) securely streams data with a fully managed, highly available Apache Kafka service, utilizing an open-source version of Apache Kafka which allows you to focus on building and running applications. A properly running Kafka cluster can handle a significant amount of data. So, it is essential to monitor the health of your Kafka cluster to maintain reliability and performance of your Kafka cluster. 
 
