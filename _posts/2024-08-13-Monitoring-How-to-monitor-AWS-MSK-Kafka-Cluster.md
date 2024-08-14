@@ -148,7 +148,8 @@ The metrics available are:
 - Request Handler 
 
   |**Expr:** 100 - Kafka\_server\_KafkaRequestHandlerPool\_Count{name="RequestHandlerAvgIdlePercent", job="Kafka-broker", env=~"$env", instance=~"$instance"}
-<br></br>
+<br>
+
 - Network Processor
 
   |**Expr:** 100 - Kafka\_network\_SocketServer\_Value{name=\"NetworkProcessorAvgIdlePercent\", job=\"Kafka-broker\", env=~\"$env\", instance=~\"$instance\"}
@@ -167,13 +168,15 @@ The metrics available are: .
   |**Expr**: (rate(node\_disk\_read\_bytes\_total{job=\"node\"}[5m]) + rate(node\_disk\_written\_bytes\_total{job=\"node\"}[5m]))/1000000000
   
   |**Percentage**: $Expr \* 100
-<br></br>
+<br>
+
 - Memory Usage 
 
   |**Expr**: (sum(java\_lang\_Memory\_HeapMemoryUsage\_used{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"}) + sum(java\_lang\_Memory\_NonHeapMemoryUsage\_used{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"})) + (sum(java\_lang\_Memory\_HeapMemoryUsage\_committed{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"}) + sum(java\_lang\_Memory\_NonHeapMemoryUsage\_committed{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"})
   
   |**Percentage**: $Expr \* 100*
-<br></br>
+<br>
+
 - CPU Usage
 
   |**Expr**: irate(process\_cpu\_seconds\_total{job=\"node\", env=~\"$env\", instance=~\"$instance\"}[5m])\*100
@@ -201,7 +204,8 @@ The following metrics are used:
 - Number of Clients 
 
   |**Expr:** count(count by(client\_id) (Kafka\_server\_Fetch\_byte\_rate{client\_id!~\"^consumer-amazon.msk.\*\"})) + count(count by(client\_id) (Kafka\_server\_Produce\_byte\_rate{client\_id!~\"^producer-.\*\"}))
-<br></br>
+<br>
+
 - Number of Partition 
 - Number of Topics 
 - Number of Brokers
@@ -217,11 +221,13 @@ The following metrics are used:
 Monthly: 
 
   |**Expr:** sum by(<broker/topic/partition>) (rate(Kafka\_log\_Log\_Value{name="Size", job="Kafka-broker", env="dev", instance=~"$instance", topic=~"$topic",partition=~"$partition"}[1h])) / $convert\_to\_GB / $GB\_Month
-<br></br>
+<br>
+
 GB-hours:
 
   |**Expr:** sum by(<broker/topic/partition>) (rate(Kafka\_log\_Log\_Value{name="Size", job="Kafka-broker", env="dev", instance=~"$instance", topic=~"$topic",partition=~"$partition"}[1h]))
-<br></br>
+<br>
+
 - Partition 
 
   <img src="../assets/blog-images/msk_monitoring/ResourceUsage/partition.png" alt="Partition" width="800" height="150"/>
@@ -241,7 +247,8 @@ GB-hours:
 Monthly: 
 
   |**Expr:** sum by(<broker/topic>) (rate Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name="RemoteLogSizeBytes", job="Kafka-broker", env="dev", instance=~"$instance", cluster=~"$cluster"}[1h])) \* $GB\_Month / $convert\_to\_GB
-<br></br>
+<br>
+
 GB-hours:
 
   |**Expr:** sum by(<broker/topic>) (rate(Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name="RemoteLogSizeBytes", job="Kafka-broker", env="dev", instance=~"$instance", cluster=~"$cluster"}[1h]))
@@ -268,11 +275,13 @@ The following metrics are used:
 - Client 
 
   |**Expr:** sum by(client\_id) (rate(<Kafka\_server\_Produce\_byte\_rate/Kafka\_server\_Fetch\_byte\_rate>{client\_id=~\"$producer\_client\_id\", job=\"Kafka-broker\", env=\"dev\", instance=~\"$instance\"}[1h])) / $convert\_to\_GB / $GB\_Month
-<br></br>
+<br>
+
 - Partition 
 
   |**Expr:** sum by(topic, partition) (rate(Kafka\_log\_Log\_Value{name=\"Size\", job=\"Kafka-broker\", env=\"dev\", instance=~\"$instance\", topic=~\"$topic\", partition=~\"$partition\"}[1h])) / $convert\_to\_GB / $GB\_Month
-<br></br>
+<br>
+
 - Topic 
 
   |**Expr:** sum by(topic) (rate(Kafka\_log\_Log\_Value{name=\"Size\", job=\"Kafka-broker\", env=\"$env\", instance=~\"$instance\", topic=~\"$topic\"}[1h])) / $convert\_to\_GB / $GB\_Month
@@ -281,7 +290,8 @@ The following metrics are used:
 - Topic 
 
   |**Expr:** sum by(topic) (rate(Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name=\"RemoteLogSizeBytes\", job=\"Kafka-broker\", env=\"dev\", topic=~\"$topic\", instance=~\"$instance\"}[1h])) \* $GB\_Month / $convert\_to\_GB
-<br></br>
+<br>
+
 - Instance 
 
   |**Expr:** sum by(instance) (rate(Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name=\"RemoteLogSizeBytes\", job=\"Kafka-broker\", env=\"dev\", instance=~\"$instance\", cluster=~\"$cluster\"}[1h])) \* $GB\_Month / $convert\_to\_GB
