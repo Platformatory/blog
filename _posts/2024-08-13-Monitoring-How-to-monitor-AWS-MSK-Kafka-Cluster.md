@@ -1,4 +1,16 @@
-﻿# <a name="_x9tho1akfi11"></a>**Monitoring: How to monitor AWS MSK Kafka Cluster** 
+﻿---
+layout: post
+title: "Monitoring: How to monitor AWS MSK Cluster"
+authors: Zeenia
+categories: [Apache Kafka, Docker Compose, AWS MSK cluster, Prometheus, Grafana]
+image: assets/blog-images/msk_monitoring/Prometheu.png
+featured: false
+hidden: false
+teaser: Monitoring, How to monitor AWS MSK Cluster
+toc: true
+---
+
+# <a name="_x9tho1akfi11"></a>**Monitoring: How to monitor AWS MSK Kafka Cluster** 
 ### <a name="_edfpg7nuisc6"></a>**Introduction**
 Amazon Managed Streaming for Apache Kafka (MSK) securely streams data with a fully managed, highly available Apache Kafka service, utilizing an open-source version of Apache Kafka which allows you to focus on building and running applications. A properly running Kafka cluster can handle a significant amount of data. So, it is essential to monitor the health of your Kafka cluster to maintain reliability and performance of your Kafka cluster. 
 
@@ -9,7 +21,7 @@ In this blog, we’ll explore how to monitor the MSK Kafka cluster using open-so
 We’re using open-source monitoring tools like Prometheus and Grafana instead of AWS CloudWatch because CloudWatch charges additional costs for monitoring various resources when you create a cluster. With basic monitoring in CloudWatch, you only get metrics related to broker and cluster. However, by using the open-source monitoring tools, you can monitor all the resources such as topics, partitions, brokers, and clients without any additional cost. This approach not only saves money but also time, as it provides detailed cost metrics per resource. In contrast, AWS Cost Explorer groups all expenses like outbound charges, data transfer within a region, and storage provisioning under the Amazon MSK category, making it a little difficult to find which resource is costing you the most. With Open-source monitoring, you can identify which resource is costing you the most and prioritize your budget and resource allocation accordingly. 
 
 ### <a name="_xykhxby5hsw2"></a>**Process Flow for Monitoring Apache Kafka with Amazon MSK**
-  <img src="../assets/blog-images/msk_monitoring/process_flow.png" alt="Process_Flow" width="400"/>
+  <img src="../assets/blog-images/msk_monitoring/process_flow.png" alt="Process_Flow" width="800"/>
 
 Here, we created a VPC with three subnets. The number of subnets should match the number of brokers in your cluster. We also created a security group that is attached to both the MSK Kafka cluster and the EC2 instance, so ensure that the security group is the same for both. Since we are using SASL/SCRAM authentication, you need to associate a secret with the cluster, which we will create in the Secrets Manager. Refer to the following document for instructions on creating a secret in the Secrets Manager.
 
