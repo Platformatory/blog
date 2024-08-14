@@ -1,27 +1,25 @@
 ﻿---
 layout: post
 title: "Monitoring: How to monitor AWS MSK Cluster"
-authors: Zeenia
+author: Zeenia
 categories: [Apache Kafka, Docker Compose, AWS MSK cluster, Prometheus, Grafana]
 image: assets/blog-images/msk_monitoring/Prometheu.png
-featured: false
-hidden: false
 teaser: Monitoring, How to monitor AWS MSK Cluster
 toc: true
 ---
 
-# Monitoring: How to monitor AWS MSK Kafka Cluster
+# **Monitoring: How to monitor AWS MSK Kafka Cluster**
 
-### Introduction
+## **Introduction**
 Amazon Managed Streaming for Apache Kafka (MSK) securely streams data with a fully managed, highly available Apache Kafka service, utilizing an open-source version of Apache Kafka which allows you to focus on building and running applications. A properly running Kafka cluster can handle a significant amount of data. So, it is essential to monitor the health of your Kafka cluster to maintain reliability and performance of your Kafka cluster. 
 
 In this blog, we’ll explore how to monitor the MSK Kafka cluster using open-source tools like Prometheus and Grafana. With the help of these tools, we can get a good understanding of our Kafka cluster’s health, identify issues, and make better decisions about resource allocation and budgeting. To keep your Kafka cluster running optimally, it is important to focus on these three things: optimizing performance, high availability, and managing costs. By monitoring load utilization, we can identify which broker is struggling due to high load, while tracking resource usage which helps optimize performance. Additionally, tracking the cost associated with specific resources, allows you for better budget planning and prioritization according to your business needs.
 
 
-### Why Do We Choose Open-Source Monitoring Over CloudWatch?
+## **Why Do We Choose Open-Source Monitoring Over CloudWatch?**
 We’re using open-source monitoring tools like Prometheus and Grafana instead of AWS CloudWatch because CloudWatch charges additional costs for monitoring various resources when you create a cluster. With basic monitoring in CloudWatch, you only get metrics related to broker and cluster. However, by using the open-source monitoring tools, you can monitor all the resources such as topics, partitions, brokers, and clients without any additional cost. This approach not only saves money but also time, as it provides detailed cost metrics per resource. In contrast, AWS Cost Explorer groups all expenses like outbound charges, data transfer within a region, and storage provisioning under the Amazon MSK category, making it a little difficult to find which resource is costing you the most. With Open-source monitoring, you can identify which resource is costing you the most and prioritize your budget and resource allocation accordingly. 
 
-### Process Flow for Monitoring Apache Kafka with Amazon MSK
+## **Process Flow for Monitoring Apache Kafka with Amazon MSK**
   <img src="../assets/blog-images/msk_monitoring/process_flow.png" alt="Process_Flow" width="800"/>
 
 Here, we created a VPC with three subnets. The number of subnets should match the number of brokers in your cluster. We also created a security group that is attached to both the MSK Kafka cluster and the EC2 instance, so ensure that the security group is the same for both. Since we are using SASL/SCRAM authentication, you need to associate a secret with the cluster, which we will create in the Secrets Manager. Refer to the following document for instructions on creating a secret in the Secrets Manager.
@@ -42,8 +40,8 @@ Configure the following inbound rules for the security groups associated with th
 
 These inbound rules will allow access to the Prometheus and Grafana dashboards via your browser. We will use open-source Apache Kafka metrics instead of CloudWatch. Prometheus will collect data from the EC2 instance, and Grafana will retrieve the data from Prometheus.
 
-### Configuration
-#### Prometheus Configuration
+## **Configuration**
+### **Prometheus Configuration**
 ```
 global:
 
@@ -137,10 +135,10 @@ As we are monitoring MSK cluster for both Kafka broker as well as node, instead 
 ```
 
 
-### Grafana Dashboards
-#### Kafka Cluster Utilization
+## **Grafana Dashboards**
+### **Kafka Cluster Utilization**
 In this We are monitoring the Utilization of our MSK cluster such as: 
-##### Thread Utilization
+#### **Thread Utilization**
 The network and request handler capacity metric group contains metrics regarding the amount of time the request handler and network process are used. Kafka networks processor threads are responsible for reading and writing the data to Kafka clients across the network. Meanwhile, the request handler threads are responsible for client requests i.e. reading and writing messages to the disk. 
 
 The metrics available are: 
@@ -157,7 +155,7 @@ The Percentage of Request handler and Network processor usage is in between 0-10
 
 <img src="../assets/blog-images/msk_monitoring/ClusterUtilization/thread.png" alt="ThreadUtilization" width="1000" height="150"/>
 
-##### System Utilization
+#### **System Utilization**
 Here, we are monitoring the cluster or broker load, which allows us to identify which brokers are overloaded. The broker can be overloaded when partitions in the topic are given correctly. In that case, increasing the number of partitions could help the load across the Kafka brokers. Similarly, there are other scenarios where adjustments can optimize performance. This not only reduces the pressure on the request handler , but also Kafka throughput will increase
 
 The metrics available are: . 
@@ -168,11 +166,13 @@ The metrics available are: .
   
   |**Percentage**: $Expr \* 100
 
+
 - Memory Usage 
 
   |**Expr**: (sum(java\_lang\_Memory\_HeapMemoryUsage\_used{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"}) + sum(java\_lang\_Memory\_NonHeapMemoryUsage\_used{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"})) + (sum(java\_lang\_Memory\_HeapMemoryUsage\_committed{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"}) + sum(java\_lang\_Memory\_NonHeapMemoryUsage\_committed{job=\"Kafka-broker\", instance=~\"$instance\", env=\"dev\"})
   
   |**Percentage**: $Expr \* 100*
+
 
 - CPU Usage
 
@@ -180,7 +180,7 @@ The metrics available are: .
 
 <img src="../assets/blog-images/msk_monitoring/ClusterUtilization/System.png" alt="SystemUsage" width="800" height="200"/>
 
-#### Resource Usage Based
+### **Resource Usage Based**
 In this mode, we are calculating the storage usage by the following: 
 
 - Topic 
@@ -202,20 +202,23 @@ The following metrics are used:
 
   |**Expr:** count(count by(client\_id) (Kafka\_server\_Fetch\_byte\_rate{client\_id!~\"^consumer-amazon.msk.\*\"})) + count(count by(client\_id) (Kafka\_server\_Produce\_byte\_rate{client\_id!~\"^producer-.\*\"}))
 
+
 - Number of Partition 
 - Number of Topics 
 - Number of Brokers
 
   <img src="../assets/blog-images/msk_monitoring/ResourceUsage/Resource.png" alt="SystemUsage" width="800" height="400"/>
 
+  
   |**Expr:**sum(Kafka\_controller\_KafkaController\_Value{name=\"<globalPartitionCound/globalTopicCount>\", job=\"Kafka-broker\", env=\"dev\", instance=~\"$instance\", cluster=~\"$cluster\"})
 
 
-##### Storage Used 
+#### **Storage Used**
 
 Monthly: 
 
   |**Expr:** sum by(<broker/topic/partition>) (rate(Kafka\_log\_Log\_Value{name="Size", job="Kafka-broker", env="dev", instance=~"$instance", topic=~"$topic",partition=~"$partition"}[1h])) / $convert\_to\_GB / $GB\_Month
+
 
 GB-hours:
 
@@ -233,7 +236,7 @@ GB-hours:
 
   <img src="../assets/blog-images/msk_monitoring/ResourceUsage/instance.png" alt="SystemUsage" width="800" height="200"/>
 
-##### Tiered Storage
+#### **Tiered Storage**
 - Instance 
 - Topic 
 
@@ -246,7 +249,7 @@ GB-hours:
   |**Expr:** sum by(<broker/topic>) (rate(Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name="RemoteLogSizeBytes", job="Kafka-broker", env="dev", instance=~"$instance", cluster=~"$cluster"}[1h]))
 
 
-#### Cost Center
+### **Cost Center**
 In this model, We provide an estimate how much it will cost you based on the resource usage in the previous model. We will calculate the cost based on the following resources: 
 
 - Topic 
@@ -258,12 +261,12 @@ The cost of the above-mentioned resources are calculated based on the observed G
 
 The following metrics are used: 
 
-##### Outbound Charges monthly
+#### **Outbound Charges monthly**
 
   |**Expr:** sum by(instance) (rate(Kafka\_server\_BrokerTopicMetrics\_Count{name=\"BytesOutPerSec\", job=\"Kafka-broker\", env=\"$env\", cluster=\"$cluster\"}[1m])) / $convert\_to\_GB / $GB\_Month
 
 
-##### Storage Usage Cost monthly
+#### **Storage Usage Cost monthly**
 - Client 
 
   |**Expr:** sum by(client\_id) (rate(<Kafka\_server\_Produce\_byte\_rate/Kafka\_server\_Fetch\_byte\_rate>{client\_id=~\"$producer\_client\_id\", job=\"Kafka-broker\", env=\"dev\", instance=~\"$instance\"}[1h])) / $convert\_to\_GB / $GB\_Month
@@ -276,7 +279,7 @@ The following metrics are used:
 
   |**Expr:** sum by(topic) (rate(Kafka\_log\_Log\_Value{name=\"Size\", job=\"Kafka-broker\", env=\"$env\", instance=~\"$instance\", topic=~\"$topic\"}[1h])) / $convert\_to\_GB / $GB\_Month
 
-##### Tiered Storage Cost
+#### **Tiered Storage Cost**
 - Topic 
 
   |**Expr:** sum by(topic) (rate(Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name=\"RemoteLogSizeBytes\", job=\"Kafka-broker\", env=\"dev\", topic=~\"$topic\", instance=~\"$instance\"}[1h])) \* $GB\_Month / $convert\_to\_GB
@@ -285,7 +288,7 @@ The following metrics are used:
 
   |**Expr:** sum by(instance) (rate(Kafka\_server\_BrokerTopicAggregatedMetrics\_Value{name=\"RemoteLogSizeBytes\", job=\"Kafka-broker\", env=\"dev\", instance=~\"$instance\", cluster=~\"$cluster\"}[1h])) \* $GB\_Month / $convert\_to\_GB
 
-##### Instance Charges Monthly
+#### **Instance Charges Monthly**
 
   |**Expr:** sum by(instance) (rate(Kafka\_log\_Log\_Value{name="Size", job="Kafka-broker", env="dev", instance=~"$instance", cluster=~"$cluster"}[1h])) / $convert\_to\_GB / $GB\_Month
 
@@ -296,6 +299,6 @@ The following metrics are used:
   <img src="../assets/blog-images/msk_monitoring/CostCenter/topic.png" alt="Topic" width="800" height="150"/>
 
 
-### Conclusion
+## **Conclusion**
 In conclusion, With the help of MSK cluster, you don’t have to worry about your servers, you just need to take care about the storage usage and cost . Performing open monitoring on MSK clusters using prometheus and grafana without relying on cloudWatch metrics offers the cost-effective way to manage your Kafka cluster. This also encourages the usage of resources and provides detailed insights to the team, and accordingly they can plan their budget for further uses. To further improve this dashboard, you can include the cross-zone charges metrics in the cost center dashboard by creating the custom metrics for availability zone, and region. This will help you to optimize your Kafka cluster even further. 
 
