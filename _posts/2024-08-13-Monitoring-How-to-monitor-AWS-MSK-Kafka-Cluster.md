@@ -42,7 +42,7 @@ These inbound rules will allow access to the Prometheus and Grafana dashboards v
 
 ## **Configuration**
 ### **Prometheus Configuration**
-```
+```yaml
 global:
 
   scrape\_interval:     15s
@@ -83,7 +83,7 @@ scrape\_configs:
 As we are monitoring MSK cluster for both Kafka broker as well as node, instead of writing all the broker DNS names here, we have created a “**target.json”** file in which we have included the broker DNS names and the port. Amazon MSK uses port 11001 for the JMX Exporter and port 11002 for the Node Exporter. 
 
 **targets.json**
-```
+```json
 [
 
   {
@@ -146,10 +146,12 @@ The metrics available are:
 - Request Handler 
 
   |**Expr:** 100 - Kafka\_server\_KafkaRequestHandlerPool\_Count{name="RequestHandlerAvgIdlePercent", job="Kafka-broker", env=~"$env", instance=~"$instance"}
+  |:-|
 
 - Network Processor
 
   |**Expr:** 100 - Kafka\_network\_SocketServer\_Value{name=\"NetworkProcessorAvgIdlePercent\", job=\"Kafka-broker\", env=~\"$env\", instance=~\"$instance\"}
+  |:-|
 
 The Percentage of Request handler and Network processor usage is in between 0-100. If it’s 0 then all resources are used and 100 i.e. all resources are available.
 
