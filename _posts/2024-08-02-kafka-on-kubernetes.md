@@ -11,26 +11,12 @@ toc: true
 ---
 
 # Introduction
-Organizations that run their business applications on Kubernetes expect the same from Kafka and plan to work through the design and deployment of Kafka to run along with their applications. This post goes into the internals of the challenges in doing so, the options to overcome them by building on the options that many companies are using to achieve the outcome.
+Kubernetes (or K8S) is an open source system for automating deployment, scaling and management of containerized applications. It was originally developed by Google, inspired from their experience of deploying scalable, reliable systems in containers via application-oriented APIs. Since its introduction in 2014, Kubernetes has grown to be one of the largest and most popular open source projects in the world. It has become the standard API for building cloud native applications, present in nearly every public cloud. Apache Kafka is a distributed streaming platform that is used as a backbone for an organization's data infrastructure. So, organizations that build, deploy, manage/operate cloud native applications look at running Kafka on K8S to take advantage of everything that K8S offers (scaling, recovery from failures, optimal use of resources).
 
-# Overall Structure
-This blogpost gently introduces the various systems that need to be tied together, lists out a few internals that are key in making them work together and finally lists out the options that are widely available to run Kafka on Kubernetes.
 
-# What is a Container?
-Containers allow us to build an application once and run it anywhere with a compatible container engine. The most popular container engines are: Docker (released in 2013), containerd, CRI-O, Podman, rkt (Rocket), and LXC/LXD (Linux Containers) with LXD being the system container manager. Containers are isolated from one another and contain their own software, libraries and configuration files. They share the services of the Operating System they are running on and therefore use fewer resources when compared to virtual machines. A microservice (typically stateless so that they can be easily added/removed) can be modeled as a set of containers running together behind a load balancer to serve a specific purpose (like order management). Software that is not natively built for to be run in a container can be containerized (like Kafka).
+# Key Characteristics of Kafka
+Based on the release timeline (Zookeeper 3.0 released in 2008, Kafka released in 2011, Docker in 2013 and Kubernetes in 2014), Kafka (and in turn Zookeeper) predate native container based applications. So, they fall into the category of applications that are containerized though they were not built to be run in containers. Also, we need to make them Stateful (brokers store data into files and cache the data in the filessytem cache), have the producers/consumers know the existence of brokers, have the ability for each broker to connect to others, and be able to recover back after a pod goes down (a pod in Kubernetes consists of one/more containers that work together to offer a set of features. One design option is to containerize Kafka/Zookeeper and build each one into a pod which can then be handled by Kubernetes).
 
-# Brief introduction to Kubernetes
-Kubernetes (or K8S) is an open source orchestrator for deploying containerized applications. It was originally developed by Google, inspired from their experience of deploying scalable, reliable systems in containers via application-oriented APIs. Since its introduction in 2014, Kubernetes has grown to be one of the largest and most popular open source projects in the world. It has become the standard API for building cloud native applications, present in nearly every public cloud.
-
-Kubernetes was built to be extensible which gives people the ability to augment the clusters, develop extensions and to build new patterns of managing systems like the Operator pattern.
-
-# Brief introduction to Kafka and some Key Characteristics
-Apache Kafka (released in 2011) is a distributed commit log that helps customers to build a backbone for data that is high throughput and provides low latency. It consists of multiple brokers (or nodes) responsible for one/more partitions of a Topic (a construct which is used by publishers to send messages to and for consumers to read messages from). Zookeeper (deprecated in version Kafka 3.5 and removed in Kafka 4.0 and replaced by KRaft) was responsible for leader elections, membership, service state, configuration data, ACLs and quotas. It comes with an ecosystem consisting of:
-- Kafka Connect that provides components to bring data from outside Kafka (like databases) and to send data to outside Kafka (e.g., another database or a data store), 
-- Kafka Streams to develop streaming applications. 
-- Schema Registry that helps define and enforce schema for the messages that are published and consumed to/from a Kafka Topic.
-
-Here's the architecture diagram:
 <div id="kafka" class="mermaid">
 flowchart TD
 
@@ -63,7 +49,6 @@ subgraph Z1["Zookeeper Cluster"]
         ZK3["Zookeeper Node 3"]
   end
 
-
     ZK1 <--> B1
     ZK2 <--> B1
     ZK3 <--> B1
@@ -90,23 +75,10 @@ subgraph Z1["Zookeeper Cluster"]
     B2 -- Consumes --> C5
     B3 -- Consumes --> C4
 
-
     %% Styling
     classDef kafkaStyle fill:#e0f7e9,stroke:#4caf50,stroke-width:2px;
     class K1,K2 kafkaStyle;
 </div>
-
-Apart from what we said above, Kafka is:
-- A stateful service which means that bringing down a broker (the node that is responsible for one or more partitions of a topic) has an impact on the availability of the topic and the producers and consumers connected to the partitions owned by the broker.
-- Made up of brokers (we need to have at least three) where each broker knows the existence of other brokers (unlike a microservice).
-- Made up of producers/consumers that connect directly to one or more brokers which means that putting a load balancer in front of a broker isn’t meaningful.
-- Each broker maintains a cache of the messages in the filesystem cache which cannot be reserved and will be made available by the OS depending on the amount of space after being shared with other processes. An alternative to Kafka is Redpanda which reserves memory and uses the Direct Memory Access (DMA) capability to service the reads and writes and bypasses the filesystem cache.
-
-Zookeeper has similar characteristics:
-- A stateful service where data is stored in a hierarchical namespace like a filesystem or a tree data structure.
-- Made up of nodes (at least three and an odd number of nodes) to maintain quorum.
-- Each node knows the existence of other nodes.
-- Each client (Kafka broker) knows about the existence of nodes and has a direct connection to the nodes.
 
 # Typical Requirements of running Kafka
 ## Security
@@ -121,15 +93,11 @@ Zookeeper has similar characteristics:
 - Replicate data across clusters
 - Rack awareness for durability
 
-
-# Key Concerns of Running Kafka in Kubernetes
-As we saw in the timeline (Zookeeper 3.0 released in 2008, Kafka released in 2011, Docker in 2013 and Kubernetes in 2014), Kafka (and in turn Zookeeper) predate native container based applications. So, they fall into the category of applications that are containerized although they were not designed to be run in containers. Also, we need to make them Stateful, have the producers/consumers know the existence of brokers, have the ability for each broker to connect to others, and be able to recover back after a pod goes down (a pod in Kubernetes consists of one/more containers that work together to offer a set of features. One design option is to containerize Kafka/Zookeeper and build each one into a pod which can then be handled by Kubernetes).
-
 ## How do we model the Kafka/Zookeeper Resources?
-Kubernetes provides support for CustomResourceDefinition which can be used to model a cluster, Connect/Connector, Mirror Maker (to replicate records across Kafka clusters), Kafka Users, Topics, Prometheus Metric, and Security (TLS, SCRAM, Keycloak). This is how Strimzi models all Kafka/Zookeeper resources.
+Kubernetes supports several native resources to manage and orchestrate containers. Some of them are Pods, Nodes, Namespaces, ReplicationController, ReplicaSet, StatefulSets, Services, Endpoints, ConfigMaps, Secrets, PersistentVolumes, PersistentVolumeClaims, Ingress, Custom Resource Definitions (CRDs) and Roles/RoleBindings among others. So, what we see is that Kafka related resources are not natively supported. But, Kubernetes provides extensibility via CRDs to model a cluster, Connect/Connector, Mirror Maker (to replicate records across Kafka clusters), Kafka Users, Topics, Prometheus Metric, and Security (TLS, SCRAM, Keycloak). 
 
 ## How do we model the infrastructure?
-*** StatefulSet*** : a StatefulSet is a Kubernetes resource designed for stateful applications. So, we model both Kafka/Zookeeper as a StatefulSet which guarantees:
+*** StatefulSet*** : a StatefulSet is a Kubernetes resource designed for stateful applications. So, we can model both Kafka/Zookeeper as a StatefulSet which guarantees:
 - Stable, unique names and network identifiers
 - Stable persistent storage that moves with the pod (even when it moves to a different node)
 - Pods are created sequentially (1, 2, 3, … n) and terminated in the opposite order (n, n-1, …, 3, 2, 1)
@@ -145,11 +113,77 @@ Some downsides to using a StatefulSet:
 - Cannot remove a specific broker because it allows the removal of most recently added broker (based on the termination order in a StatefulSet)
 - Cannot use different persistent volumes for each broker
 
-***Strimzi*** and ***KOperator*** (which are deployment options listed below) do not go the route of StatefulSet (but ***CFK*** does) and therefore do not need the headless service. 
+## How do we take care of Resource Management?
+Kubernetes provides a pattern called the ***Operator***. Any complex stateful workload (like Kafka) that can’t be run as a fully managed service can be provided as a Kubernetes operator. This allows us to proactively manage custom resources (created via the CRDs). Operators are very powerful and they enable users to get custom abstractions that are responsible for deployment, health check and repair of the custom resources (e.g., Kafka Cluster, Topic).
 
-Kubernetes has an interesting pattern called the Operator. Any complex stateful workload (like Kafka) that can’t be run as a fully managed service will be provided as a Kubernetes operator. This allows us to proactively manage custom resources (created via the CustomResourceDefinitions). Operators are very powerful and they enable users to get custom abstractions that are responsible for deployment, health check and repair of the custom resources (e.g., Kafka Cluster, Topic).
+<div class="mermaid">
+graph TD
+    A[Kubernetes API Server] -->|Watches| B[Controller]
+    B -->|Reads Desired State| C[Etcd - Cluster State Store]
+    B -->|Reads Actual State| D[Kubernetes Resources e.g. Pods, Nodes]
+    B -->|Reconciles| E[Adjusts Kubernetes Resources]
+    C -->|Stores Updated State| A
+    E -->|Updates| A
+</div>
 
-Another interesting thing to note is that Confluent uses Kubernetes to implement Kora which is their cloud native streaming platform for Kafka. Read more about it here. Also, Confluent brought this experience to their CFK offering.
+Operator Components:
+- Kubernetes API Server (A): The central management point for the cluster, providing the interface for all resource operations.
+- Controller (B): A control loop that watches the desired state in the API Server, compares it with the actual state of resources, and takes action to reconcile the differences.
+- Etcd (C): The key-value store where Kubernetes stores its desired state and cluster configuration.
+- Kubernetes Resources (D): The actual state of resources (e.g., Pods, Nodes) in the cluster.
+- Reconciliation Process (E): The controller adjusts the resources as needed to align the actual state with the desired state stored in etcd.
+
+Extending the Operator pattern to model Kafka resources could have CRDs for Topic, Kafka Cluster, Zookeeper. The Controllers: Kafka Operator and Zookeeper Operator read the CRDs, create the resources and run reconciliation loops to maintain the desired state.
+
+<div class="mermaid">
+flowchart TD
+    subgraph KubernetesCluster["Kubernetes Cluster"]
+        direction TB
+        subgraph Controllers["Controllers"]
+            KOperator["Kafka Operator"]
+            ZOperator["Zookeeper Operator"]
+        end
+
+        subgraph KafkaResources["Kafka Resources"]
+            KafkaCluster["Kafka Cluster"]
+            ZookeeperCluster["Zookeeper Cluster"]
+            KafkaTopics["Kafka Topics"]
+        end
+        
+        subgraph ManagedResources["Managed Resources"]
+            Brokers["Kafka Brokers"]
+            ZKNodes["Zookeeper Nodes"]
+        end
+        
+        subgraph CustomResources["Custom Resources"]
+            KCR["Kafka Custom Resource"]
+            ZKCR["Zookeeper Custom Resource"]
+            TopicCR["Kafka Topic Custom Resource"]
+        end
+    end
+
+
+    KOperator --> KafkaCluster
+    ZOperator --> ZookeeperCluster
+    KOperator --> KafkaTopics
+    KOperator --> Brokers
+    ZOperator --> ZKNodes
+
+    KCR --> KOperator
+    ZKCR --> ZOperator
+    TopicCR --> KOperator
+
+    
+    Brokers -- depends on --> ZKNodes
+    KafkaCluster -- managed by --> KOperator
+    ZookeeperCluster -- managed by --> ZOperator
+
+%% Styling
+    classDef kafkaStyle fill:#e0f7e9,stroke:#4caf50,stroke-width:2px;
+    class K1,K2 kafkaStyle;
+    classDef default font-size:16px;
+    
+</div>
 
 ## Scope of coverage: A mental model on Kubernetes Operators for Kafka
 What are the important requirements from an Operator to successfully run Kafka on Kubernetes? We list them here:
@@ -169,7 +203,9 @@ What are the important requirements from an Operator to successfully run Kafka o
   - Deployments & Rollouts
 - Extensibility
 
-# Deployment Options
+It is really hard to get deep into K8S, model the Kafka resources and implement the Operator pattern to have a production ready system that can achieve the objectives. But, there is help!
+
+# Deployment Options to run Kafka on K8S
 ## Strimzi
 Strimzi is an open-source project designed to run Apache Kafka on Kubernetes. It simplifies the deployment, management, and monitoring of Kafka clusters.
 Features:
@@ -187,55 +223,8 @@ Features:
 - KafkaBridge for a RESTful HTTP interface
 - Security: FIPS mode auto-enablement when using Strimzi container images
 
-Here's the architecture diagram:
 <div class="mermaid">
 flowchart LR
-
-subgraph PRODUCERS["Producers"]
-    subgraph PP1P1["Pod 4"]
-        P1("Producer 1")
-     end  
-    subgraph PP2P2["Pod 5"]
-        P2("Producer 2")
-     end
-    subgraph PP3P3["Pod 6"]
-        P3("Producer 3")
-     end 
-  end
-
- subgraph CG1["Consumer Group 1"]
-    subgraph CP1C1["Pod 7"]
-        C1("Consumer 1")
-     end 
-        
-  end
- subgraph CG2["Consumer Group 2"]
-    subgraph CGP1C1["Pod 8"]
-        C2("Consumer 1")
-     end
-    subgraph CGP1C2["Pod 9"]
-        C3("Consumer 2")
-      end
-  end
- subgraph CG3["Consumer Group 3"]
-    subgraph CGP3C1["Pod 10"]
-        C4("Consumer 1")
-     end
-    subgraph CGP3C2["Pod 11"]
-        C5("Consumer 2")
-      end
-  end
-
-subgraph CONSUMERS["Consumers"]
-    CG1
-    CG2
-    CG3
- end
-
-subgraph CLS["Clients"]
-    PRODUCERS
-    CONSUMERS
-end
  
  subgraph K1["Kafka Cluster"]
     subgraph P1B1["Pod 1"]
@@ -252,6 +241,7 @@ end
 subgraph EO["Entity Operator"]
     UO["User Operator"]
     TO["Topic Operator"]
+    CO["Cluster Operator"]
  end
 
  subgraph KCO[" "]
@@ -263,29 +253,19 @@ subgraph SZ["Strimzi"]
     KCO
     TCR
     CO
-    KCR
     UCR
+    KCR
  end
+
 subgraph KC["Kubernetes Cluster"]
     SZ
-    CLS
  end
 
 
-P1 -- Produces ---> B1
-P2 -- Produces ---> B2
-P3 -- Produces ---> B3
-    
-B1 -- Consumes --> CG1
-B2 -- Consumes --> C2
-B3 -- Consumes --> C3
-
-B2 -- Consumes --> C5
-B3 -- Consumes --> C4
-
-KCO <-- Deploys & Manages --> CO["Cluster Operator"] <--> KCR["Kafka Custom Resources"]
+KCO <--> CO <-- Deploys & Manages --> K1
 TO <--> TCR["Topic Custom Resources"]
 UO <--> UCR["User Custom Resources"]
+CO <--> KCR["Kafka Custom Resources"]
     
 TO -- Manages Topics --> K1
 UO -- Manages Users --> K1
@@ -310,40 +290,8 @@ Features:
 - Supports tiered storage
 - Supports multi-region
 
-Here's the architecture diagram:
 <div class="mermaid">
 flowchart TB
-
-    subgraph PRODUCERS["Producers"]
-        subgraph PP1P1["Pod 4"]
-            P1("Producer 1")
-        end
-        subgraph PP2P2["Pod 5"]
-            P2("Producer 2")
-        end
-        subgraph PP3P3["Pod 6"]
-            P3("Producer 3")
-        end
-    end
-
-    subgraph CONSUMERS["Consumers"]
-        subgraph CG1["Consumer Group 1"]
-            subgraph CP1C1["Pod 7"]
-                C1("Consumer 1")
-            end
-            subgraph CGP1C1["Pod 8"]
-                C2("Consumer 1")
-            end
-            subgraph CGP1C2["Pod 9"]
-                C3("Consumer 2")
-            end
-        end
-    end
-
-    subgraph CLS["Clients"]
-        PRODUCERS
-        CONSUMERS
-    end
 
     subgraph K1["Kafka Cluster"]
         direction LR
@@ -436,14 +384,7 @@ flowchart TB
     end
 
     %% Connections
-    P1 --|Produces|--> B1
-    P2 --|Produces|--> B2
-    P3 --|Produces|--> B3
-
-    B1 --|Consumes|--> C1
-    B2 --|Consumes|--> C2
-    B3 --|Consumes|--> C3
-
+    
     O --|Manages|--> KR
 
     KR -->|Uses| AEBS
@@ -471,56 +412,9 @@ Features:
 - Monitoring with Prometheus and Grafana.
 - Multi-cluster support and cross-cluster replication.
 
-Here's the architecture diagram:
 <div class="mermaid">
 flowchart TD
 
- subgraph PRODUCERS["Producers"]
-    subgraph PP1P1["Pod 4"]
-        P1("Producer 1")
-     end  
-    subgraph PP2P2["Pod 5"]
-        P2("Producer 2")
-     end
-    subgraph PP3P3["Pod 6"]
-        P3("Producer 3")
-     end 
-  end
-
- subgraph CG1["Consumer Group 1"]
-    subgraph CP1C1["Pod 7"]
-        C1("Consumer 1")
-     end 
-        
-  end
- subgraph CG2["Consumer Group 2"]
-    subgraph CGP1C1["Pod 8"]
-        C2("Consumer 1")
-     end
-    subgraph CGP1C2["Pod 9"]
-        C3("Consumer 2")
-      end
-  end
- subgraph CG3["Consumer Group 3"]
-    subgraph CGP3C1["Pod 10"]
-        C4("Consumer 1")
-     end
-    subgraph CGP3C2["Pod 11"]
-        C5("Consumer 2")
-      end
-  end
-
-subgraph CONSUMERS["Consumers"]
-    CG1
-    CG2
-    CG3
- end
-
-subgraph CLS["Clients"]
-    PRODUCERS
-    CONSUMERS
-end
- 
  subgraph K1["Kafka Cluster"]
     subgraph P1B1["Pod 1"]
         B1["Broker 1"]
@@ -550,27 +444,15 @@ subgraph KC["Kubernetes Cluster"]
  KO
  KAS
  CC
- CLS
  K1
  PS
  G
+ TCR
+ UCR
+ KCR
+ CCO
  end
 
-    CC <--> B1
-    CC <--> B2
-    CC <--> B3
-
-    P1 -- Produces ---> B1
-    P2 -- Produces ---> B2
-    P3 -- Produces ---> B3
-    
-    B1 -- Consumes --> CG1
-    
-    B2 -- Consumes --> C2
-    B3 -- Consumes --> C3
-
-    B2 -- Consumes --> C5
-    B3 -- Consumes --> C4
 
     KAS --> P1B1
     KAS --> P2B2
@@ -585,37 +467,71 @@ subgraph KC["Kubernetes Cluster"]
     KO <--> KAS
     KO --> CC
 
+    KO <--> TCR["Topic Custom Resources"]
+    KO <--> UCR["User Custom Resources"]
+    KO <--> KCR["Kafka Custom Resources"]
+    KO <--> CCO["Cruise Control Operation"]
+
     %% Styling
     classDef kafkaStyle fill:#e0f7e9,stroke:#4caf50,stroke-width:2px;
     class K1,K2 kafkaStyle;
     classDef default font-size:16px;
 </div>
 
-# Redpanda Operator
-The Redpanda Kubernetes operator simplifies the deployment and management of Redpanda clusters on Kubernetes. The Redpanda version of Kafka does not use filesystem cache and instead uses Direct Memory Access (DMA) which helps it reserve memory directly and use it for quickly building the cache (helpful when a pod goes down and comes back).
-
-Features:
-- Automated Cluster Management: Simplifies deployment, scaling, and management of Redpanda clusters.
-- Performance Optimization: Tuned for high performance and low latency.
-- Self-healing: Automatically handles node failures and ensures high availability.
-- Monitoring: Redpanda integrates with Prometheus and Grafana for monitoring. You can deploy Prometheus and Grafana in your Kubernetes cluster and configure them to scrape Redpanda metrics.
-- TLS and Authentication: For production deployments, it is recommended to enable TLS and configure authentication for secure communication between clients and the Redpanda cluster.
+## Feature Comparison
 
 
-# Prescriptive Advise
-- As with all things, k8s: It is important to setup resource constraints (CPU, MemLimits)
-- Generally advised to have Kafka nodes tainted to NoSchedule and run on a dedicated basis. 
-  - = no binpack nodes
-- For most real-life use-cases, CRs are a starting point. Will need to be use packaged “platform recipes” with different components, orienting some level of tenancy around the brokers as well as the components
-  - Typically a higher order Helm chart, preferably with GitOps style deployments
-  - Prospective users must also think about operator tenancy itself. Could be a global operator or a namespaced operator
-Key Takeaways
-- Running Kafka on K8S can be a lot of toil, without an operator. If you are running Kafka at scale (and not on a managed service), consider running one. It will save you time, money & sanity
-  - You can make a choice based on your environment, features (or the lack thereof), licensing and  other specialized purposes
-- YMMV with Operator CRs. Each operator has its own opinion based on the realities it was designed for
-  - Kafka is ultimately not “k8s native”. The operator only provides so much operational sugar
-  - As a result, there are several shoehorning mechanisms (such as config overrides to inject component properties, builtin); Full expressivity of the workload doesn’t quite exist
-- All operators provide comparable performance
+### **Operator Core**
+
+| | CFK    | Strimzi      | KOperator       |
+| :---        | :---        | :---:         | ---:           |
+| **Workload Type** | StatefulSet        | StrimziPodSet         | Pod           |
+|  |         |          |            |
+| **CRs supported**|ClusterLink ConfluentRoleBinding Connector Connect ControlCenter KafkaRestClass KafkaRestProxy| Kafka KafkaBridge KafkaConnector KafkaUser KafkaMirrorMaker2 | KafkaCluster KafkaTopic KafkaUser CruiseControlOperation  |
+| **Networking Models**| Loadbalancer NodePort Ingress      | Loadbalancer NodePort Ingress        | Loadbalancer (envoy or Istio ingress) NodePort Ingress         |
+| **Storage** | * Supports Tiered Storage *   | Generic CSI with PVs     | Generic CSI with PVs |
+|  |         |          |            |
+
+
+### **Security**
+
+| | CFK    | Strimzi      | KOperator       |
+| :---        | :---        | :---:         | ---:           |
+| mTLS (with auto provisioning of certificates) | Yes        | Yes         | Yes with Istio           |
+| SASL/PLAIN (with k8s secrets) | Yes        | Yes         | No           |
+| SASL/PLAIN (with volume mounts) | Yes        | Yes         | No           |
+| SASL/PLAIN (with LDAP) | Yes        | No         | No           |
+| SASL/SCRAM-SHA-* | No        | Yes         | No           |
+| SASL/OAUTHBEARER | No        | Yes         | No           |
+| SASL/GSSAPI | No        | No         | No           |
+| Kubernetes RBAC | No        | No         | Yes with K8S namespaces and SA           |
+|  |         |          |            |
+
+
+### **Authorization**
+
+| | CFK    | Strimzi      | KOperator       |
+| :---        | :---        | :---:         | ---:           |
+| ACL | Yes        | Yes         | Yes with Envoy           |
+| RBAC | Yes        | No         | No           |
+|  |         |          |            |
+
+
+### **Security**
+
+| | CFK    | Strimzi      | KOperator       |
+| :---        | :---        | :---:         | ---:           |
+| Self balancing | Automatic Self Balancing        | Cruise Control         | Cruise Control           |
+| Monitoring add-ons | Control Center, Confluent Health+, JMX        | JMX, Cruise Control         | JMX, Cruise Control           |
+| Disaster recovery | Replicator, ClusterLink. Also support Multi-region clusters        | MirrorMaker2         | MirrorMaker2           |
+| Scale up/out | kubectl scale with Self Balancing        | Non-broker components - K8S HPA and KEDA. Broker - Manual scaling with Strimzi Drain Cleaner         | Autoscaling with Cruise Control           |
+|  |         |          |            |
+
 
 # Summary
-Each option provides different levels of features, flexibility, and complexity. Strimzi and CFK are robust and feature-rich solutions that offer comprehensive management capabilities for Kafka on Kubernetes. KOperator provides additional flexibility and multi-cluster support. The Redpanda operator for Kubernetes makes it easy to deploy, manage, and scale Redpanda clusters, providing automated management and self-healing capabilities.
+- Running Kafka on K8S can be a lot of toil, without an operator. You can make a choice based on your environment, features, licensing and other specialized purposes.
+- Each operator has its own opinion based on the realities it was designed for.
+  - Kafka is ultimately not “k8s native”. The operator only provides so much operational sugar
+  - As a result, there are several shoehorning mechanisms (such as config overrides to inject component properties, builtin); Full expressivity of the workload doesn’t quite exist
+- All operators provide comparable performance.
+- Preferably, package all the resources in a higher order Helm chart with GitOps style deployments.
