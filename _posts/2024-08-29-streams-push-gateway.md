@@ -11,7 +11,7 @@ toc: true
 ---
 
 # Introduction
-Organizations like DoorDash/UberEats/Swiggy/Zomato that take orders from customers and use an operational database to store the orders and keep updating the status of the orders. Status update needs to be visible for customers to make sure that they know what is happening to their orders (e.g., order accepted, order in progress, order ready for delivery, order is on route, and order is delivered, among the many possible states). hello
+Organizations like DoorDash/UberEats/Swiggy/Zomato that take orders from customers and use an operational database to store the orders and keep updating the status of the orders. Status update needs to be visible for customers to make sure that they know what is happening to their orders (e.g., order accepted, order in progress, order ready for delivery, order is on route, and order is delivered, among the many possible states).
 
 # What’s needed to Implement this System?
 To send these updates to customers (possibly hundreds or thousands per second), they need to get the updates from their suppliers (Kitchens, Restaurants), update their operational database, capture the changes (Change Data Capture or CDC) into a Kafka Topic, have consumers read the records in the Kafka Topic, sift through the ones that need to be updated, maintain connections to the customers and send the updates. In doing all this, they need to make sure that they take care of failures that occur during the updates (possibly using durable execution via Temporal Workflows and Activities).
