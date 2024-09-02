@@ -4,7 +4,7 @@ title:  "The 3 pillars of Platform architecture"
 author: p6
 categories: [ Platform Engineering, Data, Infrastructure, Kafka, Kong, Kubernetes ]
 image: assets/blog-images/platform-arch-model.svg
-teaser: Data, APIs and Cloud native infrastructure
+teaser: How to solve for data, connectivity and infrastructure foundations & platform primitives.
 featured: true
 hidden: true
 toc: true

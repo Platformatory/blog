@@ -102,6 +102,16 @@ authors:
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
       description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure."
+  Vikhyat:
+      name: Vikhyat Shetty
+      display_name: Vikhyat Shetty
+      avatar: 'assets/images/avatar.png'
+      gravatar: b1cc14991db7a456fcd761680bbc8f81
+      email: vikhyat@platformatory.com
+      web: https://www.platformatory.io
+      twitter: https://twitter.com/platformatory
+      description: "DevOps/SRE at Platformatory"
+
 # Plugins
 plugins:
   - jekyll-paginate

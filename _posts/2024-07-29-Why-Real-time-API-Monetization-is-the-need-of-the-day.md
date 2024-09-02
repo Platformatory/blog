@@ -1,12 +1,13 @@
 ---
 layout: post
-title: "Why Real-time API Monetization is the need of the day?"
+title: "Monetizing APIs, Data through usage-based billing"
 authors: ashwin
 categories: [Data, SaaS, API Metering, Billing, Real-time, Cost, Product]
 image: assets/blog-images/apinomy_blog/ApinomyBlogTitle.webp
-featured: false
-hidden: false
-teaser: Discover how real-time API monetization can unlock new revenue streams and drive innovation in your organization.
+featured: true
+hidden: true
+teaser: A guide to evolving new revenue streams in SaaS and beyond.
+weight: -10
 toc: true
 ---
 
