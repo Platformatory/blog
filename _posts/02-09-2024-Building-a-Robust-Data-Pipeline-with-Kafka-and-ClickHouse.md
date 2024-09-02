@@ -47,7 +47,7 @@ To start leveraging the power of ClickHouse and Kafka for analytics, you'll need
 - **Real-Time Analytics:** ClickHouse can handle real-time data ingestion and querying, providing immediate insights, which is crucial for monitoring and streaming analytics.
 These features make ClickHouse particularly well-suited for scenarios where high performance, scalability, and real-time analytics are crucial, compared to other analytics tools that might be slower or less optimized for large-scale data processing.
 
-#Now Let’s configure it step by step with example
+# Now Let’s configure it step by step with example
 
 
 
