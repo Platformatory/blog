@@ -62,13 +62,13 @@ kafka-topics --create --topic kafka_topic  --bootstrap-server localhost:9092 --p
 
 ### Step 2: Install the Connector
 - Download the latest connector from the following repository: ClickHouse Kafka Connect v1.1.3.
-- Add the downloaded connector to the plugins folder, restart the Kafka Connect service, and then list the connector plugins to check for the ClickHouse Kafka Connect plugin.
+- Add the downloaded connector to the plugins folder, restart the Kafka Connect service, and then list the connector plugins to check for the [ClickHouse Kafka Connect plugin](https://github.com/ClickHouse/clickhouse-kafka-connect/releases/tag/v1.1.3)
 ![Image2](../assets/blog-images/clickhouse/clickhouse/3.png)
 
 ### Step 3: Configure the Sink Connector
 - When integrating Kafka with ClickHouse, ensure that the name of the Kafka topic (which stores the data) matches the name of the ClickHouse table (where the data will be stored). If the names don't match, you can use a transformer, such as ExtractTopic, to modify the data or metadata so that the topic name is appropriately aligned with the table name in ClickHouse. This ensures that the data flows correctly from Kafka to the intended table in ClickHouse.
 
-- Example configuration for the ClickHouse Kafka Sink Connector:
+- Example configuration for the ClickHouse Kafka Sink Connector. For more details about each field, refer to the following documentation: [ClickHouse Kafka Connect Sink Documentation.](https://clickhouse.com/docs/en/integrations/kafka/clickhouse-kafka-connect-sink)
 ```
 {
   "name": "voltage",
