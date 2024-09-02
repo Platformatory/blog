@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Building a Robust Data Pipeline with Kafka and ClickHouse"
-categories: [Kafka Architecture, Distributed Systems, Security]
-teaser: Want to streamline your Kafka authentication? Learn how to effortlessly integrate Confluent Cloud with OAuth/OIDC using Okta as your identity provider. This guide covers everything you need to set up secure and seamless authentication, ensuring smooth access to your Kafka resources. Discover the power of modern authentication and simplify your Kafka management today!
+categories: [Distributed Systems]
+teaser: Discover how to build a powerful real-time data pipeline using Kafka and ClickHouse. This blog guides you through setting up a system that streams and analyzes data instantly, ensuring your insights are always up-to-date. Perfect for applications like monitoring, IoT analytics, and fraud detection, this combination of technologies will take your data processing to the next level.
 author: Shivaprakash
 image: assets/blog-images/oauth-oidc-blog/Oauth.jpeg
 toc: true
