@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "From Code to Cluster: Simplifying Infrastructure with IaC and Kafka"
-categories: [Kafka Architecture, Infrastructure as Code (IaC), Automation,DevOps]
+categories: [Kafka Architecture, Infrastructure, Automation,DevOps]
 teaser: Discover how Infrastructure as Code (IaC) can revolutionize your Kafka setup by simplifying management and boosting automation. Learn how to leverage IaC for scalable, error-free Kafka operations and transform your infrastructure practices for optimal efficiency.
 author: Shivaprakash
 image: assets/blog-images/oauth-oidc-blog/IAC.png
