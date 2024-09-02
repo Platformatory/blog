@@ -51,7 +51,7 @@ These features make ClickHouse particularly well-suited for scenarios where high
 
 
 
-### Step 1: Set Up Kafka
+## Step 1: Set Up Kafka
 
 - Create Kafka topics that will store the data produced by your applications. For a local setup, you can use this GitHub repository to set up Kafka and ClickHouse: [cp-clickhouse](https://github.com/Platformatory/cp-clickhouse).
 
@@ -60,15 +60,16 @@ These features make ClickHouse particularly well-suited for scenarios where high
 kafka-topics --create --topic kafka_topic  --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
 ```
 
-### Step 2: Install the Connector
+## Step 2: Install the Connector
 - Download the latest connector from the following repository: ClickHouse Kafka Connect v1.1.3.
 - Add the downloaded connector to the plugins folder, restart the Kafka Connect service, and then list the connector plugins to check for the [ClickHouse Kafka Connect plugin](https://github.com/ClickHouse/clickhouse-kafka-connect/releases/tag/v1.1.3)
 ![Image2](../assets/blog-images/clickhouse/clickhouse/3.png)
 
-### Step 3: Configure the Sink Connector
+## Step 3: Configure the Sink Connector
 - When integrating Kafka with ClickHouse, ensure that the name of the Kafka topic (which stores the data) matches the name of the ClickHouse table (where the data will be stored). If the names don't match, you can use a transformer, such as ExtractTopic, to modify the data or metadata so that the topic name is appropriately aligned with the table name in ClickHouse. This ensures that the data flows correctly from Kafka to the intended table in ClickHouse.
 
 - Example configuration for the ClickHouse Kafka Sink Connector. For more details about each field, refer to the following documentation: [ClickHouse Kafka Connect Sink Documentation.](https://clickhouse.com/docs/en/integrations/kafka/clickhouse-kafka-connect-sink)
+
 ```
 {
   "name": "voltage",
@@ -87,13 +88,13 @@ kafka-topics --create --topic kafka_topic  --bootstrap-server localhost:9092 --p
     "value.converter.schemas.enable": "false"
   }
 }
-
 ```
 
-### Step 4: Configure the ClickHouse Table
+## Step 4: Configure the ClickHouse Table
 - Before configuring the sink connector, ensure the table is created in ClickHouse. Otherwise, the connector will fail.
 
 - Example to create a table in ClickHouse for the voltage dataset:
+
 ```
 CREATE TABLE voltage (
     Date Date,
@@ -111,6 +112,7 @@ ORDER BY (Date, Time);
 - After creating the table, ensure that the Connect worker is running. Once confirmed, produce the data to the voltage topic. The data should match the schema of the table in ClickHouse.
 
 - Example of the data to be produced to the voltage topic:
+
 ```
 {
   "Date": "2023/08/23",
@@ -123,7 +125,6 @@ ORDER BY (Date, Time);
   "Sub_metering_2": 1.0,
   "Sub_metering_3": 17.0
 }
-
 ```
 
 ### Step 5: Performing Analytics on the Table
