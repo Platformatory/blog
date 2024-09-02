@@ -39,7 +39,7 @@ To start leveraging the power of ClickHouse and Kafka for analytics, you'll need
 
 
 
-#How ClickHouse Differs from Other Analytics Tools:
+# How ClickHouse Differs from Other Analytics Tools:
 - **Speed:** ClickHouse is designed for real-time analytics and can handle billions of rows per second. It's highly optimized for querying large datasets quickly, making it much faster than traditional databases for analytics.
 - **Columnar Storage:** Unlike row-based storage used by traditional relational databases, ClickHouse uses columnar storage, which is more efficient for read-heavy analytical queries.
 - **Scalability:** ClickHouse scales horizontally, allowing you to distribute data and queries across multiple servers, making it ideal for handling large-scale analytics.
@@ -144,10 +144,12 @@ ORDER BY (Date, Time);
 - **Peak Hours for Energy Consumption: Identifies the time periods with the highest energy consumption.**
 ![Image7](../assets/blog-images/clickhouse/clickhouse/8.png)
 
-#Example Use Cases
+# Example Use Cases
+
 - **Real-Time Monitoring:** Companies can use ClickHouse and Kafka to monitor application performance, server metrics, or user activity in real-time, allowing for immediate action on critical events.
 - **IoT Analytics:** IoT devices generate massive amounts of data that need to be processed and analyzed quickly. ClickHouse can ingest and analyze this data in real-time, providing valuable insights into device behavior and system performance.
 - **Fraud Detection:** Financial institutions can stream transaction data into ClickHouse via Kafka to detect fraudulent activities as they occur, enabling them to take swift action.
 
-#Conclusion
+# Conclusion
+
 ClickHouse and Kafka together form a robust foundation for real-time analytics. Whether you’re looking to monitor application performance, analyze IoT data, or detect fraud, this powerful combination can help you gain insights at the speed of data. By setting up a pipeline that streams data from Kafka to ClickHouse, you can ensure that your analytics are always up-to-date and ready to inform your business decisions.
