@@ -10,9 +10,6 @@ hidden: false
 toc: true
 ---
 
-# Exploring Kafka UI Solutions: Features, Comparisons, and Use Cases
-
-
 # Introduction 
 
 This blog post explores various UI solutions available for Apache Kafka. Why do we need a Kafka UI when we have well documented APIs and client libraries? There are a lot of reasons.
