@@ -16,11 +16,11 @@ As of 2024, Apache Kafka is almost a teenager. A project & community that has be
 
 # The fundamentals are still strong, but Apache Kafka ~~is almost legacy~~ is a little behind
 
-But let's state it right at the onset: Building still in the (mostly) on-premise era, The founders of Kafka were true visionaries who got a lot right straight from the onset.  Building on JVM (for better or worse), persistence as a first class concern, a design focused on commodity HDDs optimized for sequential I/O, zero copy optimizations, all on top of a relatively minimalistic wire protocol and tons of bolt-ons organically evolved over the years. Till date, every KIP still conforms to a spirit of performance focus, a design ethos not in question.
+But let's state it right at the onset: Building still in the (mostly) on-premise era, The founders of Kafka were true visionaries who got a lot right, straight from the onset.  Building on JVM (memory safety, GC, for better or worse), persistence as a first class concern , a design focused on commodity HDDs (optimized for sequential I/O), zero copy optimizations, all on top of a relatively minimalistic API surface, and tons of bolt-ons organically evolved over the years. Till date, every KIP still conforms to a spirit of performance focus, a design ethos that is beyond question.
 
-Justifiably, Kafka has emerged as the de-facto mechanism for data exchange and an API that has become the gold standard beyond its own, self-branded implementation. It is now supported by an increasing mushroom cloud of technologies, both OSS and commercial, tackling the same class of problems Kafka originally set out to. Although for the most part the whole USP is about gaining an “install base” audience, touting “compatibility and drop-in replacement”.  It is a classic market focused adoption play, but at any rate, standardizing on someone else’s API is still the deepest form of flattery you can get in tech.
+Justifiably, Kafka has emerged as the de-facto mechanism for data exchange. The Kafka API has also become a gold standard beyond its own, self-branded implementation. It is now supported by an increasing mushroom cloud of technologies, both OSS and commercial, tackling the same class of problems Kafka originally set out to. Although for the most part, the USP is about gaining an “install base” audience, touting “compatibility and drop-in replacement” -- a classic market focused adoption play, but at any rate, standardizing on someone else’s API is still the deepest form of flattery you can get in tech.
 
-As of 2024, nearly hyperscaler provides a Kafka (or compatible) service and there are now, prospectively best in breed Kafka-esque platforms emerging beyond the Apache Fn project
+As of 2024, every hyperscaler provides a Kafka (or compatible) managed service and there are now, prospectively best in breed Kafka-esque platforms emerging beyond the Apache Fn project
 
 Everything is a product of its times and Kafka is no different. While the community still keeps up (which we shall discuss later on), it only does so with much baggage and design constraints that it was born with, some of which are just structural in nature. 
 
@@ -32,25 +32,23 @@ Over the years, there has been a greater convergence of what were kafka’s defi
 Let’s look at a few dimensions of differentiation:
 
 
-
 1. A simple(r) distribution: aka, a single binary. No Zookeeper (or a better Zookeeper)
 2. Squeezing the last drop of performance: aka, getting rid of the JVM (and it’s concurrency model)
 3. A modern approach to storage: aka separating storage from compute (and more loosely, tiered storage) but also SSDs. And the radical new idea of completely doing away with disks.
 4. Operator Experience: aka, something better than the clunky kafka run class tools
 5. A longer exhaustive list: Multi-tenancy, 2PC, Adaptive Partitioning, Proxies (and more)
 
-For example, Pulsar was the first to objectively address (1) and parts of (5). But it did introduce additional complexity with Apache Bookkeeper. JVM has been a perennial bottleneck and therefore a C++ based rewrite like Redpanda, armed with a Seastar core and a storage layer for modern SSDs, beats Kafka benchmarks on all of throughput, latency and node count relatively easily in most scenarios. WapStream and AutoMQ take the storage debate to the holy grail of cloud native architectures - ie, to S3. Confluent on its own part has built several enterprise features, including tiered storage, but also what is probably the most robust DevX and OperatorX around Kafka. 
+For example, Pulsar was the first to objectively address (1) and parts of (5). But it did introduce additional complexity with Apache Bookkeeper. JVM has been a perennial bottleneck and therefore a C++ based rewrite like Redpanda, armed with a Seastar core and a storage layer for modern SSDs, beats Kafka benchmarks on all of throughput, latency and node count relatively easily in most scenarios. WarpStream and AutoMQ take the storage debate to the holy grail of cloud native architectures - ie, to S3. Confluent on its own part has built several enterprise features, including tiered storage, but also what is probably the most robust DevX and OperatorX around Kafka. 
 
-Obviously these are available in self hosted and BYOC variations. Not to speak of the cloud-first offerings, such as Confluent Cloud itself, but also the comparable (atleast Kafka for kafka terms) AWS MSK serverless, Azure Event Hubs and most recently, Google entering the Kafka market.
+Obviously these are available in self hosted and BYOC variations. Not to speak of the cloud-first offerings, such as Confluent Cloud itself, but also the comparable (atleast Kafka for kafka terms) AWS MSK serverless, Azure Event Hubs and most recently, Google entering the Kafka market with Apache Kafka for BigQuery.
 
-Infact, the distinction is so stark that the marketing pitch from nearly everyone involves some flavor of 10X differentiation from Apache Kafka, including Confluent, the proverbial corporate steward.
+Infact, the distinction is so stark that the marketing pitch from nearly everyone involves some flavor of 10X differentiation from self-hosted Apache Kafka, including Confluent, Apache Kafka's corporate steward.
 
-The truth is that the Apache Fn project (and together with Confluent which employes a number of committers) has addressed most of these challenges, but it has largely been as a  follower. The basic fact is that open source now lags behind. 
-
+The truth is that the Apache Fn project (and together with Confluent which employes a number of committers) has addressed most of these challenges highlighted above as differentiation, but it has largely been as a follower. The basic fact is that open source now lags behind.
 
 # Streaming is still a low latency niche
 
-Streaming systems are fundamentally designed to optimize for incremental processing and lower latency. While there's no doubt about the value of real-time data, acting upon data in motion requires a much more comprehensive focus, a still volatile and maturing stack and many inherent complexities (such as time domain, stateful processing, consistency) which most stakeholders used to batch processing simply don't comprehend.
+Streaming systems are fundamentally designed to optimize for incremental processing and lower latency. While there's no doubt about the value of real-time data, acting upon data in motion requires a much more comprehensive focus, on a still volatile and maturing stack and many inherent complexities (such as time domain, stateful processing, consistency) which most stakeholders used to batch processing simply don't fully grok.
 
 When asked to tradeoff latency against the costs and complexity of achieving it, we have seen that most businesses tend to make it an easy decision. They can live with a few more seconds (sometimes hours) of latency.
 
@@ -66,22 +64,17 @@ This leads to very contrived forms of differentiation and commercial discounting
 At the end of the day, it is pretty simple. In private cloud, on-premise and BYOC environments it reduces to these factors:
 
 
-
-* number of node or core licenses required (lower is better, relative to present state, realistic projections and head-room for growth)  
-* architectures that are AZ-local while maintaining low RTO/RPO.
+* number of node or core licenses required to guarentee a certain (peak) throughput (lower is better, relative to present state, realistic projections and head-room for growth)  
+* Cross-zone / cross-region networking models (and therefore ingress/egress charges)
 
 With cloud (and specifically serverless), it boils down to:
-
- 
-
-
 
 * throughputs (in other words ingress/egress)
 * concurrency,
 * partition counts
 * storage
 
-In a world where everyone prefers serverless options on the cloud and a desire to pushdown durability + avoiding cross-AZ surprise billing (down to the cloud provider), the race to the bottom for data infra at the lowest cost will always be won by the holy grail of all data foundations, which is, wait for it..AWS S3. Or more generally, cloud object storage. But we emphasize S3 because AWS is a first mover for all sorts of things on the cloud and S3 Express 1Z is defining a new frontier by providing consistently sub-10ms latencies directly at the bedrock of durable storage. This would have sounded provocative many years ago, but in 2023-24, in very much the footsteps of every other , a Kafka API on top of S3 directly was just something waiting to be built. 
+In a world where everyone prefers serverless options on the cloud and a desire to pushdown durability to the vendor, while avoiding cross-AZ surprise billing (down to the cloud provider), the race to the bottom for data infra at the lowest cost will always be won by the holy grail of all data foundations, which is, (drumroll) AWS S3. Or more generally, cloud object storage. But we emphasize S3 because AWS is a first mover for all sorts of things on the cloud and S3 Express 1Z is defining a new frontier by providing consistently sub-10ms latencies directly at the bedrock of durable storage. This would have sounded provocative many years ago, but in 2023-24, in very much the footsteps of every other , a Kafka API on top of S3 directly was just something waiting to be built. 
 
 This is exactly what WarpStream is doing and although there will be fast followers (sometimes pioneers who grudgingly claim independent discovery of the idea). First movement and execution matters. Acknowledging good competition is good.
 
