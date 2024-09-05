@@ -132,11 +132,11 @@ Conduktor allows you to:
 
 
 
-1. **Real - time monitoring** of kafka brokers, topics, partitions, and consumer groups in real - time. 
-2. **Browsing and searching** through messages in Kafka topics, which make it easy for developers to inspect and debug the data flows within the cluster 
-3. **Schema Registry integration: **Users can manage and validate the schema registry directly through Kpos interface. 
+1. **Real - time monitoring**: of kafka brokers, topics, partitions, and consumer groups in real - time. 
+2. **Browsing and searching**: through messages in Kafka topics, which make it easy for developers to inspect and debug the data flows within the cluster 
+3. **Schema Registry integration**: Users can manage and validate the schema registry directly through Kpos interface. 
 4. Makes topic search easy with built - in support for JSON Query (JQ) predicates. 
-5. **Alerting System: **Set up the alerts for kafka metrics and events, so the team can respond quickly to critical issues. 
+5. **Alerting System**:Set up the alerts for kafka metrics and events, so the team can respond quickly to critical issues. 
 
 
 ### Editions
@@ -284,7 +284,7 @@ Conduktor allows you to:
 A quick comparison of the Apache Kafka cluster monitoring tools 
 
 
-<img src="../assets/blog-images/comparing_kafka_ui_monitoring_tools/table.png" alt="table" width="1000" height="500" />
+<img src="../assets/blog-images/comparing_kafka_ui_monitoring_tools/table.png" alt="table" width="1000" height="600" />
 
 
 # Conclusion 
