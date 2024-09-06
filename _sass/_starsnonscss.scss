@@ -90,3 +90,16 @@
    font-size: 50%; }
  .c-rating--big {
    font-size: 150%; }
+
+
+p:has(img) {
+  padding: 1rem 0;
+  text-align: center; /* Centers content inside <p> tags that contain an <img> */
+}
+
+p:has(img) img {
+  display: inline-block; /* Ensures the image is treated as inline-block */
+}
+.mermaid{
+  padding: 2rem 0;
+}

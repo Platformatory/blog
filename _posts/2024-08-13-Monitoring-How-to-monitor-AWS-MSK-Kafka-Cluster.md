@@ -85,7 +85,7 @@ scrape\_configs:
 As we are monitoring MSK cluster for both Kafka broker as well as node, instead of writing all the broker DNS names here, we have created a “**target.json”** file in which we have included the broker DNS names and the port. Amazon MSK uses port 11001 for the JMX Exporter and port 11002 for the Node Exporter. 
 
 **targets.json**
-```json
+```
 [
 
   {
@@ -107,6 +107,7 @@ As we are monitoring MSK cluster for both Kafka broker as well as node, instead 
       "b-2.monitoringmsk.a2801f.c18.Kafka.us-east-1.amazonaws.com:11001",
 
       "b-3.monitoringmsk.a2801f.c18.Kafka.us-east-1.amazonaws.com:11001"
+
     ]
   },
 

@@ -13,3 +13,16 @@
 	"syntax",
     "starsnonscss"
 ;
+
+
+.main-content{
+	table, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 10px;
+}
+table{
+	width: 100%;
+	margin-bottom: 20px;
+}
+}	

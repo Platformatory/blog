@@ -1,253 +1,351 @@
 ---
 layout: post
 title:  "Tooling and Process: Lessons from running Kafka at scale for mission critical customers"
-categories: [Apache Kafka, Mission-Critical Applications, High Availability Systems, Cluster Management, Performance Optimization, Operational Challenges, Kafka at Scale, SRE Practices, ]
+categories: [Apache Kafka, Mission-Critical Applications, High Availability Systems, Cluster Management, Performance, Operational Challenges, Kafka at Scale, SRE Practices, ]
 teaser: Dive into our journey of deploying Apache Kafka at scale for fintech clients, navigating challenges and implementing solutions for mission-critical success
 authors: Arun
 featured: false
-hidden: true
+hidden: false
 image: assets/blog-images/running-kafka-at-scale/kafka.png
 toc: true
 ---
+## **Introduction**
 
-# **Introduction**
+In today’s digital economy, data is the lifeblood of business operations. Companies rely on real-time data processing to make informed decisions, optimize operations, and enhance customer experiences. Apache Kafka has emerged as a critical component for enabling the efficient handling of vast amounts of data. However, running Kafka at scale for mission-critical businesses presents unique challenges and opportunities.
 
-In today’s digital economy, data is the lifeblood of business operations. Companies rely on real-time data processing to make informed decisions, optimize operations, and enhance customer experiences. Apache Kafka has emerged as a critical component in this ecosystem, enabling the efficient handling of vast amounts of data. However, running Kafka at scale for mission-critical customers presents unique challenges and opportunities.
-
-In our experience, we managed clients in the fintech domain with Kafka clusters on-premises, spread across more than 30 servers, in a highly controlled environment with stringent security requirements. Access to these systems was restricted to screen sharing, adding complexity to operations.
-
-This article explores the challenges faced, steps followed to mitigate them, and lessons learned from deploying and managing Kafka clusters at scale, focusing on tooling, processes, and best practices to ensure reliability, performance, and customer satisfaction.
+After choosing Kafka to streamline data connectivity, the next major task is efficient operation. This article delves into the potential challenges, strategies for mitigating them, and tools that can streamline the operational management of Kafka clusters at scale, ensuring reliability and performance.
 
 
-# **Understanding the Kafka Ecosystem**
+## **Understanding the Scale of Kafka Deployment in Mission Critical Environments**
 
-Before diving into our experience, it's crucial to understand the Kafka ecosystem. Apache Kafka is not just a message broker; it’s a distributed streaming platform that consists of several key components:
+Before deploying Apache Kafka at scale, especially for mission critical applications, understanding and managing various environments like Development (Dev), Pre-Production (Pre-Prod), Disaster Recovery (DR) and Production Environments is essential before deploying Apache Kafka at scale. Each environment serves a unique purpose, and balancing their needs can help ensure that Kafka deployments are reliable, resilient, and efficient.
 
-
-
-* **Producers:** Applications that publish messages to Kafka topics.
-* **Consumers:** Applications that subscribe to topics and process messages.
-* **Brokers:** Servers that store and manage data streams.
-* **ZooKeeper:** A distributed coordination service that manages Kafka brokers.
-* **Connector**: Seamlessly connect data with Kafka. 
-
-
-## **General Cluster Architecture:**
+Here, we delve into the roles of Dev, Pre-Prod, DR and Production Environments which is commonly seen architecture in critical deployments. This architecture is commonly seen in critical deployments, although it may vary based on specific organizational requirements.
 
 ![architecture.png](../assets/blog-images/running-kafka-at-scale/architecture.png)
 
-**Clusters in Primary Site:** Handling the core operational data processing, ensuring high availability and performance for critical business functions.
 
-**Clusters in Backup Site:** Acting as a backup to the Primary clusters, ready to take over in case of failures, with real-time data replication ensuring consistency and reliability.
 
-**Clusters in PreProd:** Focusing on testing, development, and non-functional requirements, allowing for safe experimentation and feature validation without impacting production workloads.
+### **Dev Environment**
 
+The Dev environment is where developers experiment with new ideas, write code, and test features in isolation. It provides a sandbox for innovation without affecting production or PreProd environments.
 
-# **Challenges Faced:**
+**CI/CD Pipeline Integration:** Any changes, such as version upgrades or new configurations, should first be applied in the Dev environment. Here, they undergo initial testing and validation to ensure they don’t introduce any issues. This process should be managed through an automated CI/CD pipeline that ensures consistency and speed.
 
 
-## **Periodic Broker Failure:**
 
-One of the first issues we encountered was the periodic failure of a broker within a particular Kafka cluster. The broker logs clearly indicated that the failures were caused by a _"Too Many Files Open"_ error, which implied that the file descriptor limit was being reached, preventing the broker from opening new files and thus leading to failure. It's important to understand that each client connection uses a file descriptor, and each segment file also consumes one.
+### **PreProd Environment**
 
-The initial hotfix for this issue was to restart the affected server, which temporarily resolved the problem. However, the issue would reoccur in the same cluster after a few days, so it was crucial to identify the root cause of the open file leak.
+The PreProd environment is a staging ground for testing new features, configurations, and updates before they go live in production. It mimics the production environment to identify potential issues and ensure changes don't negatively impact live operations.
 
-We observed that the client was deleting all topics at the end of each day and recreating them for the next day. This process created temporary open files, leading to zombie file descriptors accumulating over time.
+**CI/CD Pipeline Integration**: After successful testing in the Dev environment, the changes should automatically be promoted to the PreProd environment via the CI/CD pipeline. Here, the changes are subjected to further testing, including performance and integration testing, to validate their readiness for production.
 
-To resolve the issue permanently, we increased the open file descriptor limit to a much larger number than required for the Kafka cluster's workload. This higher limit accommodated the zombie file descriptors until Kafka itself cleaned them up after the retention period.
 
+### **Disaster Recovery Environment**:
 
-## **A Problem Isn't a Problem Until It Becomes a Business Problem:**
+The DR environment is a backup setup designed to mirror the production environment. It serves as a failover solution to maintain business continuity in the event of outage in the production environment.
 
-One of the main observations we had with this customer was that issues were initially not brought to our attention because the customer was unaware of them, as they weren’t yet affecting their production application, although they had the potential to do so. Since we didn’t have direct access to the customer environment and were dependent on the customer to screen share and grant us access, we came up with the idea of conducting periodic health checks of the Kafka clusters in the client environment. In fact, we identified so many potential issues during these checks that the client requested us to perform a health check every day before the start of business hours.
+The DR environment utilizes Kafka's MirrorMaker2/Cluster linking or other replication tools to synchronize data between the production and DR clusters. It is designed to quickly assume production workloads with minimal downtime, ensuring that business processes remain uninterrupted.
 
 
-### **Major Issues Discovered:**
+**CI/CD Pipeline Integration**: Once the changes have been thoroughly tested in the PreProd environment, the CI/CD pipeline automatically deploys them to the DR environment. This ensures that the DR setup is always in sync with production and ready to take over if needed.
 
 
-#### **Failed Replicators in Backup Site:**
+### **Production Environment**
 
-Our client had a process of deleting and recreating topics after processing all the messages within them. This approach led to an issue with the Replicator, which was responsible for copying data from the Kafka clusters in the production site to the backup site.
+The production environment is the live setting where Kafka processes real-time data for business operations. It must handle high throughput, low latency, and provide seamless data streaming capabilities to support mission-critical applications.
 
-Due to the client’s reliance on topic whitelists, there was a potential risk of replication failure if these whitelisted topics were missing from the primary site during cleanup activities.
+While environments provide the framework for Kafka deployments, it is important to recognize potential pitfalls within a Kafka cluster that can impact its performance and reliability.
 
-The client initially overlooked this failed replication because it did not affect their active application. However, it posed a significant risk of data loss if there was ever a need to failover to the backup site.
 
-This issue was identified and mitigated by advising the client to pause the replicator before initiating the cleanup process and only restart it after all topics were deleted and recreated in the primary site.
+**CI/CD Pipeline Integration**: After passing all previous stages, the changes are finally deployed to the Production environment through the CI/CD pipeline. This controlled, step-by-step deployment process minimizes risks and ensures that the production environment remains stable and reliable.
 
 
-#### **Connect log not being captured:**
+## **Operational Challenges**
 
-We encountered an issue where the Connect worker logs were not being written after a few days in the Kafka cluster with the highest usage. This problem was first noticed when one of the  connector tasks failed.
+Establishing the appropriate Kafka infrastructure is one thing, but ensuring its smooth operation is an entirely different challenge. Below are some common issues that may arise during its operation.
 
-It was observed that the volume of transactions was so high that the logs generated quickly filled up the servers disk space, causing the log-writing task to fail. It's important to note that Replicators use memory for replication instead of disk space allowing them to function as expected. Since Logs are of paramount importance for troubleshooting if any issue happens and this issue was taken on priority by us.
 
+### **Network**
 
-Though increasing disk space was a straightforward solution, it wasn’t feasible for all servers. Instead, we implemented a solution using Kafka-CP-LogMonitor, which aggregates logs for Kafka components in one location and backs up older log files in a data warehouse. Once Kafka-CP-Logmonitor was set up a cron job was run on the server to automatically delete older log files, ensuring there was always sufficient disk space available for new logs.
 
+Network issues can significantly impact the performance and stability of a Kafka cluster. Here are some specific network related problems that might arise:
 
-#### **Replicator failure due to OOM Exception:**
 
-We once encountered a peculiar issue where the replicator failed with an Out of Memory (OOM) Exception, despite the fact that no messages were being replicated at the time, and there was plenty of free space available on the server.
 
-The root cause of this issue was that the JVM memory allocated to the replicator exceeded the available memory on the server. This occurred because the infrastructure team had reduced the server's memory allocation, assuming it would be sufficient.
+1. **Increased Latency**: Network issues can cause delays in data transmission between producers, brokers, and consumers, slowing down message delivery and retrieval, which affects the overall performance of the Kafka system.
+Key node metrics like _transmit_queue_length_, _receive_queue_length_, _receive_drop_total_, and _transmit_drop_total_ are useful for detecting and analyzing such issues.
 
+2. **Packet Loss**: Loss of network packets may lead to incomplete or missing messages, resulting in data loss or corruption.
+Key node metrics like _receive_errs_total_, _transmit_errs_total_ can be used to detect such issues.
 
-#### **Missing Connect Cluster:**
+3. **Broker Connectivity Problems**: Brokers may have difficulty communicating with each other or with producers and consumers due to network problems. This can lead to failed replication, partition reassignments, or difficulties in maintaining cluster health. Persistent network issues can contribute to broker failures.
+Monitoring kafka metrics such as _kafka_server_KafkaRequestHandlerPool_RequestHandlerAvgIdlePercent_, _kafka_network_SocketServer_NetworkProcessorAvgIdlePercent_ can help in diagnosing and measuring these issues.
 
-Early one morning, we received an urgent call informing us that the entire Connect cluster was missing from one of the Kafka clusters in the Backup Site. This was a critical issue because the absence of the Connect cluster meant that no data replication to the Backup Site was occurring.
+4. **Network Partitioning**: Network partitioning, where different parts of the Kafka cluster become isolated from each other, can cause inconsistencies and disruptions in data flow. This can lead to unavailability of data or inconsistent states across the cluster.
+Kafka metrics like _ActiveControllerCount_ can help in identifying this issue.  
 
-Logs revealed an issue with the embedded Jetty server which was not starting, likely due to a corrupt JAR file. This was perplexing because no changes had been made to the server by us or any other team, as all server modifications were typically performed over the weekend, and this occurred mid-week.
+5. **DNS Resolution Issues**: Problems with DNS resolution can prevent clients from locating Kafka brokers, leading to connection failures and interruptions in service.
+By monitoring node metrics like _dns_resolver_failures_total_ we can identify these issues.
 
-During  troubleshooting, we discovered that a team had performed some Java-related patching a few days earlier. When the server restarted on this particular day, the Connect worker failed to start because the embedded Jetty server couldn't initialize due to the corrupt JAR file.
+6. **Network Configuration Errors**: Incorrect network configurations, such as misconfigured IP addresses, firewalls or security groups can lead to connectivity issues or network conflicts.
+Node metrics like _network_iface_up_ can help identify this issue.
 
-Further investigation revealed that this issue also affected other Kafka servers in the Backup Site. We resolved the problem by uninstalling OpenJDK and any conflicting packages, followed by reinstalling the correct version of OpenJDK on all the affected servers using the following commands:
+7. **Jitter**: Variability in network delay (jitter) can affect the timing of message delivery and processing, impacting the consistency of data flow.
+We can rely on node metrics like _network_receive_multicast_total_ and _network_transmit_multicast_total_ to identify this issue.
 
 
-```bash
-# Uninstall OpenJDK
-rpm -qa | grep openjdk | xargs yum -y remove yum remove java
+### **Input/Output**
 
-# Remove conflicting packages
-yum remove <package-name>
+Issues related to I/O (Input/Output) on a server running Kafka can significantly impact performance and stability. Here are some specific I/O-related problems that might arise:
 
-# Reinstall correct OpenJDK
-rpm -Uvh --force openjdk-rpm/*.rpm
-```
+1. **High I/O Latency**: Increased latency in I/O operations can slow down read and write processes, leading to delays in message production and consumption.
+Node metrics like _disk_io_time_seconds_total_ can help identify this issue. 
 
+2. **I/O Bottlenecks**: Overloaded or slow disk subsystems can create bottlenecks, limiting the overall throughput and affecting Kafka's ability to handle high data volumes efficiently.
+Monitoring node metrics such as _disk_io_time_weighted_seconds_total_, _disk_io_now_ can help identify this issue.
 
+3. **I/O Errors**: Errors in I/O operations, such as read/write failures, can cause data corruption, incomplete writes, or read errors, affecting data integrity.
+Key node metrics like _disk_errors_total_ can be used to detect this issue.
 
-#### **Data Replication Lag:**
+4. **I/O Saturation**: Saturation of I/O resources, where the disk subsystem reaches its maximum capacity, can lead to delays and failures in processing Kafka messages.
+We can rely on node metrics like _disk_saturation_ to identify this issue.
 
-There used to be a huge replication lag (~15 Million) in one of the kafka clusters in Backup SIte during peak business hours. This issue primarily arose due configuration within this cluster, where topics were set to have only one partition, preventing them from utilizing Kafka's parallel processing capabilities. This configuration was necessary to maintain message ordering, as the client was not using message keys.
+5. **High I/O Utilization**: Excessive I/O usage can overwhelm the disk subsystem, leading to degraded performance and potential slowdowns in Kafka operations.
+Node metrics like _node_disk_utilization_ can help identify this issue. 
 
-We advised the client to increase the partition count of the topics and use an instrument ID from the messages as a key. This approach would ensure that messages with the same instrument ID would be routed to the same partition, thereby maintaining order. However, this change required load testing in the PreProd environment before implementation in the production environment.
 
-As a temporary hotfix, we performed stepwise optimizations on the replicator configuration, with periodic monitoring of the lag to evaluate the effectiveness of the changes. The following configurations were adjusted:
+### **Disk Storage**
 
+When dealing with disk issues on a server running a Kafka broker, several specific problems might arise:
 
-```bash
-src.consumer.max.poll.records = incremental changes from 100000 to 800000
-src.consumer.fetch.min.bytes = incremental changes from 100000 to 800000
-producer.override.batch.size = incremental changes from 100000 to 800000
-```
 
+1. **Disk Failures**: Physical disk failures or hardware malfunctions can render the disk inaccessible or cause data corruption.
+Node Metrics like _disk_failed_ can be used to identify this issue.
 
-As a result of these optimizations, the replication lag was reduced from approximately 15 million messages to fewer than 100 messages during peak hours within a week, as illustrated in the shared graph.
+2. **Disk Full**: Running out of disk space can prevent Kafka from writing new data or appending to existing logs, potentially causing brokers to stop accepting new messages.
+We can set alerts on metrics like _node_filesystem_avail_bytes_ to get notified when the disk space is low.
 
-![graph.png](../assets/blog-images/running-kafka-at-scale/graph.png)
+3. **Disk Corruption**: File system corruption or sector damage can lead to corrupt log files, impacting data integrity and leading to errors during read or write operations.
+We can rely on node metrics like _filesystem_readonly_ to identify this issue.
 
+4. **Disk Fragmentation**: Fragmented disks can result in slower read and write operations as the system struggles to access scattered data.
+Key node metrics like _filesystem_fragmentation_ can help identify this issue.
 
-#### **Time consuming Post Kafka consumption Process:**
 
-One of the teams was experiencing delays in processing messages after consuming them from Kafka, due to time-consuming filtering and join operations before sending the processed data to the database. They were performing join operations by fetching data from a local cache, which significantly slowed down the process.
+### **Memory**
 
- \
-A work around to this was suggested, i.e to load data from the local cache into a Kafka topic via a source connector, and perform the join and filtering operations within the Kafka cluster using KSQL. Finally, use Kafka connectors to load the processed data into the database. This solution streamlined the workflow, making it nearly real-time.
+Issues related to Memory can have a significant impact on the performance, reliability, and stability of a Kafka broker. Here are some common problems that can arise due to insufficient or mismanaged RAM in a Kafka setup:
 
+1. **Out of Memory (OOM) Errors**: When Kafka brokers run out of available memory, Java's garbage collector cannot free up enough space to accommodate new objects, leading to _java.lang.OutOfMemoryError_. This can cause sudden shutdowns or crashes of the broker leading to potential data loss and disconnection of producers and consumers from the broker, causing disruptions in data flow.
+Node metrics like _memory_OOM_kill_ can help identify this issue.
 
-#### **Ansible Inventory files not found:**
+2. **High Garbage Collection (GC) Activity**: Excessive or prolonged garbage collection cycles, where the JVM spends a significant amount of time in GC, impacting application responsiveness, increased latency, reduced throughput.
+We can rely on metrics like _ava_lang_GarbageCollector_G1_Young_Generation_CollectionTime_ to identify this issue.
 
-While setting up the operational tool CP-JMX-Monitor (explained in detail later), one of the requirements was to enable Kafka components to expose JMX metrics in a format readable by Prometheus.
+3. **Insufficient Page Cache**: When Kafka brokers have limited RAM, the operating system's page cache cannot cache log segments effectively, leading to increased disk I/O.
+Node metrics like _memory_page_cache_utilization_ can be used to identify this issue.
 
-Since all Kafka clusters were configured using Ansible, we needed to update the Ansible inventory file with the following configuration and perform a rolling update:
+4. **Swap Usage**: High swap utilization occurs when the operating system moves pages from RAM to disk leading to severe performance degradation as accessing data from swap is much slower than from RAM.
+Monitoring node metrics like _memory_SwapUsed_bytes_ can help identify this issue.
 
+5. **Memory Leaks**: Gradual increase in memory usage over time without release, eventually leading to exhaustion of available memory. Brokers may exhibit unpredictable behavior, leading to errors and inconsistencies.
+Observation of consistent decrease of node metrics like _memory_MemAvailable_bytes_ can help identify this issue.
 
-```bash
-all:
-  vars:
-     # ...
-     jmxexporter_enabled: true
-     jmxexporter_url_remote: false
-     jmxexporter_jar_url:jmx_prometheus_javaagent-0.12.0.jar
-```
- 
+### **CPU Usage**
 
-Unfortunately, the Ansible inventory file used to set up the Kafka cluster was missing from the client environment.
+Issues related to CPU usage can significantly affect the performance and stability of a Kafka broker. Here are some specific problems that might arise:
 
-To mitigate this issue, we considered the following options:
+1. **High CPU Utilization**: When CPU is highly taxed by kafka operation i.e often nearing 100% may lead to increased process latency for producer & consumer, reduced throughput and brokers may become unresponsive to requests, leading to timeouts and client disconnections.
+Node metrics like _cpu_seconds_total{mode="idle/system/user"}_ can help identify this issue.
 
+2. **CPU Spikes**: Sudden CPU spikes may lead to inconsistent performance like increased temporary latency, broker may temporarily become unresponsive affecting client operations.
+We can rely on Node metrics _like cpu_seconds_total_ to identify this issue.
 
+3. **CPU Contention**: Multiple processes on the same server compete for CPU resources, usually caused by Co-location of other resource-intensive applications on the same server as Kafka, leading to contention and performance degradation. This can increase latency and inconsistency.
+Monitoring node metrics like _cpu_cores_scheduled_ can help identify issues here.
 
-1. Manually Expose JMX Metrics from Each Kafka Component:
-    * This approach was cumbersome and prone to human error, making it impractical.
-2. Rewrite the Ansible Inventory File Manually:
-    * This option was risky, as any discrepancies in the inventory file could lead to undesired changes in the Kafka cluster.
-3. Run [Ansible discovery Scripts](https://github.com/confluentinc/cp-discovery):
-    * These scripts would check the Kafka cluster and automatically rewrite the inventory file. The only requirement was a host.yml file.
+4. **High Context Switching**: Excessive context switching occurs when the CPU frequently shifts between tasks, leading to overhead and performance loss. This happens when a large number of active threads or processes are competing for CPU time.
+Node metrics like _context_switches_total_ can help identify this issue.
 
-Given these options, we chose the third option to recreate the lost inventory files using the ansible discovery scripts.
+### **Client Side**
 
+In a Kafka ecosystem, producers and consumers play crucial roles in sending and receiving data. However, misconfigurations, or poor implementation on the client side can lead to various problems. 
 
-# **Custom Tooling for Kafka Management :**
+1. **High Latency in Message Production**: Producers experience delays in sending messages, causing a backlog. This can be caused due to inefficient batching due to poor configuration (_‘batch.size',’ ‘linger.ms’_), Misconfigured _max.in.flight.requests.per.connection_ leading to blocked requests etc.
+Kafka metrics like _Kafka_producer_producer_metrics_record_send_latency_avg_ can help identify this issue.
+
+2. **Load Imbalance Across Partitions**: Uneven distribution of messages across partitions, leading to hotspots. This can be caused by poor key selection leading to uneven partition distribution.
+We can rely on kafka metrics like  _kafka_server_ReplicaFetcherManager_MaxLag_ to identify this issue.
+
+3. **Incorrect Consumer Configuration**: Consumers may fail to connect, consume messages incorrectly, or experience delays. This can be due to Incorrect _bootstrap.servers_ or _group.id_ configuration, misconfigured auto.offset.reset (e.g., earliest vs latest), Poorly configured _session.timeout.ms_ and _heartbeat.interval.ms_ etc.
+Monitoring kafka metrics like _Kafka_consumer_consumer_coordinator_metrics_rebalancetime_avg_ can help identify this issue.
+
+4. **Rebalancing Issues**: Frequent consumer group rebalancing, leading to interruptions in message consumption. This can be due to Frequent changes in consumer group membership (e.g., adding/removing consumers), Incorrectly configured _session.timeout.ms_ and _heartbeat.interval.ms_ settings.
+Metrics like _Kafka_consumer_consumer_coordinator_metrics_rebalancetime_max_ can help identify this issue.
+
+## **Key Practices for Efficient Kafka Cluster Operations**
+
+
+### **Implementing CI/CD Architecture for Kafka Cluster Management**
+
+
+Establishing a CI/CD architecture for Kafka cluster management is crucial for seamless upgrades and rollbacks. Version control is vital for managing Kafka configurations and ensuring consistency across environments. By centralizing essential Kafka files in a repository, you can streamline the upgrade process and reduce the risk of configuration drift.
+
+For instance, if Kafka is installed using Ansible, having the Ansible playbook readily available is critical for understanding the cluster's setup and applying patches or upgrades in the future. A CI/CD pipeline using tools like Jenkins, Ansible can automate the deployment process, making it more efficient and less error-prone. This approach ensures that changes are tested, approved, and applied consistently across environments.
+
+Also when multiple teams collaborate on a Kafka cluster, changes made by one team can inadvertently affect the cluster's stability. For example, if the infrastructure team updates or patches the Java installation on a server, it might impact the Kafka components running on that server.
+
+ Implementing automated scripts as part of CI/CD pipeline to monitor and detect any software changes on the server can help identify potential problems early. These scripts can provide insights into configuration changes, missing dependencies, or unexpected software updates that may not have alerts set up. By ensuring the cluster's health and consistency, you can maintain smooth operations and minimize disruptions.
+
+
+### **Effective Monitoring of kafka Cluster**
+
+Monitoring Kafka clusters is crucial for maintaining smooth and efficient operations. By closely tracking key metrics, you can detect potential issues early and take corrective actions before they escalate into larger problems. 
+
+To effectively monitor Kafka clusters, it is crucial to implement custom tooling solutions such as Prometheus-Grafana, Datadog, or New Relic. These tools provide comprehensive insights into the cluster's health and performance, enabling proactive management. Configuring alerts for these critical metrics is equally important. Alerts should notify you before potential disasters occur, allowing you to address issues promptly.
+
+Managing alerts is very crucial to reduce Noisy alerts and false alarms. One way to manage alerts effectively is to differentiate between short-term and long-term issues. For instance, an alert for under-replicated partitions might be temporarily triggered if a Kafka broker node is restarted, which is a short-term issue since the partition will catch up once the broker restarts. However, the same alert becomes crucial if a broker goes down due to a more severe problem. Tools like Prometheus Alert Manager can be utilized to group and prioritize alerts, ensuring effective monitoring and rapid response to potential issues.
+
+
+## **Custom Tooling for Proactive Management**
 
 It is well known that prevention is better than mitigation. Therefore, early detection and resolution of anomalies in a Kafka cluster is crucial. With this in mind, we designed and implemented operational tools for managing, monitoring, and securing Kafka clusters.
 
-Below are the custom tooling solutions we developed specifically for this customer:
+
+### **Kafka-CP-Log-Monitor**
+
+The Kafka-CP-Log-Monitor is a specialized tool designed to efficiently monitor and analyze Kafka component logs from a single, centralized location. By leveraging the ELK stack—Elasticsearch, Logstash, and Kibana—along with Filebeat, this tool provides a robust solution for collecting, parsing, and visualizing Kafka logs across multiple nodes.
+
+This tool addresses several challenges commonly faced when analyzing Kafka component logs. 
 
 
-## **Kafka-CP-Log-Monitor**
-
-**"Kafka-cp-log-monitor"** is a specialized tool designed to monitor and analyze Kafka component logs in one place. It leverages the ELK stack (Elasticsearch, Logstash, and Kibana) with Filebeat configured on each component to collect and push logs to Logstash. The logs are then parsed according to predefined configurations and made available in the Kibana UI for users to view and analyze.
-
-This tool addresses several challenges commonly faced when analyzing Kafka component logs:
-
-
-
-* **Access Permissions:** Sufficient permissions were required to SSH into component servers to access logs. "kafka-cp-log-monitor" eliminated this need by aggregating logs in a centralized location.
-* **Time Overhead:** Fetching or viewing logs spread across multiple servers can be time-consuming. This tool reduced the overhead by providing a unified interface to access logs from different servers.
-* **Log Searchability:** Searching for errors using `grep` in large log files is cumbersome. With "kafka-cp-log-monitor," logs are searchable based on component type, hostname, log level, and more, significantly speeding up the triage process.
-
-Here is a demo of [Kafka-CP-Log-Monitor](https://www.youtube.com/watch?v=rWhrKLZ8jSg). 
-
-[![Kafka-CP-Log-Monitor](../assets/blog-images/running-kafka-at-scale/logmonitor.png)](https://www.youtube.com/watch?v=rWhrKLZ8jSg)
-
-## **Kafka-cp-jmx-monitor**
-
-**"kafka-cp-jmx-monitor"** is a comprehensive monitoring tool designed to capture and visualize Kafka's JMX metrics, providing insights into the health and performance of Kafka clusters. This tool enables us to:
+#### **Key Features**
 
 
 
-* **Capture JMX Metrics:** Kafka exposes a wealth of JMX metrics critical for smooth cluster operations. "kafka-cp-jmx-monitor" captures these metrics and renders them as meaningful graphs in customizable dashboards.
-* **Prometheus and Grafana Integration:** Prometheus scrapes the exposed JMX metrics, and Grafana builds dashboards by querying the Prometheus database. Grafana also supports configuring alerts on the queried metrics.
-* **Advanced Alerting:** The tool supports advanced alerting based on anomaly detection, rate of change, etc., enabling proactive issue identification. It provides an in-depth view of trend analysis, capacity planning, and potential issue detection.
-* **System Metrics Monitoring:** In addition to Kafka JMX metrics, the tool also monitors system metrics of different Kafka component servers by deploying a node-exporter service on the servers.
+* **Centralized Log Collection**: Filebeat is configured on each Kafka component to gather logs, which are then sent to Logstash for processing. This eliminates the need for manual log collection from individual servers.
 
-The implementation of "kafka-cp-jmx-monitor" gave us a comprehensive understanding of the cluster's operational health, enabling us to predict and address potential issues before they escalated into significant problems. By visualizing trends and patterns in Kafka's performance, we gained valuable insights for capacity planning and resource allocation. Additionally, we configured alerts to detect anomalies at both the cluster and individual node levels, allowing us to avoid many major potential issues and drastically reduce the occurrence of problems across the cluster.
+* **Log Parsing and Visualization**: Logs are parsed using predefined configurations and are made available in the Kibana UI. Users can easily view and analyze these logs, gaining insights into Kafka's performance and identifying potential issues.
+
+
+
+#### **Addressing Common Challenges**
+
+The Kafka-CP-Log-Monitor addresses several challenges that users often face when analyzing Kafka component logs:
+
+
+##### **Access Permissions**
+
+In multi-node Kafka deployments, sufficient permissions were required to SSH into component servers to access logs. The Kafka-CP-Log-Monitor eliminates this need by aggregating logs in a centralized location, streamlining access and improving security.
+
+Below is an image from a 3-node Kafka deployment, showcasing how all the broker and ZooKeeper logs are consolidated and visualized in a centralized place, providing a comprehensive view of the Kafka ecosystem.
+
+![logmonitor-1.png](../assets/blog-images/running-kafka-at-scale/logmonitor-1.png)
+
+![logmonitor-2.png](../assets/blog-images/running-kafka-at-scale/logmonitor-2.png)
+
+
+
+##### **Reducing Time Overhead**
+
+Fetching or viewing logs spread across multiple servers can be time-consuming. This tool reduces the overhead by providing a unified interface to access logs from different servers, saving valuable time and effort
+
+
+##### **Log Searchability**
+
+Searching for errors using grep in large log files is cumbersome and inefficient. With Kafka-CP-Log-Monitor, logs are searchable based on component type, hostname, log level, and more. This significantly speeds up the triage process and enhances the ability to diagnose and resolve issues quickly.
+
+The image below demonstrates how log entries can be filtered, showcasing a specific entry containing the phrase "Leader Imbalance Ratio."
+
+![logmonitor-4.png](../assets/blog-images/running-kafka-at-scale/logmonitor-4.png)
+
+Here is a demo of [Kafka-CP-Log-Monitor](https://www.youtube.com/watch?v=rWhrKLZ8jSg).
+
+
+### **Kafka-CP-JMX-Monitor**
+
+Kafka-CP-JMX-Monitor is a comprehensive tool designed to capture and visualize Kafka’s JMX metrics, offering deep insights into the health and performance of Kafka clusters.
+
+
+#### **Key Features**
+
+
+* **Capture JMX Metrics**: Kafka-CP-JMX-Monitor captures critical JMX metrics exposed by Kafka and presents them as insightful graphs in customizable dashboards, facilitating detailed analysis of cluster operations. 
+
+* **Prometheus and Grafana Integration**: The tool integrates with Prometheus for scraping JMX metrics and uses Grafana to build and visualize dashboards based on the data collected. Grafana also supports configuring alerts based on these metrics.
+
+* **Advanced Alerting**: Kafka-CP-JMX-Monitor provides advanced alerting capabilities, including anomaly detection and rate-of-change monitoring. This helps in proactive issue identification, trend analysis, capacity planning, and potential issue detection.
+
+* **System Metrics Monitoring**: In addition to Kafka JMX metrics, the tool monitors system metrics of Kafka component servers through a node-exporter service, offering a comprehensive view of server performance.
+
+
+#### **Addressing Common Challenges**
+
+
+##### **Comprehensive Cluster Visibility**
+
+By capturing and visualizing JMX metrics, Kafka-CP-JMX-Monitor offers a clear view of the cluster’s operational health, enabling us to predict and address potential issues before they become significant problems.
+
+Below is a snapshot of some of the Kafka broker metrics as seen in the Grafana dashboard coming from the Prod environment.
+
+![jmx-monitor-2.png](../assets/blog-images/running-kafka-at-scale/jmx-monitor-2.png)
+
+
+
+##### **Efficient Capacity Planning**
+
+The tool’s trend analysis and visualization capabilities aid in effective capacity planning and resource allocation, ensuring optimal performance and preventing resource shortages.
+
+
+##### **Proactive Issue Detection**
+
+
+Advanced alerting features help in detecting anomalies at both the cluster and individual node levels, drastically reducing the occurrence of major issues and improving overall cluster stability.
 
 Here is a demo of [Kafka-cp-jmx-dashboard](https://www.youtube.com/watch?v=1Mr2iy2RkA8).
 
-[![Kafka-cp-jmx-Monitor](../assets/blog-images/running-kafka-at-scale/jmxmonitor.png)](https://www.youtube.com/watch?v=1Mr2iy2RkA8)
+
+### **Kafka-cp-deploy-manager**
 
 
-## **Kafka-cp-deploy-manager**
-
-Efficient deployment and configuration management are fundamental to running Kafka at scale. Automating these processes reduces human error and accelerates the time-to-market for new features and updates.
-
-**"kafka-cp-deploy-manager"** automates Kafka cluster lifecycle management, handling version upgrades, configuration changes, and scaling operations seamlessly. Key features include:
+“kafka-cp-deploy-manager” automates Kafka cluster lifecycle management, handling version upgrades, configuration changes, and scaling operations seamlessly.
 
 
-
-* **State Management:** The tool maintains the state of the Kafka cluster at any point, enabling automated deployments to achieve the desired state.
-* **Version Control:** State files of the Kafka cluster are maintained in a GitHub-like version control system, allowing easy rollbacks in case of issues.
-* **Continuous Deployment with Jenkins:** Jenkins handles continuous deployment on state changes, abstracting deployment complexity with simplified configurable variables in an interactive UI.
-
-**Deployment Benefits:**
+#### **Key Features**
 
 
 
-* **Consistent and Reproducible Pipelines:** Ensures uniformity in deployment processes.
-* **Error Mitigation:** Reduces human errors during deployment.
-* **Smooth Upgrades and Rollbacks:** Facilitates versioned changes to state files, ensuring stability.
-* **Privilege Isolation:** Segregates write and execute privileges, allowing admins to manage state files while developers handle deployments.
+* **State Management**: It maintains the state of the Kafka cluster at any given time, facilitating automated deployments that align with the desired state. 
+* **Version Control**: It uses a GitHub-like version control system to manage state files of the Kafka cluster, allowing for easy rollbacks if issues arise.
+* **Continuous Deployment with Jenkins**: Jenkins handles continuous deployment based on state changes, simplifying deployment with configurable variables in an interactive UI and abstracting deployment complexity.
 
-With "kafka-cp-deploy-manager," we achieved consistent deployment pipelines, minimizing errors and ensuring efficient version upgrades and rollbacks. The tool's integration with Jenkins allowed us to streamline the deployment process, enabling faster response times to changes and ensuring the clusters remained aligned with business needs.
+
+#### **Addressing Common Challenges**
+
+
+##### **Consistent and Reproducible Pipelines**
+
+Kafka-CP-Deploy-Manager ensures uniformity in deployment processes, leading to consistent and reproducible pipelines.
+
+
+##### **Error Mitigation**
+
+The tool reduces human errors during deployment by automating and streamlining the process.
+
+
+##### **Smooth Upgrades and Rollbacks**
+
+Versioned state files facilitate smooth upgrades and rollbacks, maintaining stability throughout the deployment process.
+
+
+##### **Privilege Isolation**
+
+The tool segregates write and execute privileges, allowing administrators to manage state files while developers handle deployments.
 
 Here is a demo of [Kafka-cp-deploy-manager](https://www.youtube.com/watch?v=oRAipiWWIDg).
 
-[![Kafka-cp-deploy-Monitor](../assets/blog-images/running-kafka-at-scale/deploymentmanager.png)](https://www.youtube.com/watch?v=oRAipiWWIDg)
 
+## **Conclusion**
 
-# **Conclusion**
-
-Running Kafka at scale for mission-critical customers is both complex and rewarding. By mastering the Kafka ecosystem and adhering to best practices in sizing, tooling, deployment, and performance optimization, organizations can fully leverage Kafka’s potential. Since inception, we have maintained 100% cluster availability, a feat made possible by our dedicated team and the deployment of custom tooling solutions. These tools have significantly enhanced our monitoring and management capabilities, contributing to a more efficient and reliable data streaming infrastructure.
+Running Kafka at scale for mission-critical customers is both complex and rewarding. By mastering the Kafka ecosystem and adhering to best practices in sizing, tooling, deployment, and performance optimization, organizations can fully leverage Kafka’s potential. These tools have significantly enhanced our monitoring and management capabilities, contributing to a more efficient and reliable data streaming infrastructure

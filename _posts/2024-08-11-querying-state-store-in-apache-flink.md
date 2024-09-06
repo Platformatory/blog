@@ -2,11 +2,12 @@
 layout: post
 title: "Querying Stream Processing Systems (Apache Flink)"
 authors: avinash
-categories: [apache flink, data, stream processing, kafka streams]
+categories: [apache flink, Data, Stream Processing, Kafka Streams]
 image: assets/blog-images/queryable_state_apache_flink/QueryingStateStoreInStreamProcessing.png
 featured: false
 hidden: false
 teaser: "How to query the state store in a stream processing system such as Apache Flink for unifying Operational and Analytical data."
+toc: true
 ---
 
 ## Background

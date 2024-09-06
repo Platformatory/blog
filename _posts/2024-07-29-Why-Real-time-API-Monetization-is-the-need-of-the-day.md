@@ -2,7 +2,7 @@
 layout: post
 title: "Monetizing APIs, Data through usage-based billing"
 authors: ashwin
-categories: [Data, SaaS, API Metering, Billing, Real-time, Cost, Product]
+categories: [Data, SaaS, API Metering, Billing, Real-time, Cost]
 image: assets/blog-images/apinomy_blog/ApinomyBlogTitle.webp
 featured: true
 hidden: true
