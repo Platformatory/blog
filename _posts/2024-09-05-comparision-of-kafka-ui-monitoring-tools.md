@@ -284,7 +284,7 @@ Conduktor allows you to:
 A quick comparison of the Apache Kafka cluster monitoring tools 
 
 <table>
-  <tr style="background-color:#333333;">
+  <tr>
    <td>
    </td>
    <td><strong>
@@ -317,7 +317,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
 <a href="#kafka-ui">Kafka - ui</a></strong>
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Multi-Cluster Management 
    </td>
    <td>Yes 
@@ -335,7 +335,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Message Browsing
    </td>
    <td>Yes
@@ -353,7 +353,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Protobuf Support
    </td>
    <td>Yes
@@ -371,7 +371,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Avro Support
    </td>
    <td>Yes
@@ -389,7 +389,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Amazon MSK IAM Support
    </td>
    <td>No
@@ -407,7 +407,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>JMX Metrics Validations 
    </td>
    <td>Yes
@@ -425,7 +425,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Schema Registry
    </td>
    <td>Yes
@@ -443,7 +443,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>KSQL Integration
    </td>
    <td>Yes
@@ -461,7 +461,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Authentication 
    </td>
    <td>Yes
@@ -479,7 +479,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Authorization 
    </td>
    <td>Yes
@@ -497,7 +497,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>Yes
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Resource Usage
    </td>
    <td>Yes
@@ -515,7 +515,7 @@ A quick comparison of the Apache Kafka cluster monitoring tools
    <td>No
    </td>
   </tr>
-  <tr style="background-color:#666666;">
+  <tr>
    <td>Rebalancing
    </td>
    <td>No
