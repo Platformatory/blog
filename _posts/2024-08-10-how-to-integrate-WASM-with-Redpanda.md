@@ -2,7 +2,7 @@
 layout: post
 title: "Migrating from Kafka Connect to Redpanda Connect"
 authors: Zeenia,Shivaprakash
-categories: [Apache Kafka, Docker Compose, AWS MSK cluster, Prometheus, Grafana]
+categories: [Redpanda Connect, Kafka Connect, Migration, docker compose]
 image: assets/blog-images/migrating-to-redpanda-connect/migration.png
 teaser: Looking to upgrade your data processing? Learn how moving from Kafka Connect to Redpanda Connect can boost your efficiency. Redpanda Connect, formerly Benthos, offers a lightweight, flexible alternative with powerful data transformation capabilities using Bloblang. In this blog, we'll explore why Redpanda Connect might be the better fit for your needs and guide you through a smooth migration process. Discover a faster, more streamlined approach to handling your data pipelines.
 featured: false
