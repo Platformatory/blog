@@ -162,7 +162,7 @@ Let’s walk through an example of migrating Kafka Connect pipeline that reads d
     ```
     kafka-console-producer.sh --bootstrap-server localhost:19092 --topic benthos
     ```
-    <img src="../assets/blog-images/migrating-to-redpanda-connect/kafkaproducer.png" alt="table" width="600" height="200" />
+    <img src="../assets/blog-images/migrating-to-redpanda-connect/kafkaproducer.png" alt="table" width="900" height="400" />
 
 
 - **Create the Table in ClickHouse**
@@ -305,7 +305,7 @@ Let’s walk through an example of migrating Kafka Connect pipeline that reads d
 
     As shown in the following output, the pipeline reads messages from Kafka topic i.e. benthos and processes each message by squaring its value. This transformation is handled by Redpanda Connect’s Blobland language, which allows flexible data manipulation within the pipeline. The processed data is then inserted into a ClickHouse table in batches of 100 messages or every 5 seconds, whichever occurs first.
 
-    <img src="../assets/blog-images/migrating-to-redpanda-connect/clickhouse.png" alt="table" width="400" height="300" />
+    <img src="../assets/blog-images/migrating-to-redpanda-connect/clickhouse.png" alt="table" width="600" height="500" />
 
 
 
