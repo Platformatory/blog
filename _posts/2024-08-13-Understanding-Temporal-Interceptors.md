@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Understanding Temporal Interceptors: Enhancing Workflow Management"
-categories: [Temporal, Temporal Interceptors, Pyhton, Workflow Management ]
+categories: [Temporal, Temporal Interceptors]
 teaser: Boost Your Temporal Workflows with Interceptors - Dive into how you can leverage Temporal Interceptors to inject custom logic into your workflows and activities, enhancing control flow, and adding a new layer of flexibility to your distributed systems.
 authors: Subramanya
 featured: false
