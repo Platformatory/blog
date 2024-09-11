@@ -2,11 +2,11 @@
 layout: post
 title:  "Confluent Tableflow: Bridging Operational and Analytical Data"
 categories: [Confluent Tableflow, Data Streaming, Data Flow Management, Data Analytics, Stream Processing ]
-teaser: Leverage object storage to reduce operational expenses while maintaining high performance and scalability.
+teaser: Unlock seamless data integration with Confluent Tableflow and Apache Iceberg. Bridge the gap between operational and analytical data effortlessly, ensuring real-time insights and efficiency.
 authors: Sathishkumar
 featured: false
 hidden: true
-image:  
+image: assets/blog-images/confluent-tableflow/table-flow.png
 toc: true
 ---
 
