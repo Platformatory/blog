@@ -93,6 +93,15 @@ authors:
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
       description: "SRE Team Lead at Platformatory"
+  Sathishkumar:
+      name: sathishkumar
+      display_name: Sathishkumar Venkatesan
+      avatar: 'assets/images/avatar.png'
+      gravatar: b1cc14991db7a456fcd761680bbc8f81
+      email: sathish@platformatory.com
+      web: https://www.platformatory.io
+      twitter: https://twitter.com/platformatory
+      description: "Full-Stack Engineer and Practitioner."
   Subramanya:
       name: Subramanya Madhyastha
       display_name: Subramanya Madhyastha
