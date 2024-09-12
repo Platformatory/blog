@@ -83,7 +83,7 @@ authors:
       email: akkishiva@platformatory.com
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
-      description: "DevOps engineer at Platformatory, specializing in Site Reliability Engineering (SRE) and Infrastructure. This role involves building and managing reliable systems to ensure high performance and smooth operations."
+      description: "Data Platform Engineer at Platformatory, specializing in Site Reliability Engineering (SRE) and Infrastructure. This role involves building and managing reliable systems to ensure high performance and smooth operations."
   Arun:
       name: Arun B Bhat
       display_name: Arun B Bhat
@@ -110,7 +110,7 @@ authors:
       email: subramanya@platformatory.io
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
-      description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure."
+      description: "Devops Engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure."
   Vikhyat:
       name: Vikhyat Shetty
       display_name: Vikhyat Shetty
@@ -128,7 +128,7 @@ authors:
     email: zeenia@platformatory.com
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
-    description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure"
+    description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing (SRE) and Infrastructure. The role involves managing the infrastructre and make sure the cluster are working fine."
 
 # Plugins
 plugins:
