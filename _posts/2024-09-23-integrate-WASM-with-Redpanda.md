@@ -3,7 +3,7 @@ layout: post
 title: "How to integrate WASM with Redpanda"
 author: Zeenia
 categories: [Apache Kafka, Docker Compose, WASM, Redpanda, Data processing]
-image: assets/blog-images/wasm-integration/wasm_integrate.png
+image: assets/blog-images/wasm-integration/wasm_image.png
 teaser: Discover the powerful combination of WebAssembly (WASM) and Redpanda in our latest blog post! Learn how to perform real-time data transformations directly within Redpanda, minimizing latency and maximizing efficiency. With WASM, you can write custom processing logic in multiple languages and execute it seamlessly on your data streams. From sanitizing sensitive information to transforming data formats, we’ll guide you through practical examples and setup steps. Unlock the full potential of your streaming data with this innovative integration!
 featured: false
 hidden: false
@@ -252,15 +252,20 @@ This example JavaScript transform uses the async engine to map JSON formatted me
     rpk topic create customer_data
     ```
 
-    <img src="../assets/blog-images/wasm-integration/create_topic.png" alt="Create_topic" width="900"/>
-
-
-
+    **Output**
+    ```
+    TOPIC      	STATUS
+    customer_data  OK
+    ```
+* List the topic
     ```
     rpk topic list
     ```
-    
-    <img src="../assets/blog-images/wasm-integration/list_topic.png" alt="List_opic" width="900"/>
+    **Output**
+    ```
+    NAME       	PARTITIONS     REPLICAS
+    customer_data  1       	      1
+    ```
 
 
 * Deploy the transform script to Redpanda 
@@ -268,8 +273,10 @@ This example JavaScript transform uses the async engine to map JSON formatted me
     ```
     rpk wasm deploy dist/main.js --name customer_data --description "Getting the customer data"
     ```
-    
-    <img src="../assets/blog-images/wasm-integration/Deploy.png" alt="Deploy" width="900"/>
+    **Output**
+    ```
+    Deploy successful!
+    ```
 
 
 * Produce JSON Records and Consume AVRO Results 
@@ -461,22 +468,75 @@ This example JavaScript transform uses the async engine to map JSON formatted me
     * Output from customer_data
 
         The output will contain many lines of JSON string representations of the events being sent to the topic customer_data.
+        ```
+        {
+        "topic": "customer_data",
+        "value": "{\"CustomerID\":\"1\",\"FirstName\":\"John\",\"LastName\":\"Doe\",\"Email\":\"john.doe@example.com\",\"Phone\":\"+1234567890\",\"Address\":\"123 Elm St\",\"City\":\"Springfield\",\"State\":\"IL\",\"PostalCode\":\"62701\",\"Country\":\"USA\",\"CreditCardNumber\":\"4111111111111111\",\"OrderTotal\":\"150.00\",\"LastPurchaseDate\":\"2024-09-05\"}",
+        "timestamp": 1727180609623,
+        "partition": 0,
+        "offset": 0
+        }
+        {
+        "topic": "customer_data",
+        "value": "{\"CustomerID\":\"2\",\"FirstName\":\"Jane\",\"LastName\":\"Smith\",\"Email\":\"jane.smith@example.com\",\"Phone\":\"+0987654321\",\"Address\":\"456 Oak St\",\"City\":\"Lincoln\",\"State\":\"NE\",\"PostalCode\":\"68508\",\"Country\":\"USA\",\"CreditCardNumber\":\"5500000000000004\",\"OrderTotal\":\"200.00\",\"LastPurchaseDate\":\"2024-09-07\"}",
+        "timestamp": 1727180609626,
+        "partition": 0,
+        "offset": 1
+        }
+        {
+        "topic": "customer_data",
+        "value": "{\"CustomerID\":\"3\",\"FirstName\":\"Bob\",\"LastName\":\"Johnson\",\"Email\":\"bob.johnson@example.com\",\"Phone\":\"+1122334455\",\"Address\":\"789 Pine St\",\"City\":\"Columbus\",\"State\":\"OH\",\"PostalCode\":\"43215\",\"Country\":\"USA\",\"CreditCardNumber\":\"340000000000009\",\"OrderTotal\":\"120.00\",\"LastPurchaseDate\":\"2024-09-08\"}",
+        "timestamp": 1727180609627,
+        "partition": 0,
+        "offset": 2
+        }
 
-
-        <img src="../assets/blog-images/wasm-integration/customer_data_output.png" alt="customer_data" width="900"/>
+        ```
 
 
     * Output from customer_data._json_
 
         The output will be the string representations of the json-serialized data where we filter the credit card number events being sent to customer_data._json_ 
 
+        ```
+        {
+        "topic": "customer_data._json_",
+        "value": "{\"CustomerID\":\"1\",\"FirstName\":\"John\",\"LastName\":\"Doe\",\"Email\":\"john.doe@example.com\",\"Phone\":\"+1234567890\",\"Address\":\"123 Elm St\",\"City\":\"Springfield\",\"State\":\"IL\",\"PostalCode\":\"62701\",\"Country\":\"USA\",\"OrderTotal\":\"150.00\",\"LastPurchaseDate\":\"2024-09-05\"}",
+        "timestamp": 1727180609623,
+        "partition": 0,
+        "offset": 0
+        }
+        {
+        "topic": "customer_data._json_",
+        "value": "{\"CustomerID\":\"2\",\"FirstName\":\"Jane\",\"LastName\":\"Smith\",\"Email\":\"jane.smith@example.com\",\"Phone\":\"+0987654321\",\"Address\":\"456 Oak St\",\"City\":\"Lincoln\",\"State\":\"NE\",\"PostalCode\":\"68508\",\"Country\":\"USA\",\"OrderTotal\":\"200.00\",\"LastPurchaseDate\":\"2024-09-07\"}",
+        "timestamp": 1727180609626,
+        "partition": 0,
+        "offset": 1
+        }
+        {
+        "topic": "customer_data._json_",
+        "value": "{\"CustomerID\":\"3\",\"FirstName\":\"Bob\",\"LastName\":\"Johnson\",\"Email\":\"bob.johnson@example.com\",\"Phone\":\"+1122334455\",\"Address\":\"789 Pine St\",\"City\":\"Columbus\",\"State\":\"OH\",\"PostalCode\":\"43215\",\"Country\":\"USA\",\"OrderTotal\":\"120.00\",\"LastPurchaseDate\":\"2024-09-08\"}",
+        "timestamp": 1727180609627,
+        "partition": 0,
+        "offset": 2
+        }
 
-        <img src="../assets/blog-images/wasm-integration/customer_data_json_output.png" alt="customer_data_json_output" width="900"/>
+        ```
 
 
     * Output from the producer terminal
 
-        <img src="../assets/blog-images/wasm-integration/customer_data_producer.png" alt="Producer_output" width="900"/>
+        ```
+        Producer connecting...
+        Produced: {"CustomerID":"1","FirstName":"John","LastName":"Doe","Email":"john.doe@example.com","Phone":"+1234567890","Address":"123 Elm St","City":"Springfield","State":"IL","PostalCode":"62701","Country":"USA","CreditCardNumber":"4111111111111111","OrderTotal":"150.00","LastPurchaseDate":"2024-09-05"}
+        Produced: {"CustomerID":"2","FirstName":"Jane","LastName":"Smith","Email":"jane.smith@example.com","Phone":"+0987654321","Address":"456 Oak St","City":"Lincoln","State":"NE","PostalCode":"68508","Country":"USA","CreditCardNumber":"5500000000000004","OrderTotal":"200.00","LastPurchaseDate":"2024-09-07"}
+        Produced: {"CustomerID":"3","FirstName":"Bob","LastName":"Johnson","Email":"bob.johnson@example.com","Phone":"+1122334455","Address":"789 Pine St","City":"Columbus","State":"OH","PostalCode":"43215","Country":"USA","CreditCardNumber":"340000000000009","OrderTotal":"120.00","LastPurchaseDate":"2024-09-08"}
+        Produced: {"CustomerID":"4","FirstName":"Emily","LastName":"Williams","Email":"emily.williams@example.com","Phone":"+2233445566","Address":"101 Maple St","City":"Denver","State":"CO","PostalCode":"80202","Country":"USA","CreditCardNumber":"6011000000000004","OrderTotal":"250.00","LastPurchaseDate":"2024-09-06"}
+        Produced: {"CustomerID":"5","FirstName":"Michael","LastName":"Brown","Email":"michael.brown@example.com","Phone":"+3344556677","Address":"202 Birch St","City":"Seattle","State":"WA","PostalCode":"98101","Country":"USA","CreditCardNumber":"213141413141141","OrderTotal":"180.00","LastPurchaseDate":"2024-09-04"}
+        ^C
+        Producer disconnecting...
+
+        ```
 
 
 
