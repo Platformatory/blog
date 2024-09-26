@@ -3,7 +3,7 @@ layout: post
 title: "Migrating from Kafka Connect to Redpanda Connect"
 authors: Zeenia,Shivaprakash
 categories: [Redpanda Connect, Kafka Connect, Migration, docker compose]
-image: assets/blog-images/migrating-kafka-connect-to-redpanda-connect/migration.png
+image: assets/blog-images/migrating-kafka-connect-to-redpanda-connect/Kafka Connect.png
 teaser: Looking to upgrade your data processing? Learn how moving from Kafka Connect to Redpanda Connect can boost your efficiency. Redpanda Connect, formerly Benthos, offers a lightweight, flexible alternative with powerful data transformation capabilities using Bloblang. In this blog, we'll explore why Redpanda Connect might be the better fit for your needs and guide you through a smooth migration process. Discover a faster, more streamlined approach to handling your data pipelines.
 featured: false
 hidden: false
@@ -33,9 +33,9 @@ Kafka Connect is a flexible, declarative framework for integration data with Kaf
 
 # Why Choose Redpanda Connect over Kafka Connect? 
 
-Redpanda Connect may be a better fit than Kafka Connect in scenarios where you need more flexibility and control over data transformations, particularly when you’re dealing with complex process logic. Repanda offers a framework for creating and deploying iniline transformations (data transforms) directly within Redpanda topics. This enables the processing adn validation of data right inside the broker, so that consumers receive data in the format they expect. By handling transformations within the broker itself, Redpanda eliminates the need for managing separate stream processing environments or relying on third-party tools. You can read more about it [here] (https://docs.redpanda.com/current/develop/data-transforms/how-transforms-work/) .
+Redpanda Connect may be a better fit than Kafka Connect in scenarios where you need more flexibility and control over data transformations, particularly when you’re dealing with complex process logic. Repanda offers a framework for creating and deploying inline transformations (data transforms) directly within Redpanda topics. This enables the processing and validation of data right inside the broker, so that consumers receive data in the format they expect. By handling transformations within the broker itself, Redpanda eliminates the need for managing separate stream processing environments or relying on third-party tools. You can read more about it [here](https://docs.redpanda.com/current/develop/data-transforms/how-transforms-work/).
 
-It’s also a strong choice for building data pipelines outside of the Kafka ecosystem. When building data integration pipelines, we rarely send data in exactly the same way. While Kafka Connect offers SMTs (Single Message Transforms), for simple, stateless transformations like filtering, projecting or routing messages, more complex tasks require a stream-processing framework like Kafka Streams, which can add significant overhead. Redpanda Connect, however, offers a more lightweight alternative by exposing data ingestion endpoints over HTTP(s) allowing you to send and receive data via standard HTTP requests. This enables seamless integration with non-Kafka systems or microservices, making data ingestion and transformation more efficient without the need for additional infrastructure. 
+It’s also a strong choice for building data pipelines outside of the Kafka ecosystem. When building data integration pipelines, we rarely send data in exactly the same way. While Kafka Connect offers SMTs (Single Message Transforms) for simple, stateless transformations like filtering, projecting or routing messages, more complex tasks require a stream-processing framework like Kafka Streams, which can add significant overhead. Redpanda Connect, however, offers a more lightweight alternative by exposing data ingestion endpoints over HTTP(s) allowing you to send and receive data via standard HTTP requests. This enables seamless integration with non-Kafka systems or microservices, making data ingestion and transformation more efficient without the need for additional infrastructure. 
 
 Additionally, Redpanda Connect offers superior performance in lightweight, high-throughput environments due to its streamlined architecture and efficient Go-based design. If your use case requires advanced data transformations, or operates in an environment where minimizing overhead is crucial, Redpanda Connect is likely the better choice. Its architecture is optimized for handling transformations more efficiently, with lower latency and less overhead, and is ideal for high-throughput environments. While Kafka Connect is reliable, it can be more resource-intensive due to its Java-based system, which may slow things down when processing large volumes of data or complex operations. 
 
@@ -53,8 +53,14 @@ Additionally, Redpanda Connect offers superior performance in lightweight, high-
 
 ## Migrating Kafka Connect Pipeline to Redpanda Connect 
 
-We are running kafka, Benthos, ClickHouse, and zookeeper as docker containers. We have created a docker compose file, which creates the docker container for all these services mentioned above. 
 
+
+**<span style="text-decoration:underline;">Workflow: </span>**
+
+<img src="../assets/blog-images/migrating-kafka-connect-to-redpanda-connect/workflow.png" alt="workflow" width="400" height="500" />
+
+
+We are running kafka, Benthos, ClickHouse, and zookeeper as docker containers. We have created a docker compose file, which creates the docker container for all these services mentioned above. 
 
 ```yml
 ---
@@ -142,10 +148,6 @@ volumes:
 
 Let’s walk through an example of migrating Kafka Connect pipeline that reads data from Kafka topic, performs an aggregation and writes the data to a ClickHouse database.
 
-**<span style="text-decoration:underline;">Workflow: </span>**
-
-<img src="../assets/blog-images/migrating-kafka-connect-to-redpanda-connect/workflow.png" alt="workflow" width="400" height="500" />
-
 **<span style="text-decoration:underline;">Migrating to Redpanda Connect</span>**
 
 
@@ -208,6 +210,7 @@ Let’s walk through an example of migrating Kafka Connect pipeline that reads d
 * **Write the Redpanda Connect configuration file**
 
     ```yml
+    ---
     input:
     kafka:
         addresses:
@@ -245,6 +248,7 @@ Let’s walk through an example of migrating Kafka Connect pipeline that reads d
 
 
         ```yml
+        ---
         input:
         kafka:
             addresses:
