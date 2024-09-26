@@ -283,8 +283,258 @@ Conduktor allows you to:
 
 A quick comparison of the Apache Kafka cluster monitoring tools 
 
+<table>
+  <tr>
+   <td>
+   </td>
+   <td><strong>
 
-<img src="../assets/blog-images/comparing_kafka_ui_monitoring_tools/table.png" alt="table" width="1000" height="600" />
+<a href="#confluent-control-center">Confluent CC</a></strong>
+   </td>
+   <td><strong>
+
+
+<a href="#conduktor">Conduktor</a></strong>
+   </td>
+   <td><strong>
+
+<a href="#kpow">Kpow(CE)</a></strong>
+</td>
+<td><strong>
+
+<a href="#akhq">AKHQ</a></strong>
+   </td>
+   <td><strong>
+
+<a href="#cruise-control">Cruise Control</a></strong>
+   </td>
+   <td><strong>
+
+<a href="#redpanda-console">Redpanda Console</a></strong>
+   </td>
+   <td><strong>
+
+<a href="#kafka-ui">Kafka - ui</a></strong>
+   </td>
+  </tr>
+  <tr>
+   <td>Multi-Cluster Management 
+   </td>
+   <td>Yes 
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Message Browsing
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Protobuf Support
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Partial
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Avro Support
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Amazon MSK IAM Support
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>JMX Metrics Validations 
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Schema Registry
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>KSQL Integration
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Authentication 
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Paid
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Authorization 
+   </td>
+   <td>Yes
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>Paid
+   </td>
+   <td>Yes
+   </td>
+  </tr>
+  <tr>
+   <td>Resource Usage
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+  </tr>
+  <tr>
+   <td>Rebalancing
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+   <td>Yes
+   </td>
+   <td>No
+   </td>
+   <td>No
+   </td>
+  </tr>
+</table>
+
 
 
 # Conclusion 
