@@ -20,7 +20,7 @@ toc: true
 
   In the evolving landscape of real-time data processing, Change Data Capture (CDC) is essential for keeping data systems synchronized. Debezium, combined with the Confluent Platform, provides a robust solution for streaming database changes directly into Apache Kafka. When integrating with Oracle Database, Debezium can be configured to OpenLogReplicator which uses binary reading of redo logs and publish database transactions efficiently.
 
-![Image-1](../assets/blog-images/openlogreplicator/architecture.png
+![Image-1](../assets/blog-images/openlogreplicator/architecture.png)
 
 > Source - [OpenLogReplicator]
   
@@ -223,9 +223,11 @@ toc: true
 
   When Oracle DB container starts for the first time, there are no initial configuration and database exists. Hence database will be installed and configuration will be started. This process may take 10-20 mins (approx). You can verify readiness of Oracle DB from container logs (docker compose logs oracle) and should see message:
 
+  ```
   #############################
   DATABASE IS READY TO USE!
   #############################
+  ```
   
   In order to incorporate changes from an Oracle database, a number of database configurations are required:
 
@@ -411,4 +413,9 @@ toc: true
 # Conclusion
 
   This concludes the deployment of the Oracle Debezium connector with OpenLogReplicator, which captures changes in the CUSTOMERS table. We successfully set up and configured the pipeline to enable real-time change data capture from Oracle to Kafka. This integration ensures efficient and reliable data streaming, allowing downstream systems to consume updates as they happen. With this foundation in place, you can further enhance the pipeline by adding transformations, monitoring, or scaling it for enterprise workloads.
+
+
+[//]: 
+
+   [OpenLogReplicator]: <https://github.com/bersler/OpenLogReplicator/blob/master/documentation/introduction/introduction.adoc#openlogreplicator>
 
