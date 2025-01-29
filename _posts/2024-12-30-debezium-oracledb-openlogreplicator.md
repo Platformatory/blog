@@ -22,7 +22,7 @@ toc: true
 
 ![Image-1](../assets/blog-images/openlogreplicator/architecture.png)
 
-> Source - [OpenLogReplicator]
+> Source - [OpenLogReplicator Architecture]
   
   In this blog, we'll walk you through configuring Debezium’s Oracle connector within the Confluent Platform. You'll learn how to set up OpenLogrReplicator, configure Debezium, and stream changes into your Kafka topics seamlessly. This guide covers:
   
@@ -415,7 +415,7 @@ toc: true
   This concludes the deployment of the Oracle Debezium connector with OpenLogReplicator, which captures changes in the CUSTOMERS table. We successfully set up and configured the pipeline to enable real-time change data capture from Oracle to Kafka. This integration ensures efficient and reliable data streaming, allowing downstream systems to consume updates as they happen. With this foundation in place, you can further enhance the pipeline by adding transformations, monitoring, or scaling it for enterprise workloads.
 
 
-[//]: 
+[//]: # (These are reference links used in the body) 
 
-   [OpenLogReplicator]: <https://github.com/bersler/OpenLogReplicator/blob/master/documentation/introduction/introduction.adoc#openlogreplicator>
+[OpenLogReplicator Architecture]: <https://github.com/bersler/OpenLogReplicator/blob/master/documentation/introduction/introduction.adoc#openlogreplicator>
 
