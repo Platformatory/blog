@@ -39,9 +39,9 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
 # Pre-requisites
 
-  •   Internet Connection
-  •   OS supporting Confluent Platform (link)
-  •   Docker Engine 1.11 or higher installed
+  - Internet Connection
+  - OS supporting Confluent Platform (link)
+  - Docker Engine 1.11 or higher installed
 
 
 # Setting up Confluent Platform
