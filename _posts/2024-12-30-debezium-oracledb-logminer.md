@@ -55,7 +55,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
 
   3. Update docker-compose.yaml file with below changes:
-
+```
        kafka-connect:
         image: debezium/connect:2.7.3.Final
         hostname: kafka-connect
@@ -89,15 +89,15 @@ Confluent Platform is a streaming platform that enables user to store, and manag
     
         volumes:
         - ./oracleDB/oradata:/opt/oracle/oradata
-  
+ ``` 
   4.  Create directory “oracleDB/oradata and change ownership to 54321
-        '''
+        ```
         $> mkdir -p oracleDB/oradata
         $> sudo chown -R oracleDB/oradata 54321:54321
-        '''
+        ```
   5.  Start Confluent Platform stack in detach mode:
         
-        '''
+        ```
         $> docker compose up -d
           Each component of Confluent Platform starts in separate container.
           
@@ -111,7 +111,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
         Creating ksqldb-cli       ... done
         Creating oracle           ... done
         
-        '''
+        ```
 
         You can verify if all services are up and running using command “docker compose ps -a”
 
@@ -119,11 +119,11 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
   When Oracle DB container starts for the first time, there are no initial configuration and database exists. Hence database will be installed and configuration will be started. This process may take 10-20 mins (approximately). You can verify readiness of Oracle DB from container logs (docker compose logs oracle) and should see message:
 
-    '''
+    ```
     #############################
     DATABASE IS READY TO USE!
     #############################
-    '''
+    ```
 
 
   In order to incorporate changes from an Oracle database, a number of database configurations are required:
@@ -133,19 +133,19 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
   The Oracle container registry image used in the Install Oracle section may not have archive logging enabled. If you use another image or a pre-existing environment, you should check whether archive logging is enabled.
 
-  '''
+  ```
   $> docker compose exec oracle bash
   $> sqlplus ‘/ as sysdba’
 
   SQL> SELECT LOG_MODE FROM V$DATABASE
 
-  '''
+  ```
 
   If the column contains ARCHIVELOG, then archive logging is enabled. If the column contains the value NOARCHIVELOG, archive logging isn’t enabled, and further configuration is necessary.
 
   Execute the following SQL commands inside the SQL*Plus terminal window:
   
-  '''
+  ```
   ALTER SYSTEM SET db_recovery_file_dest_size = 10G;
   ALTER SYSTEM SET db_recovery_file_dest = '/opt/oracle/oradata/ORCLCDB' scope=spfile;
   SHUTDOWN IMMEDIATE
@@ -153,16 +153,17 @@ Confluent Platform is a streaming platform that enables user to store, and manag
   ALTER DATABASE ARCHIVELOG;
   ALTER DATABASE OPEN;
   ARCHIVE LOG LIST;
-  '''
+  ```
   Output of last executed SQL command should show Archive mode for Database log mode.
-  '''
+  
+  ```
   Database log mode                  Archive Mode
   Automatic archival                 Enabled
   Archive destination                USE_DB_RECOVERY_FILE_DEST
   Oldest online log sequence         1
   Next log sequence to archive       3
   Current log sequence               3
-  '''
+  ```
 
 
 
@@ -170,7 +171,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
   Oracle Redo logs are the transactional logs. Using the same terminal window, execute below listed SQL command to determine filenames, location of redo logs and recreate log group with size of 400 MB using same log file.
 
-  '''
+  ```
   SQL> SELECT GROUP#, MEMBER FROM V$LOGFILE ORDER BY 1, 2;
 
   GROUP# MEMBER
@@ -185,15 +186,15 @@ Confluent Platform is a streaming platform that enables user to store, and manag
   ALTER DATABASE ADD LOGFILE GROUP 1 ('/opt/oracle/oradata/ORCLCDB/redo01.log') size 400M REUSE;
   ALTER SYSTEM SWITCH LOGFILE;
 
-  '''
+  ```
 
 # Supplemental Logging
 
   Database supplementary logging needs to be enabled at the very least for Debezium to communicate with LogMiner, handle chained rows, and work with different storage configurations.
 
-  '''
+  ```
   SQL> ALTER DATABASE ADD SUPPLEMENTAL LOG DATA
-  '''
+  ```
 
 
 # Users Setup in Oracle DB
@@ -203,17 +204,17 @@ Confluent Platform is a streaming platform that enables user to store, and manag
   In the same SQLplus terminal window, create table spaces:
 
 
-  '''
+  ```
   CONNECT sys/oraclepw@ORCLCDB as sysdba; 
   CREATE TABLESPACE logminer_tbs DATAFILE '/opt/oracle/oradata/ORCLCDB/logminer_tbs.dbf' SIZE 25M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED; 
 
   CONNECT sys/oraclepw@ORCLPDB1 as sysdba; 
   CREATE TABLESPACE logminer_tbs DATAFILE '/opt/oracle/oradata/ORCLCDB/ORCLPDB1/logminer_tbs.dbf' SIZE 25M REUSE  AUTOEXTEND ON MAXSIZE UNLIMITED;
-  '''
+  ```
 
 > NOTE – Replace oraclepw with the password set in docker compose file.
 > 
-  '''
+  ```
   CONNECT sys/oraclepw@ORCLCDB as sysdba; 
   CREATE USER c##dbzuser IDENTIFIED BY dbz DEFAULT TABLESPACE LOGMINER_TBS  QUOTA UNLIMITED ON LOGMINER_TBS CONTAINER=ALL;
   
@@ -248,41 +249,41 @@ Confluent Platform is a streaming platform that enables user to store, and manag
   
   EXIT;
 
-  '''
+  ```
 
 # Create Initial Test Data
 
   Connect to Oracle DB using command:
 
-  '''
+  ```
   $> sqlplus ‘/ as sysdba’
   SQL> connect c##dbzuser/dbz
   SQL> alter session set container=ORCLPDB1;
-  '''
+  ```
 
   Create table and some initial sample data.
 
-  '''
+  ```
   CREATE TABLE customers (id number(9,0) primary key, name varchar2(50)); INSERT INTO customers VALUES (1001, 'Jane Doe'); 
   INSERT INTO customers VALUES (1002, 'Bob Willy'); 
   INSERT INTO customers VALUES (1003, 'Eddie Murphy'); 
   INSERT INTO customers VALUES (1004, 'Anne Mary'); 
   COMMIT;
 
-  '''
+  ```
 
   Set the table’s supplemental log level:
 
-  '''
+  ```
   ALTER TABLE customers ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
 
-  '''
+  ```
 
 # Deploy Debezium Oracle Connector
 
   Create a source connector file “source_logMiner.json” with configuration:
 
-  '''
+  ```
   {
   "name": "debezium-log-miner",
   "config": {
@@ -303,17 +304,18 @@ Confluent Platform is a streaming platform that enables user to store, and manag
     "schema.history.internal.kafka.topic": "schema-changes.new_table"
   }
 }
-'''
+```
 
 Save above configuration and deploy the source connector 
 
-'''
+```
 $> curl -i -X POST -H "Accept:application/json" \ -H "Content-Type:application/json" \ localhost:8083/connectors \ -d @r source_logMiner.json | jq
-'''
+```
 
 Once the source connector registration is successful, open Confluent Platform Control Center using http://<host-ip>:9021 in a browser. Navigate to Overview → Topics. You should see a topic “server1.C__DBZUSER.CUSTOMERS’ listed there. Click on the topic and verify the contents of topic.
 
 
+# Summary
 
 In this blog, we successfully deployed the Oracle Debezium connector to capture real-time changes from the CUSTOMERS table. From setting up the environment to configuring Debezium and validating CDC events in Kafka, we demonstrated a seamless data streaming pipeline. This integration enables reliable change data capture, ensuring efficient data synchronization between Oracle and downstream consumers. With this setup in place, you can now extend it further by adding transformations, integrating with analytics platforms, or scaling for enterprise workloads.
 
