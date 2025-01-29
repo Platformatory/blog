@@ -3,7 +3,7 @@ layout: post
 title: "Debezium with Oracle DB and OpenLogReplicator for Change Data Capture on Confluent Platform"
 author: Balaji K
 categories:
-  [Platform Engineering, Data, Infrastructure, Kafka, Kubernetes]
+  [Kafka Connectors, Debezium,  Kafka, Oracle CDC]
 image: assets/blog-images/platform-strategy.svg
 featured: true
 hidden: true
@@ -13,19 +13,22 @@ ctas:
     description: "Have questions or need assistance? Our team is here to help"
     url: "/contact/"
 
-teaser: Platform Engineering is dead. Long live platform engineering!
 toc: true
 ---
 
 # Introduction
 
   In the evolving landscape of real-time data processing, Change Data Capture (CDC) is essential for keeping data systems synchronized. Debezium, combined with the Confluent Platform, provides a robust solution for streaming database changes directly into Apache Kafka. When integrating with Oracle Database, Debezium can be configured to OpenLogReplicator which uses binary reading of redo logs and publish database transactions efficiently.
+
+![Image-1](../assets/blog-images/openlogreplicator/architecture.png
+
+> Source - [OpenLogReplicator]
   
   In this blog, we'll walk you through configuring Debezium’s Oracle connector within the Confluent Platform. You'll learn how to set up OpenLogrReplicator, configure Debezium, and stream changes into your Kafka topics seamlessly. This guide covers:
   
-    •   Preparing your Oracle Database for CDC with OpenLogReplicator.
-    •   Configuring the Debezium connector on Confluent Platform.
-    •   Validating and monitoring the data flow.
+    - Preparing your Oracle Database for CDC with OpenLogReplicator.
+    - Configuring the Debezium connector on Confluent Platform.
+    - Validating and monitoring the data flow.
   
   By the end, you'll have a powerful CDC pipeline ready to capture and stream changes from Oracle to Kafka, enabling real-time data integration and analytics. Let's dive in!
 
@@ -42,36 +45,36 @@ toc: true
 
 # Pre-requisite
 
-  •   Internet Connection
-  •   OS supporting Confluent Platform
-  •   Docker Engine 1.11 or higher installed
+  - Internet Connection
+  - OS supporting Confluent Platform
+  - Docker Engine 1.11 or higher installed
 
 
 # Setting up Debezium Container Image
 
   1. Clone the github OpenLogReplicator repository 
-  '''
+  ```
     $> git clone https://github.com/bersler/OpenLogReplicator-tutorials.git
-  '''
+  ```
 
   2. Navigate to folder OpenLogReplicator-tutorials → images and execute script bersler_openlogreplicator_tutorial.sh to build OpenLogReplicator container image.
   
-  '''
+  ```
   $> ./bersler_openlogreplicator_tutorial.sh
-  '''
+  ```
 
 # Setting up Confluent Platform
 
   1. Download Oracle JDBC Driver from Oracle JDBC Driver page. You need to download zipped JDBC driver for Oracle DB 21c. Extract the zip file.
-  2. Download the Confluent Platform KRaft all-in-one Docker Compose file using command:
+  2. Download the Confluent Platform KRaft all-in-one Docker Compose file using below command. The docker compose file is a configuration file used to quickly set up a local Confluent Platform environment with all the essential components like Kafka, Schema Registry, and Connect, specifically utilizing the "KRaft" mode for managing Kafka cluster metadata allowing user to easily run a full Confluent Platform instance in a single Docker command using the "cp-all-in-one" image with KRaft enabled.
 
-  '''
+  ```
   $> wget https://raw.githubusercontent.com/confluentinc/cp-all-in-one/7.8.0-post/cp-all-in-one-kraft/docker-compose.yml
-  '''
+  ```
 
 3. Update docker-compose.yaml file with below changes:
   
-  '''
+  ```
   kafka-connect:
     image: debezium/connect:2.7.3.Final
     hostname: kafka-connect
@@ -125,11 +128,11 @@ toc: true
       - ./scripts:/opt/OpenLogReplicator/scripts
     restart: "no"
 
-  '''
+  ```
 
-4. Create below listed directories and respective ownership:
+4. Create below listed directories and respective ownership requried for setting up OpenLogReplicator connector:
 
-  '''
+  ```
     mkdir oradata
     chmod 755 oradata
     sudo chown 54321:54321 oradata
@@ -152,11 +155,11 @@ toc: true
     
     chmod 777 scripts
     chmod 644 scripts/OpenLogReplicator.json
-  '''
+  ```
 
 5. Create file OpenLogReplicator.json under scripts folder with content:
 
-  '''
+  ```
   {
     "version": "1.7.0",
     "log-level": 3,
@@ -192,17 +195,17 @@ toc: true
       }
     ]
   }
-'''
+```
 
 6. Start Confluent Platform stack in detach mode:
 
-  '''
+  ```
   $> docker compose up -d
-  '''
+  ```
 
   Each component of Confluent Platform starts in separate container.
   
-  '''
+  ```
   Creating broker   ... done
   Creating schema-registry  ... done
   Creating rest-proxy       ... done
@@ -212,7 +215,7 @@ toc: true
   Creating ksql-datagen     ... done
   Creating ksqldb-cli       ... done
   Creating oracle  ... done
-  '''
+  ```
 
   You can verify if all services are up and running using command “docker compose ps -a”
 
@@ -230,18 +233,18 @@ toc: true
 
   The Oracle container registry image used in the Install Oracle section may not have archive logging enabled. If you use another image or a pre-existing environment, you should check whether archive logging is enabled.
 
-  '''
+  ```
   $> docker compose exec oracle bash
   $> sqlplus ‘/ as sysdba’
   
   SQL> SELECT LOG_MODE FROM V$DATABASE
-  '''
+  ```
 
   If the column contains ARCHIVELOG, then archive logging is enabled. If the column contains the value NOARCHIVELOG, archive logging isn’t enabled, and further configuration is necessary.
   
   Execute the following SQL commands inside the SQL*Plus terminal window:
   
-  '''
+  ```
   ALTER SYSTEM SET db_recovery_file_dest_size = 10G;
   ALTER SYSTEM SET db_recovery_file_dest = '/opt/oracle/oradata/ORCLCDB' scope=spfile;
   SHUTDOWN IMMEDIATE
@@ -249,24 +252,24 @@ toc: true
   ALTER DATABASE ARCHIVELOG;
   ALTER DATABASE OPEN;
   ARCHIVE LOG LIST;
-  '''
+  ```
 
   Output of last executed SQL command should show Archive mode for Database log mode.
   
-  '''
+  ```
   Database log mode                  Archive Mode
   Automatic archival                 Enabled
   Archive destination                USE_DB_RECOVERY_FILE_DEST
   Oldest online log sequence         1
   Next log sequence to archive       3
   Current log sequence               3
-  '''
+  ```
 
 # _Configure Redo Logs_
 
-  Oracle Redo logs are the transactional logs. Using the same terminal window, execute below listed SQL command:
+  Oracle Redo logs are the transactional logs. Using the same terminal window, execute below listed SQL command to determine filenames, location of redo logs and recreate log group with size of 400 MB using same log file.
 
-  '''
+  ```
   SQL> SELECT GROUP#, MEMBER FROM V$LOGFILE ORDER BY 1, 2;
 
   GROUP# MEMBER
@@ -280,15 +283,15 @@ toc: true
   ALTER DATABASE DROP LOGFILE GROUP 1; 
   ALTER DATABASE ADD LOGFILE GROUP 1 ('/opt/oracle/oradata/ORCLCDB/redo01.log') size 400M REUSE;
   ALTER SYSTEM SWITCH LOGFILE;
-  '''
+  ```
 
 # _Configure Supplemental Logging_
 
   Database supplementary logging needs to be enabled at the very least for Debezium to communicate with LogMiner, handle chained rows, and work with different storage configurations.
 
-  '''
+  ```
   SQL> ALTER DATABASE ADD SUPPLEMENTAL LOG DATA
-  '''
+  ```
 
 # _Configuring Users in Oracle DB_
 
@@ -297,17 +300,17 @@ toc: true
 
   In the same SQLplus terminal window, create table spaces:
 
-  '''
+  ```
   CONNECT sys/oraclepw@ORCLCDB as sysdba; 
   CREATE TABLESPACE logminer_tbs DATAFILE '/opt/oracle/oradata/ORCLCDB/logminer_tbs.dbf' SIZE 25M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED; 
 
   CONNECT sys/oraclepw@ORCLPDB1 as sysdba; 
   CREATE TABLESPACE logminer_tbs DATAFILE '/opt/oracle/oradata/ORCLCDB/ORCLPDB1/logminer_tbs.dbf' SIZE 25M REUSE  AUTOEXTEND ON MAXSIZE UNLIMITED;
-  '''
+  ```
 
   > NOTE – Replace oraclepw with the password set in docker compose file.
 
-  '''
+  ```
   CONNECT sys/oraclepw@ORCLCDB as sysdba; 
   CREATE USER c##dbzuser IDENTIFIED BY dbz DEFAULT TABLESPACE LOGMINER_TBS  QUOTA UNLIMITED ON LOGMINER_TBS CONTAINER=ALL;
 
@@ -341,39 +344,39 @@ toc: true
   
   EXIT;
 
-  '''
+  ```
 
 # _Create Initial Test Data_
 
   Connect to Oracle DB using command:
 
-  '''
+  ```
   $> sqlplus ‘/ as sysdba’
   SQL> connect c##dbzuser/dbz
   SQL> alter session set container=ORCLPDB1;
-  '''
+  ```
 
   After connecting to ORCLPDB1, create table and some initial data.
 
-  '''
+  ```
   CREATE TABLE customers (id number(9,0) primary key, name varchar2(50)); INSERT INTO customers VALUES (1001, 'Jane Doe'); 
   INSERT INTO customers VALUES (1002, 'Bob Willy'); 
   INSERT INTO customers VALUES (1003, 'Eddie Murphy'); 
   INSERT INTO customers VALUES (1004, 'Anne Mary'); 
   COMMIT;
-  '''
+  ```
 
   Set the table’s supplemental log level:
 
-  '''
+  ```
   ALTER TABLE customers ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
-  '''
+  ```
 
 # Deploy Debezium Oracle Connector
 
   Create a source connector file “source_Debezium_OpenLogReplicator.json” with configuration:
 
-  '''
+  ```
   {
     "name": "openlogreplicator",
     "config": {
@@ -394,16 +397,18 @@ toc: true
       "schema.history.internal.kafka.topic": "schema-changes.customers"
     }
   }
-  '''
+  ```
 
   Save above configuration and deploy the source connector 
 
-  '''
+  ```
   $> curl -i -X POST -H "Accept:application/json" \ -H "Content-Type:application/json" \ localhost:8083/connectors \ -d @ source_Debezium_OpenLogReplicator.json | jq
-  '''
+  ```
 
   Once the source connector registration is successful, open Confluent Platform Control Center using http://<host-ip>:9021 in a browser. Navigate to Overview → Topics. You should see a topic “server1.C__DBZUSER.CUSTOMERS’ listed there. Click on the topic and verify the contents of topic.
 
 
-  This concludes deployment of Oracle Debezium connector with OpenLogReplicator which captures changes in the table CUSTOMERS.
+# Conclusion
+
+  This concludes the deployment of the Oracle Debezium connector with OpenLogReplicator, which captures changes in the CUSTOMERS table. We successfully set up and configured the pipeline to enable real-time change data capture from Oracle to Kafka. This integration ensures efficient and reliable data streaming, allowing downstream systems to consume updates as they happen. With this foundation in place, you can further enhance the pipeline by adding transformations, monitoring, or scaling it for enterprise workloads.
 
