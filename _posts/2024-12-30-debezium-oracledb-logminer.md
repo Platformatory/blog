@@ -3,7 +3,7 @@ layout: post
 title: "Debezium with Oracle DB and LogMiner for Change Data Capture on Confluent Platform"
 author: Balaji K
 categories:
-  [Platform Engineering, Data, Infrastructure, Kafka, Kubernetes]
+  [Data Processing, Data Streaming, Confluent Kafka, Connectors]
 image: assets/blog-images/platform-strategy.svg
 featured: true
 hidden: true
@@ -13,13 +13,16 @@ ctas:
     description: "Have questions or need assistance? Our team is here to help"
     url: "/contact/"
 
-teaser: Platform Engineering is dead. Long live platform engineering!
 toc: true
 ---
 
 # Introduction
 
 In the evolving landscape of real-time data processing, Change Data Capture (CDC) is essential for keeping data systems synchronized. Debezium, combined with the Confluent Platform, provides a robust solution for streaming database changes directly into Apache Kafka. When integrating with Oracle Database, Debezium leverages Oracle LogMiner to capture and publish database transactions efficiently.
+
+
+![Image-1](../assets/blog-images/oracleCDC-debezium-connector/debezium-architecture.png)
+
 In this blog, we'll walk you through configuring Debezium’s Oracle connector within the Confluent Platform. You'll learn how to set up LogMiner, configure Debezium, and stream changes into your Kafka topics seamlessly. This guide covers:
 
   •   Preparing your Oracle Database for CDC with LogMiner.
@@ -34,7 +37,7 @@ By the end, you'll have a powerful CDC pipeline ready to capture and stream chan
 Confluent Platform is a streaming platform that enables user to store, and manage data as real-time streams. It enabled transformations through stream processing, simplifies enterprise operations at scale. Confluent Platform can be downloaded and managed by user. This is a specialized distribution system of Kafka with many commercial features built into Kafka brokers that function as Confluent Server. Confluent facilitates the development of a whole new class of contemporary, event-driven applications, provides a universal data pipeline, and opens up potent new use cases with complete performance, scalability, and dependability.
 
 
-# Pre-requisite
+# Pre-requisites
 
   •   Internet Connection
   •   OS supporting Confluent Platform (link)
@@ -44,7 +47,9 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 # Setting up Confluent Platform
 
   1.  Download Oracle JDBC Driver from Oracle JDBC Driver page. You need to download zipped JDBC driver for Oracle DB 21c. Extract the zip file.
-  2.  Download the Confluent Platform KRaft all-in-one Docker Compose file using command:
+
+  2.  Download the Confluent Platform KRaft all-in-one Docker Compose file using below command. The docker compose file is a configuration file used to quickly set up a local Confluent Platform environment with all the essential components like Kafka, Schema Registry, and Connect, specifically utilizing the "KRaft" mode for managing Kafka cluster metadata allowing user to easily run a full Confluent Platform instance in a single Docker command using the "cp-all-in-one" image with KRaft enabled.
+
 
       $> wget https://raw.githubusercontent.com/confluentinc/cp-all-in-one/7.8.0-post/cp-all-in-one-kraft/docker-compose.yml
 
@@ -112,7 +117,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
 # Configuring Oracle Database
 
-  When Oracle DB container starts for the first time, there are no initial configuration and database exists. Hence database will be installed and configuration will be started. This process may take 10-20 mins (approx). You can verify readiness of Oracle DB from container logs (docker compose logs oracle) and should see message:
+  When Oracle DB container starts for the first time, there are no initial configuration and database exists. Hence database will be installed and configuration will be started. This process may take 10-20 mins (approximately). You can verify readiness of Oracle DB from container logs (docker compose logs oracle) and should see message:
 
     '''
     #############################
@@ -163,7 +168,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
 # Redo Logs
 
-  Oracle Redo logs are the transactional logs. Using the same terminal window, execute below listed SQL command:
+  Oracle Redo logs are the transactional logs. Using the same terminal window, execute below listed SQL command to determine filenames, location of redo logs and recreate log group with size of 400 MB using same log file.
 
   '''
   SQL> SELECT GROUP#, MEMBER FROM V$LOGFILE ORDER BY 1, 2;
@@ -309,5 +314,6 @@ $> curl -i -X POST -H "Accept:application/json" \ -H "Content-Type:application/j
 Once the source connector registration is successful, open Confluent Platform Control Center using http://<host-ip>:9021 in a browser. Navigate to Overview → Topics. You should see a topic “server1.C__DBZUSER.CUSTOMERS’ listed there. Click on the topic and verify the contents of topic.
 
 
-This concludes deployment of Oracle Debezium connector which captures changes in the table CUSTOMERS.
+
+In this blog, we successfully deployed the Oracle Debezium connector to capture real-time changes from the CUSTOMERS table. From setting up the environment to configuring Debezium and validating CDC events in Kafka, we demonstrated a seamless data streaming pipeline. This integration enables reliable change data capture, ensuring efficient data synchronization between Oracle and downstream consumers. With this setup in place, you can now extend it further by adding transformations, integrating with analytics platforms, or scaling for enterprise workloads.
 
