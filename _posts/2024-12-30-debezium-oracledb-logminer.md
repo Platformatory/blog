@@ -4,7 +4,7 @@ title: "Debezium with Oracle DB and LogMiner for Change Data Capture on Confluen
 author: Balaji K
 categories:
   [Data Processing, Data Streaming, Confluent Kafka, Connectors]
-image: assets/blog-images/platform-strategy.svg
+image: assets/blog-images/oracleCDC-debezium-connector/debezium_header.jpg
 featured: true
 hidden: true
 cat_box_title: Contact Us
@@ -55,7 +55,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
 
   3. Update docker-compose.yaml file with below changes:
-```
+     ```
        kafka-connect:
         image: debezium/connect:2.7.3.Final
         hostname: kafka-connect
@@ -89,7 +89,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
     
         volumes:
         - ./oracleDB/oradata:/opt/oracle/oradata
- ``` 
+      ``` 
   4.  Create directory “oracleDB/oradata and change ownership to 54321
         ```
         $> mkdir -p oracleDB/oradata
@@ -213,7 +213,7 @@ Confluent Platform is a streaming platform that enables user to store, and manag
   ```
 
 > NOTE – Replace oraclepw with the password set in docker compose file.
-> 
+ 
   ```
   CONNECT sys/oraclepw@ORCLCDB as sysdba; 
   CREATE USER c##dbzuser IDENTIFIED BY dbz DEFAULT TABLESPACE LOGMINER_TBS  QUOTA UNLIMITED ON LOGMINER_TBS CONTAINER=ALL;
@@ -285,25 +285,25 @@ Confluent Platform is a streaming platform that enables user to store, and manag
 
   ```
   {
-  "name": "debezium-log-miner",
-  "config": {
-    "connector.class": "io.debezium.connector.oracle.OracleConnector",
-    "tasks.max": "1",
-    "topic.prefix" : "server1",
-    "database.hostname": "oracle-db",
-    "database.port": "1521",
-    "database.user": "c##dbzuser",
-    "database.password": "dbz",
-    "database.dbname": "ORCLCDB",
-    "database.pdb.name": "ORCLPDB1",
-    "database.server.name": "server1",
-    "table.include.list": "C##DBZUSER.CUSTOMERS",
-    "database.history.kafka.bootstrap.servers": "broker:29092",
-    "database.history.kafka.topic": "schema-changes",
-    "schema.history.internal.kafka.bootstrap.servers" : "broker:29092",
-    "schema.history.internal.kafka.topic": "schema-changes.new_table"
+    "name": "debezium-log-miner",
+    "config": {
+      "connector.class": "io.debezium.connector.oracle.OracleConnector",
+      "tasks.max": "1",
+      "topic.prefix" : "server1",
+      "database.hostname": "oracle-db",
+      "database.port": "1521",
+      "database.user": "c##dbzuser",
+      "database.password": "dbz",
+      "database.dbname": "ORCLCDB",
+      "database.pdb.name": "ORCLPDB1",
+      "database.server.name": "server1",
+      "table.include.list": "C##DBZUSER.CUSTOMERS",
+      "database.history.kafka.bootstrap.servers": "broker:29092",
+      "database.history.kafka.topic": "schema-changes",
+      "schema.history.internal.kafka.bootstrap.servers" : "broker:29092",
+      "schema.history.internal.kafka.topic": "schema-changes.new_table"
+    }
   }
-}
 ```
 
 Save above configuration and deploy the source connector 
