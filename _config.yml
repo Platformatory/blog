@@ -138,6 +138,7 @@ authors:
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
     description: "Senior Consultant at Platformatory"
+
 # Plugins
 plugins:
   - jekyll-paginate
