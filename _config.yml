@@ -129,7 +129,15 @@ authors:
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
     description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing (SRE) and Infrastructure. The role involves managing the infrastructre and make sure the cluster are working fine."
-
+  Balaji:
+    name: Balaji K
+    display_name: Balaji K
+    avatar: 'assets/images/balaji.png'
+    gravatar: b1cc14991db7a456fcd761680bbc8f81
+    email: balaji@platformatory.com
+    web: https://www.platformatory.io
+    twitter: https://twitter.com/platformatory
+    description: "Senior Consultant at Platformatory"
 # Plugins
 plugins:
   - jekyll-paginate

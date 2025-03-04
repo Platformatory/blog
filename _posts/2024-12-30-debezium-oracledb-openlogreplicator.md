@@ -4,7 +4,7 @@ title: "Debezium with Oracle DB and OpenLogReplicator for Change Data Capture on
 author: Balaji K
 categories:
   [Kafka Connectors, Debezium,  Kafka, Oracle CDC]
-image: assets/blog-images/platform-strategy.svg
+image: assets/blog-images/openlogreplicator/architecture.png
 featured: true
 hidden: true
 cat_box_title: Contact Us
@@ -20,7 +20,6 @@ toc: true
 
   In the evolving landscape of real-time data processing, Change Data Capture (CDC) is essential for keeping data systems synchronized. Debezium, combined with the Confluent Platform, provides a robust solution for streaming database changes directly into Apache Kafka. When integrating with Oracle Database, Debezium can be configured to OpenLogReplicator which uses binary reading of redo logs and publish database transactions efficiently.
 
-![Image-1](../assets/blog-images/openlogreplicator/architecture.png)
 
 > Source - [OpenLogReplicator Architecture]
   
@@ -40,7 +39,10 @@ toc: true
 
 # OpenLogReplicator Overview
 
-  OpenLogReplicator is an open-source project created by Adam Leszczyński. OpenLogReplicator does not depend on any specific configuration of the source database. With no impact on the source system and not utilizing Oracle LogMiner, OpenLogReplicator primarly targets Kafka systems capturing change component.
+  OpenLogReplicator is an open-source project created by Adam Leszczyńskie, an external CDC solution that reads Oracle redo logs without directly impacting database performance. Unlike LogMiner, it operates independently of Oracle, making it a more scalable and lightweight option for real-time data replication. OpenLogReplicator is particularly useful for streaming large-scale transactional data to modern data platforms like Apache Kafka, Elasticsearch, and cloud-based storage systems. Its architecture is designed to handle high-volume, low-latency workloads, making it an ideal choice for event-driven applications and distributed systems. Use OpenLogReplicator if you need a real-time, scalable, and low-overhead CDC solution for streaming data to external platforms without burdening the Oracle database.
+
+While both OpenLogReplicator and LogMiner tools provide CDC capabilities, OpenLogReplicator is better suited for modern, cloud-native architectures, whereas LogMiner is a more traditional solution for Oracle-centric environments. OpenLogReplicator does not depend on any specific configuration of the source database. With no impact on the source system and not utilizing Oracle LogMiner, OpenLogReplicator primarly targets Kafka systems capturing change component.
+
 
 
 # Pre-requisite
@@ -195,7 +197,7 @@ toc: true
       }
     ]
   }
-```
+  ```
 
 6. Start Confluent Platform stack in detach mode:
 
