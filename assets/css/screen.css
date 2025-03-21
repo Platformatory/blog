@@ -428,6 +428,15 @@ span.post-read-more a:hover {
     
 
 @media (max-width:780px) {
+    li{
+        word-wrap: break-word;
+    }
+    a{
+        word-wrap: break-word;
+    }
+    /* .navbar-brand img{
+        max-height: 54px !important;
+    } */
     .toc-container{
         margin: 0 12px;
     }
@@ -440,10 +449,10 @@ span.post-read-more a:hover {
     }
     
     .mainheading h1.sitetitle{  
-        font-size: 1.5em !important;
+        font-size: 1.3em !important;
     }
     .mainheading .lead {
-        font-size: 0.8em !important;
+        font-size: 0.6em !important;
         padding-top: 4px;
     }
 }
