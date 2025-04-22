@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "Stream Oracle DB Changes to Redis with Confluent Platform: An End-to-End Guide"
-author: Balaji K
+author: Balaji
 categories:
   [Platform Engineering, Data, Infrastructure, Kafka, Kubernetes]
-image: assets/blog-images/platform-strategy.svg
+image: assets/blog-images/e2e_datapipeline/header.png
 featured: true
 hidden: true
 cat_box_title: Contact Us
@@ -22,7 +22,7 @@ toc: true
 Real-time data integration has become the backbone of modern data architectures, allowing businesses to react quickly to changing conditions and make informed decisions. One of the most powerful tools in this ecosystem is Change Data Capture (CDC), which enables organizations to monitor and capture changes in their databases as they occur. For businesses using Oracle Database as their primary data store, the Oracle CDC Source Connector for the Confluent Platform offers an easy and efficient way to stream database changes to Apache Kafka. This powerful combination allows for the creation of scalable, real-time data pipelines that can integrate, process, and analyze data with minimal latency. In this blog, we’ll walk through the capabilities of the Oracle CDC Source Connector, its key benefits, and how you can start using it to transform your data architecture.
 
 
-![Image-1](../assets/blog-images/oracleCDC-redis-connector/E2E.png)
+![Image-1](../assets/blog-images/e2e_datapipeline/E2E.png)
 
 # Need for Kafka Connect and Change Data Capture (CDC)
 
@@ -38,13 +38,21 @@ Oracle CDC Source Connector which records any modifications to database’s row,
 
 A subset of the tables in a single database, which is all tables that the user can access and that match an include regular expression, can be captured by the connector. Additionally, it can be set up to omit tables that match a different exclusion regular expression.
 
-![Image-2](../assets/blog-images/oracleCDC-redis-connector/oracleCDC.png)
+![Image-2](../assets/blog-images/e2e_datapipeline/oracleCDC.png)
 
 # Redis Sink Connector
 
 The Confluent Redis Kafka Connector makes it possible for Redis and Apache Kafka to integrate seamlessly and exchange data in real time. For use cases like caching, event sourcing, and analytics, it is perfect because it enables Kafka topics to transfer data to Redis. Compatibility with various data pipelines is guaranteed by its support for widely used serialization formats, including JSON, Avro, and Protobuf. The Redis Sink Connector allows for low-latency data access by streaming Kafka data to Redis. It is made to integrate easily with the Confluent Platform and offers scalability and stable setups for event-driven, real-time architectures.
 
-![Image-3](../assets/blog-images/oracleCDC-redis-connector/redis_sink.png)
+One of the primary reasons for using a Redis Sink Connector is low-latency caching. Since Redis is an in-memory data store, it is well-suited for handling frequently accessed data with minimal latency. Streaming Kafka events into Redis ensures that applications can retrieve data almost instantly, making it ideal for use cases like recommendation engines, session storage, and leaderboards. Instead of relying on disk-based databases for quick lookups, Redis allows applications to access critical data in real time.
+
+Another key advantage is real-time data processing. Kafka can ingest massive amounts of data, but consuming applications need immediate access to relevant information. By sinking Kafka data into Redis, applications can perform real-time aggregations, filtering, and analytics without the overhead of querying Kafka directly. This is particularly useful in scenarios like fraud detection, monitoring, and IoT telemetry, where events must be evaluated in milliseconds. Redis supports clustering and replication, making it a highly scalable and fault-tolerant data store for Kafka-driven applications. With a Redis Sink Connector continuously syncing Kafka data into Redis, applications can ensure real-time data availability without manual intervention or complex database queries.
+
+
+In summary, a Redis Sink Connector is a vital component in real-time streaming architectures, bridging the gap between Kafka’s high-throughput messaging and Redis’s ultra-fast data access. It optimizes caching, enables instant analytics, and ensures that applications have quick access to processed event data. Whether for session management, caching, event enrichment, or real-time decision-making, integrating Redis with Kafka using a Sink Connector enhances performance and scalability in data-driven applications.
+
+
+![Image-3](../assets/blog-images/e2e_datapipeline/redis_sink.png)
 
 # Oracle DB Pre-requisite
 
