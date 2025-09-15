@@ -78,7 +78,7 @@ In cases where you are not required to move existing data, the migration process
     * Start migrating consumers to the new cluster in phases. Begin with less critical consumers and verify that they are processing data correctly.
     * Ensure that consumers can handle data from the new cluster without issues such as reprocessing or data loss. More information on this will follow.
 * **Cutover:**
-    * Once the stability of the new Confluent cluster is confirmed and the consumers have already been migrated, the next step is to stop dual writes from the producer. At this point, the producer should only write to the new cluster. This ensures a smooth transition while maintaining data consistency and minimizing any potential risks associated with the migration. Make sure a rollback plan is in place to handle any unforeseen issues during this process in case the cutover is unsuccessful. This plan should allow you to revert to the original cluster quickly to minimize downtime and data loss, ensuring business continuity while troubleshooting any issues with the migration.
+    * Once the stability of the new Kafka cluster is confirmed and the consumers have already been migrated, the next step is to stop dual writes from the producer. At this point, the producer should only write to the new cluster. This ensures a smooth transition while maintaining data consistency and minimizing any potential risks associated with the migration. Make sure a rollback plan is in place to handle any unforeseen issues during this process in case the cutover is unsuccessful. This plan should allow you to revert to the original cluster quickly to minimize downtime and data loss, ensuring business continuity while troubleshooting any issues with the migration.
     * Monitor both clusters during and after the cutover to ensure everything is functioning as expected.
 * **Decommission the Old Cluster:**
     * After a period of stable operation on the new cluster, decommission the old cluster. Ensure all relevant data and metadata have been successfully transitioned before doing so.
@@ -122,7 +122,7 @@ Data migration adds complexity, as it involves transferring not only active prod
     * Potential replication lag: MirrorMaker 2 may experience higher replication lag compared to Cluster Linking, depending on configurations.
     * Limited schema translation: If using schema registries, it lacks advanced schema translation features.
 
-**When to use:** MM2 is suited for environments where you require flexibility with Kafka distributions or need offset translation between clusters.
+**When to use:** MM2 is suited for environments where you require flexibility with Kafka distributions or do not mind offset translation between clusters.
 
 **Confluent Replicator:** A robust tool that enables data replication with advanced features like filtering, transformation, and schema management.
 
