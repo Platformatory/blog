@@ -156,11 +156,11 @@ Here’s a look at the dashboard in action computing the latency metrics in real
 
 > **Note:** The screenshots shown below are captured at random points in time while the pipelines were running. They are not intended to represent a single fixed phase (startup or steady state), but rather illustrate how latency behaves at different moments during execution.
 
-### Screenshot 1: Early Startup Phase
+### Snapshot 1: Early Startup Phase
 
-![Screenshot 1](/blog/assets/blog-images/spark_vs_flink/screenshot_1.png "Screenshot 1: Early Startup Phase")
+![Spark vs Flink Startup Latency Comparison](/blog/assets/blog-images/spark_vs_flink/spark_flink_startup_latency_comparison.png "Screenshot 1: Early Startup Phase")
 
-This screenshot was captured immediately after data production started.
+This snapshot was captured immediately after data production started.
 
 - Spark shows a significantly higher average latency of around **~30 seconds**
 - This includes Spark job initialization, micro-batch scheduling, and backlog buildup
@@ -180,11 +180,11 @@ This snapshot highlights differences during **initial load and job warm-up**.
 
 ---
 
-### Screenshot 2: Post-Startup / Active Processing Phase
+### Snapshot 2: Post-Startup / Active Processing Phase
 
-![Screenshot 2](/blog/assets/blog-images/spark_vs_flink/screenshot_2.png "Screenshot 2: Post-Startup / Active Processing Phase")
+![Spark vs Flink Steady-State Latency Comparison](/blog/assets/blog-images/spark_vs_flink/spark_flink_steady_state_latency_comparison.png "Screenshot 2: Post-Startup / Active Processing Phase")
 
-This screenshot captures a point after the initial startup phase.
+This snapshot captures a point after the initial startup phase.
 
 - Spark latency stabilizes around **~0.83–0.94 seconds**
 - A visible step-like pattern appears, characteristic of micro-batch execution
@@ -230,6 +230,16 @@ http://127.0.0.1:8050/
 ```
 
 This dashboard computes and visualizes latency metrics in real time for both Spark and Flink pipelines.
+
+---
+
+## Limitations and Future Work
+
+This experiment focuses on a **stateless, transformation-light streaming workload** to isolate and compare end-to-end latency characteristics of Spark and Flink under high-throughput conditions.
+
+Both Apache Spark and Apache Flink provide rich support for **stateful operations**, including windowed aggregations, joins, and complex event processing. Latency and performance characteristics can differ significantly when state management, checkpointing, and recovery mechanisms are involved.
+
+A comparative evaluation of **stateful streaming workloads** would provide deeper insight into how each system handles state, backpressure, and fault tolerance. This is a natural next step and is planned as a future iteration of this work.
 
 ---
 
