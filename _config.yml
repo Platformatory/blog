@@ -137,7 +137,7 @@ authors:
     email: shriveens@platformatory.com
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
-    description: "Data Engineer at Platformatory responsible for designing and building real-time data infrastructure. Works on end-to-end streaming pipelines, cloud infrastructure provisioning, and analytics dashboards, enabling near real-time insights across the platform."
+    description: "Data Engineer at Platformatory responsible for designing and building real-time data infrastructure. Works on end-to-end streaming pipelines, cloud infrastructure provisioning, and analytics dashboards, enabling real-time insights across the platform."
   Balaji:
     name: Balaji K
     display_name: Balaji K
