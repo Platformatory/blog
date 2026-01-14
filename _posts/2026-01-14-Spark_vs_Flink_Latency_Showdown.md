@@ -154,11 +154,11 @@ Here’s a look at the dashboard in action computing the latency metrics in real
 
 ## A Closer Look at the Dashboard
 
-> **Note:** The screenshots shown below are captured at random points in time while the pipelines were running. They are not intended to represent a single fixed phase (startup or steady state), but rather illustrate how latency behaves at different moments during execution.
+> **Note:** The snapshots shown below are captured at random points in time while the pipelines were running. They are not intended to represent a single fixed phase (startup or steady state), but rather illustrate how latency behaves at different moments during execution.
 
 ### Snapshot 1: Early Startup Phase
 
-![Spark vs Flink Startup Latency Comparison](/blog/assets/blog-images/spark_vs_flink/spark_flink_startup_latency_comparison.png "Screenshot 1: Early Startup Phase")
+![Spark vs Flink Startup Latency Comparison](/blog/assets/blog-images/spark_vs_flink/spark_flink_startup_latency_comparison.png "Snapshot 1: Early Startup Phase")
 
 This snapshot was captured immediately after data production started.
 
@@ -182,7 +182,7 @@ This snapshot highlights differences during **initial load and job warm-up**.
 
 ### Snapshot 2: Post-Startup / Active Processing Phase
 
-![Spark vs Flink Steady-State Latency Comparison](/blog/assets/blog-images/spark_vs_flink/spark_flink_steady_state_latency_comparison.png "Screenshot 2: Post-Startup / Active Processing Phase")
+![Spark vs Flink Steady-State Latency Comparison](/blog/assets/blog-images/spark_vs_flink/spark_flink_steady_state_latency_comparison.png "Snapshot 2: Post-Startup / Active Processing Phase")
 
 This snapshot captures a point after the initial startup phase.
 
