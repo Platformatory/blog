@@ -129,6 +129,15 @@ authors:
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
     description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing (SRE) and Infrastructure. The role involves managing the infrastructre and make sure the cluster are working fine."
+  ShriVeena:
+    name: Shri Veena M P
+    display_name: Shri Veena M P
+    avatar: 'assets/images/girl_avatar_2.jpg'
+    gravatar: b1cc14991db7a456fcd761680bbc8f81
+    email: shriveens@platformatory.com
+    web: https://www.platformatory.io
+    twitter: https://twitter.com/platformatory
+    description: "Data Engineer at Platformatory responsible for designing and building real-time data infrastructure. Works on end-to-end streaming pipelines, cloud infrastructure provisioning, and analytics dashboards, enabling near real-time insights across the platform."
   Balaji:
     name: Balaji K
     display_name: Balaji K
