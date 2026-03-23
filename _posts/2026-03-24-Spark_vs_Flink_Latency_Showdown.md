@@ -65,7 +65,6 @@ Kafka was used as both the **source and sink**, simulating real-time data stream
 
 ## Workload Characteristics
 
-
 The workload was designed to progressively increase in complexity:
 
 - **Stateless pipelines:** Each message is self-contained, no joins or aggregations.  
@@ -202,7 +201,6 @@ Percentile metrics confirm:
 
 ---
 
-
 ## Results: Who Wins the Latency Race?
 
 After processing **over 1 million records** across all configurations:
@@ -304,7 +302,5 @@ Flink’s continuous, record-at-a-time processing model handles both stateless a
 > If your goal is low-latency, high-throughput streaming with complex state or schema requirements, PyFlink provides a clear advantage over PySpark.
 
 We’d love to hear your experiences with Spark vs Flink. Share your thoughts and insights in the comments!
-
-✅ It keeps the flow and readability of your original conclusion, while also:
 
 ---
