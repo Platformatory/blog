@@ -230,7 +230,7 @@ For example, an insert into an Oracle table:
 
 ```sql
 INSERT INTO ADMIN.USERS (ID, NAME, STATUS)
-VALUES (101, 'Balaji', 'ACTIVE');
+VALUES (101, 'John Doe', 'ACTIVE');
 ```
 
 May become a Kafka event conceptually like:
@@ -238,7 +238,7 @@ May become a Kafka event conceptually like:
 ```json
 {
   "ID": 101,
-  "NAME": "Balaji",
+  "NAME": "John Doe",
   "STATUS": "ACTIVE"
 }
 ```
@@ -422,7 +422,7 @@ Conceptually:
 ```text
 Table Data Block
 ------------------------------------------------
-Row: ID=101, NAME='Balaji', NOTES=[LOB LOCATOR]
+Row: ID=101, NAME='John Doe', NOTES=[LOB LOCATOR]
 ------------------------------------------------
 ```
 
