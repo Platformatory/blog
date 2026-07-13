@@ -25,11 +25,11 @@ toc: true
 
 Modern data platforms increasingly depend on real-time or near-real-time data movement. Traditional batch-based ETL still has its place, but for many use cases such as operational reporting, downstream synchronization, audit pipelines, fraud detection, and event-driven applications, waiting for hourly or daily jobs is no longer sufficient.
 
-This is where **Change Data Capture**, or **CDC**, becomes important.
+This is where **Change Data Capture (CDC)** becomes important.
 
 CDC allows applications and data platforms to capture changes from a database as they happen and publish those changes to downstream systems. In the Oracle ecosystem, this is commonly done by reading database redo logs and converting committed database changes into events.
 
-In this blog, we will look at how data moves from **Oracle Database to Kafka** using the **Confluent Oracle CDC Source Connector**. We will also discuss what happens internally at a high level, what to check in Oracle table structures before implementing CDC, how different Oracle data types are represented in Kafka Connect, and why LOB columns such as `BLOB`, `CLOB`, and `NCLOB` require special attention.
+In this blog, we will look at how data moves from **Oracle DB to Kafka** using the **Confluent Oracle CDC Source Connector**. We will also discuss what happens internally at a high level, what to check in Oracle table structures before implementing CDC, how different Oracle data types are represented in Kafka Connect, and why LOB columns such as `BLOB`, `CLOB`, and `NCLOB` require special attention.
 
 This article is based on a practical Oracle CDC implementation where Oracle source data, including primitive columns and `NCLOB` data, was streamed through Confluent Platform using Kafka Connect, Kafka topics, Schema Registry, and downstream sink processing.
 
@@ -48,7 +48,6 @@ Once the data is in Kafka, multiple consumers can independently process it. One 
 
 This is the major benefit of using Kafka for CDC: **Oracle is no longer tightly coupled to every downstream system**.
 
----
 
 ## Why Use Confluent Oracle CDC Source Connector?
 
@@ -58,28 +57,22 @@ The main reasons to choose it are:
 
 ### 1. It Captures Changes from Oracle Redo Logs
 
-Oracle records database changes in redo logs. The Confluent Oracle CDC Source Connector uses Oracle LogMiner to interpret those redo logs and identify committed changes.
-
-This avoids repeatedly querying source tables.
-
-With query-based polling, you usually depend on columns such as `LAST_UPDATED_DATE` or incrementing IDs. That approach can miss deletes, can miss certain updates, and usually adds extra read load on source tables.
-
-CDC through redo logs is a better fit when the requirement is to capture actual database changes.
+Oracle records database changes in redo logs. The Confluent Oracle CDC Source Connector uses Oracle LogMiner to interpret those redo logs and identify committed changes. This avoids repeatedly querying source tables. With query-based polling, you usually depend on columns such as `LAST_UPDATED_DATE` or incrementing IDs. That approach can miss deletes, can miss certain updates, and usually adds extra read load on source tables. CDC through redo logs is a better fit when the requirement is to capture actual database changes. 
 
 
-### 2. It Integrates with Kafka Connect
+### 2. Integration with Kafka Connect
 
 Kafka Connect provides the runtime for running the connector. This gives you a standard framework for:
 
 ```text
-Connector deployment
-Task execution
-Offset tracking
-Error handling
-Converters
-Single Message Transforms
-Monitoring
-Restart and recovery
+ - Connector deployment
+ - Task execution
+ - Offset tracking
+ - Error handling
+ - Converters
+ - Single Message Transforms
+ - Monitoring
+ - Restart and recovery
 ```
 
 This means you are not building a custom data movement service from scratch. You are deploying a connector into a managed runtime that is already designed for streaming integration workloads.
@@ -105,7 +98,6 @@ ORCL.ADMIN.CUSTOMERS
 
 This table-specific topic design makes downstream consumption easier. Consumers can subscribe only to the tables they care about.
 
----
 
 ### 4. It Allows Downstream Decoupling
 
@@ -117,13 +109,11 @@ After Oracle changes are written to Kafka, many downstream systems can consume t
 
 This is different from point-to-point database integration. Kafka becomes the central event backbone.
 
----
 
 ### 5. It Supports Schema-Aware Pipelines
 
-When used with Schema Registry and converters such as Avro, JSON Schema, or Protobuf, CDC records can carry structured schemas.
+When used with Schema Registry and converters such as Avro, JSON Schema, or Protobuf, CDC records can carry structured schemas. This is important because CDC pipelines are not only moving data values, they are also moving the structure and meaning of the data.
 
-This is important because CDC pipelines are not only moving data values. They are also moving the structure and meaning of the data.
 
 For example:
 
@@ -136,7 +126,6 @@ Oracle BLOB/CLOB   -> Kafka Connect Bytes
 
 Schema awareness helps consumers understand the data format and reduces the risk of silent schema mismatches.
 
----
 
 ## High-Level Internal Working of Oracle CDC Source Connector
 
@@ -162,13 +151,11 @@ A simplified diagram:
 
 In the reference implementation, Oracle DB fed redo logs into the Oracle CDC Source Connector running inside Kafka Connect. The connector used LogMiner, wrote raw redo log events to a redo log topic, and then produced table-specific topics for primitive columns and separate LOB topics for LOB columns.
 
----
 
 ## Understanding the Redo Log Topic
 
-One important internal concept is the **redo log topic**.
+One important internal concept is the **redo log topic**. The connector does not simply read a table and directly publish rows to Kafka. It works from Oracle redo log information.
 
-The connector does not simply read a table and directly publish rows to Kafka. It works from Oracle redo log information.
 
 A simplified view:
 
@@ -176,11 +163,9 @@ A simplified view:
 ![Image-4](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image4.png)
 
 
-The redo log topic acts as an intermediate Kafka topic containing raw redo log events. The connector processes this information and generates structured change events for the captured tables.
+The redo log topic acts as an intermediate Kafka topic containing raw redo log events. The connector processes this information and generates structured change events for the captured tables. This design helps the connector manage CDC processing, offsets, and table-level event generation.
 
-This design helps the connector manage CDC processing, offsets, and table-level event generation.
 
----
 
 ## Table-Specific Topics
 
@@ -204,11 +189,8 @@ Example:
 table.topic.name.template=${fullyQualifiedTableName}
 ```
 
-This means each Oracle table gets its own Kafka topic based on the fully qualified table name.
+This means each Oracle table gets its own Kafka topic based on the fully qualified table name. This is clean and intuitive for downstream consumers because each table becomes a separate event stream.
 
-This is clean and intuitive for downstream consumers because each table becomes a separate event stream.
-
----
 
 ## What Actually Flows into Kafka?
 
@@ -217,13 +199,13 @@ A CDC event usually represents a database change.
 Depending on the connector configuration, converter, and event format, a Kafka record may include:
 
 ```text
-Primary key
-Changed row values
-Operation type
-Timestamp information
-Source metadata
-Schema information
-Before/after values depending on configuration
+ - Primary key
+ - Changed row values
+ - Operation type
+ - Timestamp information
+ - Source metadata
+ - Schema information
+ - Before/after values depending on configuration
 ```
 
 For example, an insert into an Oracle table:
@@ -251,11 +233,8 @@ SET STATUS = 'INACTIVE'
 WHERE ID = 101;
 ```
 
-The event may represent the changed state of the row, depending on connector behavior and configuration.
+The event may represent the changed state of the row, depending on connector behavior and configuration. The exact message structure depends on the converter and connector settings, but the core idea is the same: **database row-level changes become Kafka records**.
 
-The exact message structure depends on the converter and connector settings, but the core idea is the same: **database row-level changes become Kafka records**.
-
----
 
 ## Why Table Design Matters Before Implementing CDC
 
@@ -264,23 +243,22 @@ Before enabling CDC on Oracle tables, it is important to inspect the table desig
 At minimum, you should review:
 
 ```text
-Primary key availability
-Column data types
-LOB columns
-Nullable columns
-Timestamp columns
-Precision and scale for NUMBER columns
-Character set and national character set
-Unsupported or complex data types
-Expected row size
-Expected change volume
-Delete behavior
-Schema evolution frequency
+ - Primary key availability
+ - Column data types
+ - LOB columns
+ - Nullable columns
+ - Timestamp columns
+ - Precision and scale for NUMBER columns
+ - Character set and national character set
+ - Unsupported or complex data types
+ - Expected row size
+ - Expected change volume
+ - Delete behavior
+ - Schema evolution frequency
 ```
 
 Let us look at the most important checks.
 
----
 
 ## Check 1: Does the Table Have a Primary Key?
 
@@ -319,8 +297,6 @@ Can a stable business key be used?
 How will updates and deletes be handled downstream?
 ```
 
----
-
 ## Check 2: What Data Types Are Present?
 
 The next important check is column data types.
@@ -328,23 +304,23 @@ The next important check is column data types.
 Simple columns are usually straightforward:
 
 ```text
-VARCHAR2
-NUMBER
-DATE
-TIMESTAMP
+ - VARCHAR2
+ - NUMBER
+ - DATE
+ - TIMESTAMP
 ```
 
 Complex or sensitive columns need more attention:
 
 ```text
-BLOB
-CLOB
-NCLOB
-XMLTYPE
-RAW
-NUMBER with high precision
-TIMESTAMP WITH TIME ZONE
-TIMESTAMP WITH LOCAL TIME ZONE
+ - BLOB
+ - CLOB
+ - NCLOB
+ - XMLTYPE
+ - RAW
+ - NUMBER with high precision
+ - TIMESTAMP WITH TIME ZONE
+ - TIMESTAMP WITH LOCAL TIME ZONE
 ```
 
 Example Oracle-to-Kafka Connect mappings:
@@ -368,9 +344,8 @@ XMLTYPE                             Bytes
 
 This is a critical point.
 
-Many teams assume that `CLOB` and `NCLOB` will appear as normal strings in Kafka. In practice, they may appear as bytes and require additional handling.
+Many teams assume that `CLOB` and `NCLOB` will appear as normal strings in Kafka. In practice, they appear as bytes and require additional handling.
 
----
 
 ## Check 3: Are There LOB Columns?
 
@@ -388,7 +363,6 @@ LOBs are used for large text, documents, XML, JSON, images, PDFs, and other larg
 
 From a CDC point of view, LOBs are different from primitive columns because they are stored differently inside Oracle.
 
----
 
 ## Primitive Columns vs LOB Columns
 
@@ -441,7 +415,6 @@ LOB Chunk 3: "...more text..."
 
 This difference matters because Oracle redo logs also represent LOB changes differently.
 
----
 
 ## Why LOB Columns Are Challenging in CDC
 
@@ -465,11 +438,8 @@ A simplified flow:
 ![Image-5](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image5.png)
 
 
-This creates a downstream challenge.
+This creates a downstream challenge. If the target database expects a readable `NCLOB` value, the pipeline may need to decode the byte array into a string before writing it.
 
-If the target database expects a readable `NCLOB` value, the pipeline may need to decode the byte array into a string before writing it.
-
----
 
 ## LOB Topic Handling
 
@@ -498,8 +468,6 @@ A good design is to treat primitive topics and LOB topics differently.
 
 ![Image-6](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image6.png)
 
-
----
 
 ## Character Encoding Matters
 
@@ -537,7 +505,6 @@ byte[] representing UTF-16 encoded content
 
 If a sink connector or consumer treats that byte array as a normal UTF-8 string, the result may be corrupted, unreadable, or contain null characters.
 
----
 
 ## Kafka Stores Bytes, But Converters Decide Representation
 
@@ -560,7 +527,6 @@ String Converter
 
 The key lesson is that Kafka can safely transport the bytes, but your downstream processing must understand what those bytes represent.
 
----
 
 ## Handling NCLOB Data: Example Flow
 
@@ -588,7 +554,6 @@ After custom SMT:
 
 Then the JDBC Sink Connector can write the cleaned string to the destination Oracle table.
 
----
 
 ## What to Check Before Enabling Oracle CDC
 
@@ -611,7 +576,6 @@ Why it matters:
 
 The connector needs to know which tables to capture, and downstream systems need a stable way to identify each changed row.
 
----
 
 ### 2. Primary Key and Upsert Behavior
 
@@ -628,7 +592,6 @@ Why it matters:
 
 Without a proper key, update and delete handling becomes difficult.
 
----
 
 ### 3. Column Data Types
 
@@ -649,7 +612,6 @@ Why it matters:
 
 Each data type may require different serialization, conversion, or sink-side handling.
 
----
 
 ### 4. LOB Columns
 
@@ -668,7 +630,6 @@ Why it matters:
 
 LOBs are not always plug-and-play in CDC. They may need custom decoding or transformation.
 
----
 
 ### 5. Character Set
 
@@ -687,7 +648,6 @@ Why it matters:
 
 `CLOB` and `NCLOB` handling depends on character encoding. For `NCLOB`, you need to know the national character set. If the emitted value is bytes, decoding must use the correct encoding.
 
----
 
 ### 6. Nullable Columns and Default Values
 
@@ -704,7 +664,6 @@ Why it matters:
 
 CDC records may represent nulls, missing fields, or tombstones depending on operation type and configuration.
 
----
 
 ### 7. Deletes and Tombstones
 
@@ -721,7 +680,6 @@ Why it matters:
 
 Delete handling must be explicitly designed, especially if Kafka topics are compacted or downstream systems maintain a copy of the source table.
 
----
 
 ### 8. Schema Changes
 
@@ -739,7 +697,6 @@ Why it matters:
 
 CDC pipelines are sensitive to schema changes. Adding a nullable column may be simple. Changing a column type can break consumers or sink connectors.
 
----
 
 ## Recommended Data Type Review Table
 
@@ -758,7 +715,6 @@ XML_PAYLOAD | XMLTYPE     | Bytes              | Yes                       | Dec
 
 This exercise is extremely useful because it prevents surprises after connector deployment.
 
----
 
 ## Recommended Architecture Pattern
 
@@ -771,7 +727,6 @@ A better pattern is:
 
 This allows you to process normal relational data with standard patterns while applying special logic only where required.
 
----
 
 ## Common Mistakes to Avoid
 
@@ -794,7 +749,6 @@ Deletes
 Schema changes
 ```
 
----
 
 ### Mistake 2: Assuming LOBs Are Strings
 
@@ -802,7 +756,6 @@ Schema changes
 
 Do not assume they will arrive in Kafka as normal readable strings.
 
----
 
 ### Mistake 3: Ignoring Character Encoding
 
@@ -818,7 +771,6 @@ Converter behavior
 Sink connector behavior
 ```
 
----
 
 ### Mistake 4: Not Defining Key Strategy
 
@@ -833,7 +785,6 @@ Sink primary key mode
 Destination table key
 ```
 
----
 
 ### Mistake 5: Treating the Connector as a Black Box
 
@@ -851,7 +802,6 @@ Sink behavior
 
 Understanding this flow makes troubleshooting much easier.
 
----
 
 ## Lessons Learned
 
@@ -877,7 +827,6 @@ LOB data is stored differently in Oracle and may be emitted as bytes. For `NCLOB
 
 Kafka will transport the data. But the connector, converter, SMTs, stream processing layer, and sink connector must preserve the correct meaning of the data.
 
----
 
 ## Conclusion
 
