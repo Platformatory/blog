@@ -162,7 +162,7 @@ Example where primary key is in value:
 ```json
 {
   "CUSTOMER_ID": 101,
-  "NAME": "Balaji",
+  "NAME": "John Doe",
   "STATUS": "ACTIVE"
 }
 ```
