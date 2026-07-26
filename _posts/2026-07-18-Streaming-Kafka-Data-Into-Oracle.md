@@ -179,7 +179,6 @@ This tells the sink connector to use the `CUSTOMER_ID` field from the Kafka reco
 
 Without correct key handling, the connector may not be able to update existing rows reliably.
 
----
 
 ## Auto-Create Table vs Pre-Created Oracle Table
 
@@ -445,7 +444,6 @@ NOTES bytes
     -> write to Oracle NCLOB
 ```
 
----
 
 ## Recommended LOB Processing Pattern
 
@@ -455,7 +453,6 @@ A clean production pattern is to separate primitive and LOB processing.
 
 This separation gives you better control and easier troubleshooting.
 
----
 
 ## Using SMTs for LOB Transformation
 
@@ -516,7 +513,6 @@ Handle multi-step transformation logic
 
 For example, if primitive data and LOB data arrive in separate Kafka topics and need to be merged before writing to Oracle, a stream processing application may be more suitable than an SMT.
 
----
 
 ## Handling Separate LOB Topics
 
