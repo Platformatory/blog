@@ -21,12 +21,12 @@ This blog focuses on the Kafka-to-Oracle side of the pipeline: how to write Kafk
 
 The high-level requirement is to synchronize data from Kafka topics into Oracle tables.
 
-![Image-1](../assets/blog-images/StreamingKafkaDataIntoOracle/image1.png)
+![Kafka Topics To Oracle Destination DB](../assets/blog-images/StreamingKafkaDataIntoOracle/image1.png)
 
 
 In a CDC-based architecture, these Kafka topics may have been produced by an upstream CDC source connector. For example:
 
-![Image-2](../assets/blog-images/StreamingKafkaDataIntoOracle/image2.png)
+![Oracle to Kafka to Oracle End-to-End Synchronization](../assets/blog-images/StreamingKafkaDataIntoOracle/image2.png)
 
 
 This blog focuses only on the second half: **Kafka Topics --> Oracle Destination DB**
@@ -60,7 +60,7 @@ Instead of writing a custom Kafka consumer application for every database synchr
 
 For a simple Kafka topic containing customer data, the flow may look like this:
 
-![Image-3](../assets/blog-images/StreamingKafkaDataIntoOracle/image3.png)
+![Kafka Topic to Oracle Table Mapping](../assets/blog-images/StreamingKafkaDataIntoOracle/image3.png)
 
 
 Destination Oracle table:
@@ -340,6 +340,8 @@ Before writing into Oracle, you need to answer:
 
 ## BLOB vs CLOB vs NCLOB Handling
 
+![BLOB vs CLOB vs NCLOB Handling](../assets/blog-images/StreamingKafkaDataIntoOracle/image4.png)
+
 ### BLOB
 
 `BLOB` is binary data. If the Kafka field is truly binary content, it can remain as bytes.
@@ -449,12 +451,14 @@ NOTES bytes
 
 A clean production pattern is to separate primitive and LOB processing.
 
-![Image-5](../assets/blog-images/StreamingKafkaDataIntoOracle/image5.png)
+![Recommended LOB Processing Pattern](../assets/blog-images/StreamingKafkaDataIntoOracle/image5.png)
 
 This separation gives you better control and easier troubleshooting.
 
 
 ## Using SMTs for LOB Transformation
+
+![Using SMTs for LOB Transformation](../assets/blog-images/StreamingKafkaDataIntoOracle/image6.png)
 
 Kafka Connect Single Message Transforms, or SMTs, can modify records before they are written by the sink connector.
 
@@ -532,7 +536,7 @@ There are two common sink patterns.
 
 ### Pattern 1: Two Sink Connectors to the Same Table
 
-![Image-7](../assets/blog-images/StreamingKafkaDataIntoOracle/image7.png)
+![Pattern 1: Two Sink Connectors to the Same Table](../assets/blog-images/StreamingKafkaDataIntoOracle/image7.png)
 
 Both sink connectors use the same primary key and `upsert` mode.
 
@@ -540,7 +544,7 @@ This pattern works when the primitive and LOB updates can be applied independent
 
 ### Pattern 2: Merge First, Then Sink
 
-![Image-8](../assets/blog-images/StreamingKafkaDataIntoOracle/image8.png)
+![Pattern 2: Merge First, Then Sink](../assets/blog-images/StreamingKafkaDataIntoOracle/image8.png)
 
 This pattern is better when the destination row must be written as a complete merged record.
 
@@ -767,7 +771,7 @@ FILE_DATA   | Bytes      | FILE_DATA     | BLOB        | No if true binary      
 
 ## Recommended Architecture
 
-![Image-9](../assets/blog-images/StreamingKafkaDataIntoOracle/image9.png)
+![Recommended Architecture](../assets/blog-images/StreamingKafkaDataIntoOracle/image9.png)
 
 Choose the pattern based on ordering requirements, merge requirements, and downstream consistency expectations.
 
