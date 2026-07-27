@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Debezium with Oracle DB and OpenLogReplicator for Change Data Capture on Confluent Platform"
-author: Balaji K
+author: Balaji
 categories:
   [Kafka Connectors, Debezium,  Kafka, Oracle CDC]
 image: assets/blog-images/openlogreplicator/architecture.png
