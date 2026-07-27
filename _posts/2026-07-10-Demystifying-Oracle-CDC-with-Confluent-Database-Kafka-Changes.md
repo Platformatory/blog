@@ -4,7 +4,7 @@ title: "Demystifying Oracle CDC with Confluent: How Database Changes Flow into K
 author: Balaji
 categories:
   [Platform Engineering, Data, Infrastructure, Kafka, CDC, Oracle, Connectors, LOB]
-image: assets/blog-images/DemystifyingOracleCDCwithConfluent/Blog1-Header.png
+image: assets/blog-images/DemystifyingOracleCDCwithConfluent/demystifying-oracleCDC-with-confluent.png
 featured: true
 hidden: true
 cat_box_title: Contact Us
@@ -13,7 +13,7 @@ ctas:
     description: "Have questions or need assistance? Our team is here to help"
     url: "/contact/"
 
-teaser: Platform Engineering is dead. Long live platform engineering!
+teaser: This blog explains how the Confluent Oracle CDC Source Connector streams Oracle database changes—including primitive and LOB data—into Kafka using redo-log-based Change Data Capture.
 toc: true
 ---
 
