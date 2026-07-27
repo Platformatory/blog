@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Debezium with Oracle DB and LogMiner for Change Data Capture on Confluent Platform"
-author: Balaji K
+author: Balaji
 categories:
   [Data Processing, Data Streaming, Confluent Kafka, Connectors]
 image: assets/blog-images/oracleCDC-debezium-connector/debezium_header.jpg
