@@ -1,4 +1,21 @@
-# Streaming Kafka Data into Oracle: JDBC Sink Connector, Upserts, and LOB Handling
+---
+layout: post
+title: "Streaming Kafka Data into Oracle: JDBC Sink Connector, Upserts, and LOB Handling"
+author: Balaji K
+categories:
+  [Kafka Connect,Kafka,Data Engineering, CDC, Oracle CDC]
+image: assets/blog-images/StreamingKafkaDataIntoOracle/streaming-kafka-data-to-oracle.png
+featured: false
+hidden: false
+cat_box_title: Contact Us
+ctas:
+  - title: Get In Touch
+    description: "Have questions or need help designing low-latency data pipelines? Our team is here to help"
+    url: "/contact/"
+teaser: Data streaming projects often begin by capturing source data into Kafka. The next step is delivering that data to downstream systems, such as Oracle databases, for reporting, application integration, modernization, auditing, or cross-zone synchronization.
+toc: true
+---
+
 
 
 ## Introduction
