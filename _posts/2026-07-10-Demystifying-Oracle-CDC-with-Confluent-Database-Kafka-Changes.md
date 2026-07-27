@@ -18,8 +18,6 @@ toc: true
 ---
 
 
-# Demystifying Oracle CDC with Confluent: How Database Changes Flow into Kafka
-
 
 ## Introduction
 
@@ -39,7 +37,7 @@ This article is based on a practical Oracle CDC implementation where Oracle sour
 
 The use case is simple to describe:
 
-![Image-1](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image1.png)
+![Oracle to Kafka to Downstream System](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image1.png)
 
 
 Instead of writing custom jobs that repeatedly query Oracle tables, CDC captures row-level changes from Oracle and publishes those changes into Kafka topics.
@@ -104,7 +102,7 @@ This table-specific topic design makes downstream consumption easier. Consumers 
 After Oracle changes are written to Kafka, many downstream systems can consume the same data independently:
 
 
-![Image-2](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image2.png)
+![Oracle CDC Outputs from kafka Topics](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image2.png)
 
 
 This is different from point-to-point database integration. Kafka becomes the central event backbone.
@@ -146,7 +144,7 @@ At a high level, the data movement from Oracle to Kafka happens in multiple stag
 A simplified diagram:
 
 
-![Image-3](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image3.png)
+![How Oracle Changes Reaches Kafka Topics](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image3.png)
 
 
 In the reference implementation, Oracle DB fed redo logs into the Oracle CDC Source Connector running inside Kafka Connect. The connector used LogMiner, wrote raw redo log events to a redo log topic, and then produced table-specific topics for primitive columns and separate LOB topics for LOB columns.
@@ -160,7 +158,7 @@ One important internal concept is the **redo log topic**. The connector does not
 A simplified view:
 
 
-![Image-4](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image4.png)
+![Oracle Redo Logs to Kafka Topics](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image4.png)
 
 
 The redo log topic acts as an intermediate Kafka topic containing raw redo log events. The connector processes this information and generates structured change events for the captured tables. This design helps the connector manage CDC processing, offsets, and table-level event generation.
@@ -435,7 +433,7 @@ The reason is that LOB content is written into redo logs as binary chunks relate
 A simplified flow:
 
 
-![Image-5](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image5.png)
+![Oracle NCLOB Data Reaches Kafka Topic](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image5.png)
 
 
 This creates a downstream challenge. If the target database expects a readable `NCLOB` value, the pipeline may need to decode the byte array into a string before writing it.
@@ -466,7 +464,7 @@ This separation is useful because LOB payloads may be large, encoded differently
 A good design is to treat primitive topics and LOB topics differently.
 
 
-![Image-6](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image6.png)
+![Primitive vs LOB Topic Processing](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image6.png)
 
 
 ## Character Encoding Matters
@@ -533,7 +531,7 @@ The key lesson is that Kafka can safely transport the bytes, but your downstream
 For an `NCLOB` column, a practical flow may look like this:
 
 
-![Image-7](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image7.png)
+![NCLOB Processing from Kafka To Oracle](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image7.png)
 
 
 Conceptually:
@@ -723,7 +721,7 @@ For a production CDC pipeline, avoid treating all columns and topics the same wa
 A better pattern is:
 
 
-![Image-8](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image8.png)
+![Oracle CDC with Separate Primitve and LOB Path](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image8.png)
 
 This allows you to process normal relational data with standard patterns while applying special logic only where required.
 
