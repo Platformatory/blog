@@ -1,7 +1,7 @@
 **TechMart Enterprise Voice Agent: Building a Sovereign AI Voice Support System for Indian Telecom**
 
 
-![TechMart Enterprise Voice Agent Architecture](/assets/blog-images/Techmart-telephony-ai/image1.png)
+![TechMart Enterprise Voice Agent Architecture](/assets/blog-images/telephony_architecture.png)
 
 
 
