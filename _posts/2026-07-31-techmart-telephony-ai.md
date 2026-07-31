@@ -148,7 +148,7 @@ This decision had several downstream benefits:
 
 Because the agent handles live customer accounts over the phone, the system must guarantee that a caller can never access another customer's data, regardless of how the conversation is steered. This is enforced structurally rather than through prompting:
 
-- **Server-side identity injection**. When a call connects, the caller's phone number is verified at the telecom layer and used to look up their record. Sensitive identifiers such as customer_id are then stored in the LangGraph agent state. They are never supplied by the LLM — instead, they are injected directly into tool execution at the LangGraph ToolNode layer via LangGraph's InjectedState mechanism, so the model can request an action but cannot control whose data that action touches.
+- **Server-side identity injection**. When a call connects, the caller's phone number is verified at the telecom layer and used to look up their record. Sensitive identifiers such as `customer_id` are then stored in the LangGraph agent state. They are never supplied by the LLM — instead, they are injected directly into tool execution at the LangGraph `ToolNode` layer via LangGraph's `InjectedState` mechanism, so the model can request an action but cannot control whose data that action touches.
 
 - **Explicit confirmation gates**. State-changing actions, such as filing a complaint ticket, require a two-step flow. First, an eligibility check runs; then the caller must explicitly confirm before any write occurs.
 
