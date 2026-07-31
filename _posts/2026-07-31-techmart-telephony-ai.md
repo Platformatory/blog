@@ -13,7 +13,7 @@ toc: true
 
 
 
-![TechMart Enterprise Voice Agent Architecture](/assets/blog-images/telephony_architecture.png)
+![TechMart Enterprise Voice Agent Architecture](../assets/blog-images/telephony_architecture.png)
 
 
 
