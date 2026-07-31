@@ -1,4 +1,4 @@
-![](/assets/blog-images/Techmart-telephony-ai/telephony_architecture.png){width="8.085106080489938in"
+![](/assets/blog-images/telephony_architecture.png){width="8.085106080489938in"
 height="3.1666666666666665in"}**TechMart Enterprise Voice Agent:
 Building a Sovereign AI Voice Support System for Indian Telecom**
 
