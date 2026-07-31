@@ -13,7 +13,9 @@ toc: true
 
 
 
-![TechMart Enterprise Voice Agent Architecture](../assets/blog-images/telephony_architecture.png)
+<img src="../assets/blog-images/telephony_architecture.png" 
+     alt="TechMart Enterprise Voice Agent Architecture" 
+     style="max-width: 100%; height: auto; display: block; margin: 1.5em auto;" />
 
 
 
