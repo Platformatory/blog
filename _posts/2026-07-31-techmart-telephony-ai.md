@@ -3,19 +3,12 @@ layout: post
 title: "TechMart Enterprise Voice Agent: Building a Sovereign AI Voice Support System for Indian Telecom"
 authors: Ashmith
 categories: [Voice AI, LangGraph, Telephony, Real time Conversational AI]
-# image: assets/blog-images/telephony_architecture.png
+image: assets/blog-images/telephony_architecture.png
 teaser: How do you build a real-time, telephony-native AI agent that handles customer support calls end-to-end in native Indian languages, without a human in the loop? This post walks through the architecture behind the TechMart Enterprise Voice Agent — from decoupling the reasoning layer with LangGraph, to hybrid search, state-level security, and the case for sovereign, India-hosted infrastructure over foreign-hosted alternatives.
 featured: false
 hidden: false
 toc: true
 ---
-
-
-
-
-<img src="../assets/blog-images/telephony_architecture.png" 
-     alt="TechMart Enterprise Voice Agent Architecture" 
-     style="max-width: 100%; height: auto; display: block; margin: 1.5em auto;" />
 
 
 
