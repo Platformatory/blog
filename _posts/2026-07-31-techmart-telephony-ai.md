@@ -3,7 +3,7 @@ layout: post
 title: "TechMart Enterprise Voice Agent: Building a Sovereign AI Voice Support System for Indian Telecom"
 authors: Ashmith
 categories: [Voice AI, LangGraph, Telephony, Real time Conversational AI]
-image: assets/blog-images/telephony_architecture.png
+# image: assets/blog-images/telephony_architecture.png
 teaser: How do you build a real-time, telephony-native AI agent that handles customer support calls end-to-end in native Indian languages, without a human in the loop? This post walks through the architecture behind the TechMart Enterprise Voice Agent — from decoupling the reasoning layer with LangGraph, to hybrid search, state-level security, and the case for sovereign, India-hosted infrastructure over foreign-hosted alternatives.
 featured: false
 hidden: false
@@ -13,7 +13,9 @@ toc: true
 
 
 
-![TechMart Enterprise Voice Agent Architecture](/assets/blog-images/telephony_architecture.png)
+<img src="../assets/blog-images/telephony_architecture.png" 
+     alt="TechMart Enterprise Voice Agent Architecture" 
+     style="max-width: 100%; height: auto; display: block; margin: 1.5em auto;" />
 
 
 
@@ -36,8 +38,8 @@ The TechMart Voice Agent is a voice AI system that bridges live telephone calls 
 | Telecom Transport      | Vobiz.ai                                 | Bridges live phone calls to WebSocket audio streams                | India-hosted telecom provider; lower per-minute cost than prior alternative at scale                                                            |
 | Audio Pipeline         | Pipecat-AI                               | Real-time voice orchestration: VAD, turn-taking, barge-in          | Purpose-built framework for real-time voice pipelines; avoids reimplementing solved audio-concurrency problems                                  |
 | Reasoning Core         | LangGraph & LangChain                    | Stateful, tool-calling conversational agent                        | Typed, checkpointed state machine required for auditable, multi-turn tool execution — capabilities that are generally not available in flow-builder platforms |
-| Primary LLM            | Groq (llama-3.3-70b-versatile) [To be depriciated on August 16, 2026]           | Main reasoning and response generation                             | Low-latency inference required to stay within phone-call response tolerances                                                                    |
-| Summary LLM            | Groq (llama-3.1-8b-instant) [To be depriciated on August 16, 2026]              | Memory summarization and ticket generation                         | Smaller model sufficient for low latency summarization, reducing cost                                                                           |
+| Primary LLM            | Groq (llama-3.3-70b-versatile) [To be deprecated on August 16, 2026]           | Main reasoning and response generation                             | Low-latency inference required to stay within phone-call response tolerances                                                                    |
+| Summary LLM            | Groq (llama-3.1-8b-instant) [To be deprecated on August 16, 2026]              | Memory summarization and ticket generation                         | Smaller model sufficient for low latency summarization, reducing cost                                                                           |
 | Speech Services        | Sarvam AI (saaras:v3, bulbul:v3)         | Native Indian-language STT and TTS                                 | India-hosted; native support for Indian dialects without a separate translation layer                                                           |
 | Vector & Relational DB | ClickHouse                               | Hybrid fuzzy string + vector search, CRM, order and ticket storage | Single engine supports both fast analytical queries and vector similarity search, avoiding a separate vector-DB dependency                      |
 | Local Embeddings       | Sentence-Transformers (all-MiniLM-L6-v2) | CPU-bound embedding generation for search                          | Local inference removes external embedding-API latency and dependency                                                                           |
