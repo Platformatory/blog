@@ -2,15 +2,16 @@
 layout: post
 title: "Integrating APIs and Event Streaming: for fun and profit"
 authors: avinash
-categories: [Event-Driven Architecture, Kafka, Eventing, command processing, real-time, event driven workflows, saas]
+categories: [Event-Driven Architecture, Kafka, Eventing, Command processing, Real-time, Event Driven Workflows, SaaS]
 image: assets/blog-images/eventception/EventDrivenArchitectureAbstract.jpeg
 featured: true
 hidden: true
 weight: -10
 teaser: "How to progressively get the best out of RESTful and event-driven architectures."
+toc: true
 ---
 
-# How to turn your legacy architecture to an event-driven system
+## How to turn your legacy architecture to an event-driven system
 
 In the world of microservices and real-time applications, event-driven architecture is widely adopted for building loosely coupled systems. As a result of this, multiple patterns have emerged, such as Event Notifications, Event Sourcing, CQRS, etc. All of these patterns depend on the system’s ability to produce events and react to events in a timely manner. But what are these events, and why are they important?
 

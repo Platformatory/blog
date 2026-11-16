@@ -87,7 +87,6 @@ PLATFORMS
   arm-linux-musl
   arm-linux-musleabihf
   arm64-darwin
-  ruby
   x86-linux
   x86-linux-android
   x86-linux-musl

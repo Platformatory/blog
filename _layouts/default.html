@@ -141,36 +141,31 @@ ga('send', 'pageview');
     
 </div>
 
+
 <!-- Categories Jumbotron
 ================================================== -->
-<div class="jumbotron fortags">
+<!--<div class="jumbotron fortags">
 	<div class="d-md-flex h-100">
 		<div class="col-md-4 transpdark align-self-center text-center h-100">
             <div class="d-md-flex align-items-center justify-content-center h-100">
                 <h2 class="d-md-block align-self-center py-1 font-weight-light">Explore <span class="d-none d-md-inline">→</span></h2>
             </div>
 		</div>
-		<div class="col-md-8 p-5 align-self-center text-center">
-            {% comment %} Show only the most-used topics, ranked by post count. {% endcomment %}
-            {% assign cat_keys = "" | split: "" %}
-            {% for category in site.categories %}
-                {% assign padded = category[1].size | prepend: "000" | slice: -3, 3 %}
-                {% capture cat_key %}{{ padded }}|{{ category[0] }}{% endcapture %}
-                {% assign cat_keys = cat_keys | push: cat_key %}
-            {% endfor %}
-            {% assign cat_keys = cat_keys | sort | reverse %}
-            {% for cat_key in cat_keys limit: 12 %}
-                {% assign parts = cat_key | split: "|" %}
-                {% assign cat_count = parts[0] | plus: 0 %}
-                <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ parts[1] | url_escape | strip | replace: ' ', '-' }}">{{ parts[1] | camelcase }} ({{ cat_count }})</a>
-            {% endfor %}
-            {% if cat_keys.size > 12 %}
-                <a class="mt-1 mb-1 explore-all" href="{{site.baseurl}}/categories">All {{ cat_keys.size }} topics →</a>
+		 <div class="col-md-8 p-5 align-self-center text-center">
+            {% assign categories_list = site.categories %}
+            {% if categories_list.first[0] == null %}
+                {% for category in categories_list %}
+                    <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ category | url_escape | strip | replace: ' ', '-' }}">{{ category | camelcase }} ({{ site.tags[category].size }})</a>
+                {% endfor %}
+            {% else %}
+                {% for category in categories_list %}
+                    <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ category[0] | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a>
+                {% endfor %}
             {% endif %}
-            {% assign cat_keys = nil %}
-		</div>
+            {% assign categories_list = nil %}
+		</div> 
 	</div>
-</div>
+</div>-->
 
 <!-- Begin Footer
 ================================================== -->

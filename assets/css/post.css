@@ -216,10 +216,13 @@
 .layout-post .ss-body h4, .layout-post .ss-body h5, .layout-post .ss-body h6 { font-size: 1.075rem; }
 .layout-post .ss-body > :first-child { margin-top: 0; }
 .layout-post .ss-body img { display: block; margin: 1.75rem auto; height: auto; border-radius: 6px; }
+/* boxed callout, matching the site-wide blockquote style in screen.css */
 .layout-post .ss-body blockquote {
-  border-left: 3px solid var(--ss-accent);
-  padding: .1rem 0 .1rem 1.25rem;
-  font-style: normal;
+  border: 2px solid var(--ss-accent);
+  border-radius: 6px;
+  background-color: #c5c5c514;
+  padding: 1rem 1.25rem;
+  font-style: italic;
   color: var(--ss-text-2);
 }
 .layout-post .ss-body blockquote p:last-child { margin-bottom: 0; }

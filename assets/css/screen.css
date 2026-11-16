@@ -472,9 +472,11 @@ span.post-read-more a:hover {
 }
 
 blockquote {
-    border-left: 4px solid #00ab6b;
-    padding: 0 20px;
+    border: 2px solid #00ab6b;
+    padding: 20px;
     font-style: italic;
+    background-color: #c5c5c514;
+    border-radius: 4px;
     color: rgba(0, 0, 0, .5);
 }
 
@@ -1074,4 +1076,10 @@ iframe {
 
 .navbar-collapse{
     flex-grow: 0 !important;
+}
+
+.more-blog{
+    font-size: 14px;
+    padding: 20px;
+    font-weight: bold;
 }

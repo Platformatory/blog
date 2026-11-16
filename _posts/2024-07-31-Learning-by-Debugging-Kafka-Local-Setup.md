@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Learning by Debugging: Kafka Local Setup"
-categories: [Apache Kafka, Local Kafka, Docker Compose, Ansible, Kafka Troubleshooting ]
+categories: [Apache Kafka, Docker Compose, Kafka Troubleshooting ]
 teaser: Discover how to set up and troubleshoot a local Kafka environment using Docker Compose and Ansible, gain hands-on experience and debugging skills in a safe, isolated setting. Dive into real-world scenarios and enhance your Kafka expertise.
 authors: Subramanya
 featured: false

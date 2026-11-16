@@ -6,6 +6,7 @@ categories: [Data, Kafka, Librdkafka]
 image: assets/blog-images/librdkafka_interceptors/KafkaInterceptors.png
 featured: false
 teaser: Building Kafka interceptors for librdkafka clients
+toc: true
 ---
 
 Interceptors in Apache Kafka are plugins that intercept and potentially modify data that is being produced or consumed by Kafka clients. It allows the externalization of common functionality among clients without having to modify the underlying Kafka code. These interceptors can either be producer interceptors or consumer interceptors and act on a single message at a time. Interceptors hook into various stages of a produce or consume request, allowing access to the message and metadata through custom code.

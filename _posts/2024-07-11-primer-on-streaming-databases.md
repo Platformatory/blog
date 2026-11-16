@@ -6,6 +6,7 @@ categories: [Data, Kafka, Streaming Databases, KSQL, Materialize, RisingWave]
 image: assets/blog-images/streaming_databases/StreamingDatabase.png
 featured: false
 teaser: Why streaming databases are the rage and what makes them the hottest thing in the world of streaming. A deep dive into important characteristics of a few streaming DBs with a comparative lens.
+toc: true
 ---
 
 
@@ -18,7 +19,7 @@ In the modern era of digitalization, data needs to be made available for making 
 
 
 
-### Challenges with Stream Processing
+## Challenges with Stream Processing
 
 For the rest of the use cases, we can rely on a stream processing system that processes data in “real-time”. For such real-time processing systems, there are constraints within the system, such as constraints on how quickly the data can be made available for processing from various other systems. It is usually the weakest link in the chain that contributes to the constraints. This makes stream processing in “real-time” a hard problem to solve. 
 
@@ -53,7 +54,7 @@ Although both a stream processing engine and a streaming database serve the same
 Real time analytical databases such as Apache Druid, Apache Pinot, or Clickhouse, on the other hand, are meant for querying data in real-time post ingestion. These databases handle ad-hoc and user facing analytics. Whereas a streaming database is meant to work on data before it is ingested into a RTOLAP database for querying.
 
 
-# Comparing Streaming Databases
+## Comparing Streaming Databases
 
 While evaluating a streaming database, asking a few questions about the features, design, and capabilities can help.
 
@@ -93,7 +94,7 @@ When evaluating any software, the maturity and age of the software is a basic cr
 Finally, understanding the implementation details helps in designing and troubleshooting the stream processing better. An aspect of evaluation is understanding the data flow model, the key primitives, and user facing APIs / constructs.
 
 
-# Comparison of 3 OSS streaming databases
+## Comparison of 3 OSS streaming databases
 
 For this blog post, we will be providing a comparison between three open source databases - KsqlDB, RisingWave, and Materialize. We will briefly compare them across the previously mentioned factors and provide a reference for evaluation.
 

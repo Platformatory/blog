@@ -78,12 +78,12 @@ authors:
   Shivaprakash:
       name: Shivaprakash Akki
       display_name: Shivaprakash Akki
-      avatar: 'assets/images/avatar.png'
+      avatar: 'assets/images/shiva.png'
       gravatar: b1cc14991db7a456fcd761680bbc8f81
       email: akkishiva@platformatory.com
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
-      description: "DevOps engineer at Platformatory specializing in Site Reliability Engineering (SRE) and Infrastructure."
+      description: "Data Platform Engineer at Platformatory, specializing in Site Reliability Engineering (SRE) and Infrastructure. This role involves building and managing reliable systems to ensure high performance and smooth operations."
   Arun:
       name: Arun B Bhat
       display_name: Arun B Bhat
@@ -93,24 +93,69 @@ authors:
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
       description: "SRE Team Lead at Platformatory"
+  Sathishkumar:
+      name: sathishkumar
+      display_name: Sathishkumar Venkatesan
+      avatar: 'assets/images/avatar.png'
+      gravatar: b1cc14991db7a456fcd761680bbc8f81
+      email: sathish@platformatory.com
+      web: https://www.platformatory.io
+      twitter: https://twitter.com/platformatory
+      description: "Full-Stack Engineer and Practitioner."
   Subramanya:
       name: Subramanya Madhyastha
       display_name: Subramanya Madhyastha
-      avatar: 'assets/images/subramanya.jpg'
+      avatar: 'assets/images/subramanya_1.jpg'
       gravatar: b1cc14991db7a456fcd761680bbc8f81
       email: subramanya@platformatory.io
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
-      description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure."
+      description: "Devops Engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure."
   Vikhyat:
       name: Vikhyat Shetty
       display_name: Vikhyat Shetty
-      avatar: 'assets/images/avatar.png'
+      avatar: 'assets/images/vikhyat.jpg'
       gravatar: b1cc14991db7a456fcd761680bbc8f81
       email: vikhyat@platformatory.com
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
       description: "DevOps/SRE at Platformatory"
+  Zeenia:
+    name: Zeenia
+    display_name: Zeenia Gupta
+    avatar: 'assets/images/girl_avatar.jpg'
+    gravatar: b1cc14991db7a456fcd761680bbc8f81
+    email: zeenia@platformatory.com
+    web: https://www.platformatory.io
+    twitter: https://twitter.com/platformatory
+    description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing (SRE) and Infrastructure. The role involves managing the infrastructre and make sure the cluster are working fine."
+  ShriVeena:
+    name: Shri Veena M P
+    display_name: Shri Veena M P
+    avatar: 'assets/images/girl_avatar_2.jpg'
+    gravatar: b1cc14991db7a456fcd761680bbc8f81
+    email: shriveens@platformatory.com
+    web: https://www.platformatory.io
+    twitter: https://twitter.com/platformatory
+    description: "Data Engineer at Platformatory responsible for designing and building real-time data infrastructure. Works on end-to-end streaming pipelines, cloud infrastructure provisioning, and analytics dashboards, enabling real-time insights across the platform."
+  Balaji:
+    name: Balaji K
+    display_name: Balaji K
+    avatar: 'assets/images/balaji.png'
+    gravatar: b1cc14991db7a456fcd761680bbc8f81
+    email: balaji@platformatory.com
+    web: https://www.platformatory.io
+    twitter: https://twitter.com/platformatory
+    description: "Lead Consultant at Platformatory"
+  Ashmith:
+    name: Ashmith
+    display_name: Ashmith N Shetty
+    avatar: 'assets/images/avatar.png'
+    gravatar: b1cc14991db7a456fcd761680bbc8f81
+    email: ashmith@platformatory.com
+    web: https://www.platformatory.io
+    twitter: https://twitter.com/platformatory
+    description: "AI & ML Intern at Platformatory."
 
 # Plugins
 plugins:
@@ -129,7 +174,7 @@ jekyll-archives:
     category: '/category/:name/'
     
 # Pagination 
-paginate: 6
+paginate: 9
 paginate_path: /page:num/
     
 # Other
