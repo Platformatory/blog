@@ -1,0 +1,7 @@
+{% if site.mailchimp-list %}
+<form class="subscribe-form" action="{{ site.mailchimp-list }}" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+  <label class="sr-only" for="mce-EMAIL-{{ include.id | default: 'x' }}">Email address</label>
+  <input type="email" name="EMAIL" id="mce-EMAIL-{{ include.id | default: 'x' }}" placeholder="Type your email…" autocomplete="email" required>
+  <button type="submit" name="subscribe">Subscribe</button>
+</form>
+{% endif %}

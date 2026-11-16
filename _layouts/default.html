@@ -16,6 +16,13 @@
 
 <link href="{{ site.baseurl }}/assets/css/main.css" rel="stylesheet">
 
+{% if page.layout == 'post' %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Lora:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="{{ site.baseurl }}/assets/css/post.css" rel="stylesheet">
+{% endif %}
+
 <script src="{{ site.baseurl }}/assets/js/jquery.min.js"></script>
 
 </head>
@@ -144,17 +151,23 @@ ga('send', 'pageview');
             </div>
 		</div>
 		<div class="col-md-8 p-5 align-self-center text-center">
-            {% assign categories_list = site.categories %}
-            {% if categories_list.first[0] == null %}
-                {% for category in categories_list %}
-                    <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ category | url_escape | strip | replace: ' ', '-' }}">{{ category | camelcase }} ({{ site.tags[category].size }})</a>
-                {% endfor %}
-            {% else %}
-                {% for category in categories_list %}
-                    <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ category[0] | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a>
-                {% endfor %}
+            {% comment %} Show only the most-used topics, ranked by post count. {% endcomment %}
+            {% assign cat_keys = "" | split: "" %}
+            {% for category in site.categories %}
+                {% assign padded = category[1].size | prepend: "000" | slice: -3, 3 %}
+                {% capture cat_key %}{{ padded }}|{{ category[0] }}{% endcapture %}
+                {% assign cat_keys = cat_keys | push: cat_key %}
+            {% endfor %}
+            {% assign cat_keys = cat_keys | sort | reverse %}
+            {% for cat_key in cat_keys limit: 12 %}
+                {% assign parts = cat_key | split: "|" %}
+                {% assign cat_count = parts[0] | plus: 0 %}
+                <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ parts[1] | url_escape | strip | replace: ' ', '-' }}">{{ parts[1] | camelcase }} ({{ cat_count }})</a>
+            {% endfor %}
+            {% if cat_keys.size > 12 %}
+                <a class="mt-1 mb-1 explore-all" href="{{site.baseurl}}/categories">All {{ cat_keys.size }} topics →</a>
             {% endif %}
-            {% assign categories_list = nil %}
+            {% assign cat_keys = nil %}
 		</div>
 	</div>
 </div>

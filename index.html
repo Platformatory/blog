@@ -27,7 +27,11 @@ title: Home
 {% endif %}
 
 <!-- Posts Index
+     All non-featured posts are rendered (newest first, so it still works
+     without JS); the script below shuffles them on every visit and reveals
+     them a few at a time. Featured posts above keep their weighted order.
 ================================================== -->
+{% assign listed_posts = site.posts | where_exp: "p", "p.hidden != true" %}
 <section class="recent-posts">
 
     <div class="section-title">
@@ -36,9 +40,9 @@ title: Home
 
     </div>
 
-    <div class="row listrecent">
+    <div class="row listrecent" id="all-posts">
 
-        {% for post in paginator.posts %}
+        {% for post in listed_posts %}
 
         {% include postbox.html %}
 
@@ -46,14 +50,35 @@ title: Home
 
     </div>
 
+    <div class="text-center mb-5">
+        <button type="button" id="show-more-posts" class="show-more-posts" hidden>Show more posts</button>
+    </div>
+
 </section>
 
-<!-- Pagination
-================================================== -->
-<div class="bottompagination">
-<div class="pointerup"><i class="fa fa-caret-up"></i></div>
-<span class="navigation" role="navigation">
-    {% include pagination.html %}
-</span>
-</div>
+<script>
+  (function () {
+    var PAGE = 9;
+    var list = document.getElementById('all-posts');
+    var more = document.getElementById('show-more-posts');
+    if (!list || !more) return;
+    var items = Array.prototype.slice.call(list.children);
 
+    // Fisher–Yates shuffle, then re-append in the new order
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = items[i]; items[i] = items[j]; items[j] = t;
+    }
+    items.forEach(function (el) { list.appendChild(el); });
+
+    var shown = 0;
+    function reveal() {
+      shown = Math.min(shown + PAGE, items.length);
+      items.forEach(function (el, k) { el.style.display = k < shown ? '' : 'none'; });
+      more.hidden = shown >= items.length;
+      more.textContent = 'Show more posts (' + (items.length - shown) + ')';
+    }
+    more.addEventListener('click', reveal);
+    reveal();
+  })();
+</script>
