@@ -1,0 +1,35 @@
+{% comment %}
+  Substack-style byline: avatars, author names, date and reading time.
+  Usage: {% include byline.html post=page size="lg" %}
+{% endcomment %}
+{% assign bl_post = include.post %}
+{% if bl_post.authors %}
+  {% assign bl_names = bl_post.authors | split: "," %}
+{% elsif bl_post.author %}
+  {% assign bl_names = bl_post.author | split: "," %}
+{% else %}
+  {% assign bl_names = "" | split: "," %}
+{% endif %}
+{% assign bl_words = bl_post.content | strip_html | number_of_words %}
+{% assign bl_minutes = bl_words | divided_by: 230 | plus: 1 %}
+<div class="byline byline-{{ include.size | default: 'sm' }}">
+  {% if bl_names.size > 0 %}
+  <div class="byline-avatars">
+    {% for n in bl_names %}{% assign nk = n | strip %}{% assign a = site.authors[nk] %}{% if a %}
+      <img src="{% if a.avatar %}{{ site.baseurl }}/{{ a.avatar }}{% else %}https://www.gravatar.com/avatar/{{ a.gravatar }}?s=96&d=mm&r=x{% endif %}" alt="{{ a.display_name }}" loading="lazy">
+    {% endif %}{% endfor %}
+  </div>
+  {% endif %}
+  <div class="byline-text">
+    {% if bl_names.size > 0 %}
+    <div class="byline-names">
+      {% for n in bl_names %}{% assign nk = n | strip %}{% assign a = site.authors[nk] %}{% if a %}<span>{{ a.display_name }}</span>{% unless forloop.last %}<span class="byline-sep">,</span> {% endunless %}{% endif %}{% endfor %}
+    </div>
+    {% endif %}
+    <div class="byline-meta">
+      <time datetime="{{ bl_post.date | date_to_xmlschema }}">{{ bl_post.date | date: "%b %-d, %Y" }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ bl_minutes }} min read</span>
+    </div>
+  </div>
+</div>

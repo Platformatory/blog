@@ -26,3 +26,20 @@ table{
 	margin-bottom: 20px;
 }
 }	
+
+/* "Show more posts" button on the home page (matches the green Read buttons) */
+.show-more-posts {
+	border: 2px solid #00ab6b;
+	background: #fff;
+	color: #00ab6b;
+	font-weight: 600;
+	font-size: 1rem;
+	padding: .6em 1.6em;
+	cursor: pointer;
+	transition: background-color .15s, color .15s;
+}
+.show-more-posts:hover,
+.show-more-posts:focus-visible {
+	background: #00ab6b;
+	color: #fff;
+}

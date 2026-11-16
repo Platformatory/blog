@@ -5,256 +5,170 @@ archive: false
 post_class: post-template
 ---
 
-<!-- Begin Article
-================================================== -->
-<div class="">
-    <div class="row">
+{% if page.authors %}
+  {% assign post_authors = page.authors | split: "," %}
+{% elsif page.author %}
+  {% assign post_authors = page.author | split: "," %}
+{% endif %}
 
-        <!-- Post Share -->
-        <!-- <div class="col-md-2 pl-0 d-none d-md-block">
-            {% include share.html %}
-        </div> -->
-        <div class="col-md-2 p-0">
-            <div class="toc-container">     
-                <!-- Toc if any -->
-                {% if page.toc   %}
-                {% if page.beforetoc %}
-                <p><em>{{page.beforetoc}}</em></p>
-                {% endif %}
-                <div class="toc mb-4 lead">
-                    <h3 class="font-weight-bold">Summary</h3>
-                    {% include toc.html html=content %}
-                </div>
-                {% endif %}
-                <!-- End Toc -->
-            </div>
-        </div>
-        <!-- Post -->
-        {% assign author = site.authors[page.author] %}
+{% if page.toc %}{% capture toc_html %}{% include toc.html html=content h_max=3 %}{% endcapture %}{% endif %}
 
-        <div class="{% if page.ctas %}col-md-8{% else %} col-md-10 {% endif %}">
-            <div class="mainheading">
+<div class="ss-post-wrap{% if page.toc %} has-toc{% endif %}">
 
-                <!-- Author Box -->
-                <!-- {% if page.author %} -->
-                <!-- <h4 class="">Author</h4> -->
-                <!-- <h6 class="">Authored by</h6> -->
-                <!-- <div class="row post-top-meta"> -->
-                <!-- <div class="col-xs-12 text-center text-md-left mb-4 mb-md-0">
-                        {% if author.avatar %}
-                        <img class="author-thumb-top" src="{{site.baseurl}}/{{ author.avatar }}" alt="{{ author.display_name }}">
-                        {% else %}
-                        <img class="author-thumb-top" src="https://www.gravatar.com/avatar/{{ author.gravatar }}?s=250&d=mm&r=x" alt="{{ author.display_name }}">
-                        {% endif %}
-                    </div> -->
-
-                <!-- <div class="col-xs-12 text-center text-md-left">
-                        <a target="_blank" class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a>
-                    </div> -->
-                <!-- </div> -->
-                <!-- {% endif %} -->
-
-                <!-- {% if page.authors %}
-                {% assign authors = page.authors | split: "," %}
-
-                <h6 class="">Authored by</h6>
-                <div class="d-flex">
-                    {% for author_name in authors %}
-                    {% assign author = site.authors[author_name] %}
-                    {% if author %}
-                    <div class="text-center text-md-left">
-                        <a target="_blank" class="link-dark " href="{{ author.web }}">{{ author.display_name }}{% if
-                            forloop.last == false %},&nbsp;
-                            {% endif %}</a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                {% endif %} -->
-
-                <!-- Post Title -->
-                <h1 class="posttitle">{{ page.title }}</h1>
-
-            </div>
-
-            <!-- Adsense if enabled from _config.yml (change your pub id and slot) -->
-            {% if site.adsense == "enabled" %}
-            {% include adsense-under-header.html %}
-            {% endif %}
-            <!-- End Adsense -->
-
-            <!-- Post Featured Image -->
-            {% if page.image %}
-
-            {% if site.lazyimages == "enabled" %}
-            <img class="featured-image img-fluid lazyimg"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAQAAAA3fa6RAAAADklEQVR42mNkAANGCAUAACMAA2w/AMgAAAAASUVORK5CYII="
-                data-src="{% if page.image contains " ://" %}{{ page.image }}{% else %}{{ site.baseurl }}/{{ page.image
-                }}{% endif %}" alt="{{ page.title }}">
-            {% else %}
-            <img class="featured-image img-fluid" src="{% if page.image contains " ://" %}{{ page.image }}{% else %}{{
-                site.baseurl }}/{{ page.image }}{% endif %}" alt="{{ page.title }}">
-            {% endif %}
-
-            {% endif %}
-            <!-- End Featured Image -->
-
-            <!-- Post Content -->
-            <div class="article-post">
-
-                {{content}}
-            </div>
-
-            <!-- Rating -->
-            {% if page.rating %}
-            <div class="rating mb-4 d-flex align-items-center">
-                <strong class="mr-1">Rating:</strong> {% include star_rating.html %}
-            </div>
-            {% endif %}
-
-            <!-- Author Box -->
-            {% if page.author %}
-            <h3 class="text-center d-md-none">About The Author</h3>
-            <h3 class="text-start d-md-flex d-none">About The Author</h3>
-            <div class="row post-top-meta">
-                <div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0">
-                    {% if author.avatar %}
-                    <img class="author-thumb" src="{{site.baseurl}}/{{ author.avatar }}"
-                        alt="{{ author.display_name }}">
-                    {% else %}
-                    <img class="author-thumb" src="https://www.gravatar.com/avatar/{{ author.gravatar }}?s=250&d=mm&r=x"
-                        alt="{{ author.display_name }}">
-                    {% endif %}
-                </div>
-                <div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left">
-                    <a target="_blank" class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a>
-                    <!-- <a target="_blank" href="{{ author.twitter }}" class="btn follow">Follow</a> -->
-                    <span class="author-description">{{ author.description }}</span>
-                </div>
-            </div>
-            {% endif %}
-
-            <!-- Authors Box -->
-            {% if page.authors %}
-            {% assign authors = page.authors | split: "," %}
-            <h3 class="text-center d-md-none">About The Authors</h3>
-            <h3 class="text-start d-md-flex d-none">About The Authors</h3>
-            <div class="mt-2">
-                {% for author_name in authors %}
-                {% assign author = site.authors[author_name] %}
-                {% if author %}
-                <!-- Author Box -->
-                <div class="row post-top-meta">
-                    <div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-2 mb-md-0">
-                        {% if author.avatar %}
-                        <img class="author-thumb" src="{{site.baseurl}}/{{ author.avatar }}"
-                            alt="{{ author.display_name }}">
-                        {% else %}
-                        <img class="author-thumb"
-                            src="https://www.gravatar.com/avatar/{{ author.gravatar }}?s=250&d=mm&r=x"
-                            alt="{{ author.display_name }}">
-                        {% endif %}
-                    </div>
-                    <div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left">
-                        <a target="_blank" class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a>
-                        <!-- <a target="_blank" href="{{ author.twitter }}" class="btn follow">Follow</a> -->
-                        <span class="author-description">{{ author.description }}</span>
-                    </div>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-
-            <!-- Post Date -->
-            <p>
-                <small>
-                    <span class="post-date"><time class="post-date" datetime="{{ page.date | date:" %Y-%m-%d" }}">{{
-                            page.date | date_to_string }}</time></span>
-                    {% if page.last_modified_at %}
-                    (Updated: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}"
-                        itemprop="dateModified">{{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)
-                    {% endif %}
-                </small>
-            </p>
-
-            <!-- Post Categories -->
-            <div class="after-post-cats">
-                <ul class="tags mb-4">
-                    {% assign sortedCategories = page.categories | sort %}
-                    {% for category in sortedCategories %}
-                    <li>
-                        <a class="smoothscroll" href="{{site.baseurl}}/categories#{{ category | replace: " "," -" }}">{{
-                            category }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <!-- End Categories -->
-
-            <!-- Post Tags -->
-            <div class="after-post-tags">
-                <ul class="tags">
-                    {% assign sortedTags = page.tags | sort %}
-                    {% for tag in sortedTags %}
-                    <li>
-                        <a class="smoothscroll" href="{{site.baseurl}}/tags#{{ tag | replace: " "," -" }}">#{{ tag
-                            }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <!-- End Tags -->
-
-
-            <!-- Prev/Next -->
-            <div class="row PageNavigation d-flex justify-content-between font-weight-bold">
-                {% if page.previous.url %}
-                <a class="prev d-block col-md-6" href="{{ site.baseurl }}/{{page.previous.url}}"> &laquo;
-                    {{page.previous.title}}</a>
-                {% endif %}
-                {% if page.next.url %}
-                <a class="next d-block col-md-6 text-lg-right"
-                    href="{{ site.baseurl }}/{{page.next.url}}">{{page.next.title}} &raquo; </a>
-                {% endif %}
-                <div class="clearfix"></div>
-            </div>
-            <!-- End Categories -->
-
-        </div>
-        <!-- End Post -->
-        {% if page.ctas%}
-        <div class="col-md-2 p-0">
-            {% include postcta.html %}
+    <!-- Left rail: sticky table of contents (wide screens) -->
+    <aside class="ss-rail ss-rail-left">
+        {% if page.toc %}
+        <div class="ss-rail-sticky ss-toc-side" role="navigation" aria-label="Contents">
+            <p class="ss-rail-label">Contents</p>
+            {% if page.beforetoc %}<p class="ss-toc-before">{{ page.beforetoc }}</p>{% endif %}
+            {{ toc_html }}
         </div>
         {% endif %}
-        <!-- <div class="col-md-2 d-md-none d-block pl-0">
-            {% include share.html %}
-        </div> -->
+    </aside>
 
-    </div>
-</div>
-<!-- End Article
-================================================== -->
+    <article class="ss-post">
+        <div class="ss-post-header">
+            <h1 class="ss-post-title">{{ page.title }}</h1>
+            {% if page.teaser %}
+            <h2 class="ss-post-subtitle">{{ page.teaser | strip_html }}</h2>
+            {% endif %}
+            <div class="ss-post-byline">
+                {% include byline.html post=page size="lg" %}
+            </div>
+        </div>
 
-<!-- Begin Comments
-================================================== -->
-{% if page.comments != false %}
-<div class="container">
-    <div id="comments" class="row justify-content-center mb-5">
-        <div class="col-md-8">
+        <!-- Adsense if enabled from _config.yml -->
+        {% if site.adsense == "enabled" %}
+        {% include adsense-under-header.html %}
+        {% endif %}
+
+        {% if page.image %}
+        <figure class="ss-post-image">
+            <img src="{% if page.image contains '://' %}{{ page.image }}{% else %}{{ site.baseurl }}/{{ page.image }}{% endif %}" alt="{{ page.title }}">
+        </figure>
+        {% endif %}
+
+        <!-- Table of contents -->
+        {% if page.toc %}
+        <details class="ss-toc ss-toc-inline">
+            <summary>Contents</summary>
+            {% if page.beforetoc %}<p class="ss-toc-before">{{ page.beforetoc }}</p>{% endif %}
+            {{ toc_html }}
+        </details>
+        {% endif %}
+
+        <div class="article-post ss-body">
+            {{ content }}
+        </div>
+
+        {% if page.rating %}
+        <div class="rating mb-4 d-flex align-items-center">
+            <strong class="mr-1">Rating:</strong> {% include star_rating.html %}
+        </div>
+        {% endif %}
+
+        <!-- CTAs -->
+        {% if page.ctas %}
+        <aside class="ss-ctas ss-ctas-inline">
+            {% if page.cat_box_title %}<h3>{{ page.cat_box_title }}</h3>{% endif %}
+            <ul>
+                {% for cta in page.ctas %}
+                <li>
+                    <a target="_blank" rel="noopener" href="{{ cta.url }}">{{ cta.title }} →</a>
+                    {% if cta.description %}<p>{{ cta.description }}</p>{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        {% endif %}
+
+        <!-- Topics: first few categories, in the order the author listed them -->
+        {% if page.categories.size > 0 %}
+        <div class="ss-pills ss-pills-inline">
+            {% for category in page.categories limit: 5 %}
+            <a href="{{ site.baseurl }}/categories#{{ category | replace: ' ', '-' }}">{{ category }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Subscribe -->
+        {% if site.mailchimp-list %}
+        <section class="ss-subscribe-box" id="subscribe">
+            <h3>Thanks for reading {{ site.name }}</h3>
+            <p>Subscribe for free to receive new posts.</p>
+            {% include subscribe.html id="post" %}
+        </section>
+        {% endif %}
+
+        <!-- About the author(s): a quiet note, not a feature -->
+        {% if post_authors %}
+        <section class="ss-authors">
+            {% for n in post_authors %}
+            {% assign nk = n | strip %}{% assign author = site.authors[nk] %}
+            {% if author and author.description %}
+            <p class="ss-author"><a class="ss-author-name" target="_blank" rel="noopener" href="{{ author.web }}">{{ author.display_name }}</a> — {{ author.description }}</p>
+            {% endif %}
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        <!-- Prev / Next -->
+        {% if page.previous.url or page.next.url %}
+        <nav class="ss-prevnext" aria-label="More posts">
+            {% if page.previous.url %}
+            <a class="prev" href="{{ site.baseurl }}{{ page.previous.url }}"><span>← Previous</span>{{ page.previous.title }}</a>
+            {% else %}<span></span>{% endif %}
+            {% if page.next.url %}
+            <a class="next" href="{{ site.baseurl }}{{ page.next.url }}"><span>Next →</span>{{ page.next.title }}</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+
+        {% if page.comments != false and site.disqus %}
+        <div id="comments" class="ss-comments">
             {% include disqus.html %}
         </div>
-    </div>
-</div>
-{% endif %}
-<!--End Comments
-================================================== -->
+        {% endif %}
+    </article>
 
-<!-- Review with LD-JSON, adapt it for your needs if you like, but make sure you test the generated HTML source code first: 
-https://search.google.com/structured-data/testing-tool/u/0/
-================================================== -->
+    <!-- Right rail: author, subscribe, topics (wide screens) -->
+    <aside class="ss-rail ss-rail-right">
+        <div class="ss-rail-sticky">
+
+            {% if site.mailchimp-list %}
+            <div class="ss-rail-block ss-rail-subscribe">
+                <p class="ss-rail-label">Newsletter</p>
+                <p>New posts on platforms, streaming and data. No spam.</p>
+                {% include subscribe.html id="rail" %}
+            </div>
+            {% endif %}
+
+            {% if page.ctas %}
+            <div class="ss-rail-block">
+                <p class="ss-rail-label">{{ page.cat_box_title | default: "Related" }}</p>
+                <ul class="ss-rail-links">
+                    {% for cta in page.ctas %}
+                    <li><a target="_blank" rel="noopener" href="{{ cta.url }}">{{ cta.title }} →</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if page.categories.size > 0 %}
+            <div class="ss-rail-block">
+                <p class="ss-rail-label">Topics</p>
+                <div class="ss-pills ss-pills-rail">
+                    {% for category in page.categories limit: 5 %}
+                    <a href="{{ site.baseurl }}/categories#{{ category | replace: ' ', '-' }}">{{ category }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </aside>
+</div>
+
+
 {% if page.rating %}
 <script type="application/ld+json">
 {
@@ -266,7 +180,7 @@ https://search.google.com/structured-data/testing-tool/u/0/
   },
   "author": {
     "@type": "Person",
-    "name": "{{ author.display_name }}"
+    "name": "{{ site.authors[page.author].display_name }}"
   },
   "datePublished": "{{ page.date | date:"%Y-%m-%d" }}",
   "reviewRating": {
@@ -277,3 +191,36 @@ https://search.google.com/structured-data/testing-tool/u/0/
 }
 </script>
 {% endif %}
+
+{% if page.toc %}
+<script>
+  // Highlight the current section in the sticky TOC.
+  (function () {
+    var links = document.querySelectorAll('.ss-toc-side a[href^="#"]');
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    var byId = {};
+    links.forEach(function (a) { byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+    var heads = Array.prototype.filter.call(
+      document.querySelectorAll('.ss-body h1[id], .ss-body h2[id], .ss-body h3[id]'),
+      function (h) { return byId[h.id]; });
+    var current;
+    function setActive(id) {
+      if (current === id) return;
+      if (current && byId[current]) byId[current].classList.remove('active');
+      current = id;
+      if (byId[id]) byId[id].classList.add('active');
+    }
+    function update() {
+      var y = window.innerHeight * 0.25, last = heads[0];
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].getBoundingClientRect().top <= y) last = heads[i]; else break;
+      }
+      if (last) setActive(last.id);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+{% endif %}
+
+<script src="{{ site.baseurl }}/assets/js/lightbox.js" defer></script>
