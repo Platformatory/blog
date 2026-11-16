@@ -216,15 +216,26 @@
 .layout-post .ss-body h4, .layout-post .ss-body h5, .layout-post .ss-body h6 { font-size: 1.075rem; }
 .layout-post .ss-body > :first-child { margin-top: 0; }
 .layout-post .ss-body img { display: block; margin: 1.75rem auto; height: auto; border-radius: 6px; }
-/* boxed callout, matching the site-wide blockquote style in screen.css */
+/* Callout: soft green panel with an accent bar (posts use these for
+   "ProTip:" / "Bottomline:" asides). Overrides screen.css's boxed style. */
 .layout-post .ss-body blockquote {
-  border: 2px solid var(--ss-accent);
-  border-radius: 6px;
-  background-color: #c5c5c514;
-  padding: 1rem 1.25rem;
-  font-style: italic;
-  color: var(--ss-text-2);
+  border: 0;
+  border-left: 4px solid var(--ss-accent);
+  border-radius: 0 8px 8px 0;
+  background-color: #f3f7ef;
+  padding: 1.1rem 1.4rem;
+  margin: 1.75rem 0;
+  font-style: normal;
+  font-size: .95em;
+  line-height: 1.6;
+  color: #2f3a28;
 }
+.layout-post .ss-body blockquote em,
+.layout-post .ss-body blockquote i { font-style: italic; }
+.layout-post .ss-body blockquote strong,
+.layout-post .ss-body blockquote b { color: var(--ss-accent-hover); font-weight: 600; }
+.layout-post .ss-body blockquote ul,
+.layout-post .ss-body blockquote ol { margin-bottom: .6rem; }
 .layout-post .ss-body blockquote p:last-child { margin-bottom: 0; }
 .layout-post .ss-body hr { border: 0; text-align: center; margin: 2.5rem 0; }
 .layout-post .ss-body hr::before { content: "* * *"; letter-spacing: .6em; color: var(--ss-text-3); }
