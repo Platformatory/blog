@@ -273,17 +273,35 @@
 .layout-post .ss-body .highlight pre.lineno { color: #aaa; user-select: none; text-align: right; }
 
 /* Tables */
+/* Clean, rule-only tables. border:0 first so main.scss's site-wide
+   ".main-content table, th, td { border: 1px solid black }" doesn't stack. */
 .layout-post .ss-body table:not(.rouge-table) {
+  display: table;
   width: 100%;
+  font-family: var(--ss-sans);
   font-size: .9rem;
+  line-height: 1.45;
+  border: 0;
   border-collapse: collapse;
-  margin: 0 0 1.5rem;
-  display: block;
-  overflow-x: auto;
+  margin: 1.5rem 0 1.75rem;
 }
 .layout-post .ss-body table:not(.rouge-table) th,
-.layout-post .ss-body table:not(.rouge-table) td { border-bottom: 1px solid var(--ss-line); padding: .55rem .75rem; text-align: left; vertical-align: top; }
-.layout-post .ss-body table:not(.rouge-table) th { font-weight: 600; border-bottom: 2px solid #ccc; }
+.layout-post .ss-body table:not(.rouge-table) td {
+  border: 0;
+  border-bottom: 1px solid var(--ss-line);
+  padding: .65rem .9rem .65rem 0;
+  text-align: left;
+  vertical-align: top;
+}
+.layout-post .ss-body table:not(.rouge-table) th {
+  font-weight: 600;
+  color: var(--ss-text);
+  border-bottom: 2px solid var(--ss-text);
+}
+.layout-post .ss-body table:not(.rouge-table) tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 600px) {
+  .layout-post .ss-body table:not(.rouge-table) { display: block; overflow-x: auto; }
+}
 
 .layout-post .ss-body .mermaid { margin: 1.5rem 0; text-align: center; }
 
