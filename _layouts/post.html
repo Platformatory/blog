@@ -62,7 +62,7 @@ post_class: post-template
         </div>
 
         <script>
-          // Collapse every "Refs"/"References" section by default: the heading
+          // Collapse refs by default. A "Refs"/"References" heading
           // becomes the <summary>, everything up to the next heading of the
           // same or higher level goes inside the <details>.
           (function () {
@@ -85,14 +85,32 @@ post_class: post-template
                 n = next;
               }
             });
-            // Open the section when a link (e.g. the TOC) targets it.
-            function openTarget() {
-              var id = decodeURIComponent(location.hash.slice(1));
+            // Markdown footnotes ([^name]) render as div.footnotes with no
+            // heading: collapse them under a "Refs (N)" summary.
+            Array.prototype.forEach.call(body.querySelectorAll('.footnotes'), function (fn) {
+              if (fn.closest('details.ss-refs')) return;
+              var det = document.createElement('details');
+              det.className = 'ss-refs';
+              var sum = document.createElement('summary');
+              var h = document.createElement('h3');
+              h.textContent = 'Refs (' + fn.querySelectorAll('li').length + ')';
+              sum.appendChild(h);
+              det.appendChild(sum);
+              fn.parentNode.insertBefore(det, fn);
+              det.appendChild(fn);
+            });
+            // Open the section when a link (TOC entry, footnote marker) targets it.
+            function openTarget(hash) {
+              var id = decodeURIComponent((hash || location.hash).slice(1));
               var el = id && document.getElementById(id);
               var d = el && el.closest('details.ss-refs');
               if (d) { d.open = true; el.scrollIntoView(); }
             }
-            window.addEventListener('hashchange', openTarget);
+            window.addEventListener('hashchange', function () { openTarget(); });
+            body.addEventListener('click', function (e) {
+              var a = e.target.closest('a[href^="#"]');
+              if (a) setTimeout(function () { openTarget(a.getAttribute('href')); }, 0);
+            });
             openTarget();
           })();
         </script>
