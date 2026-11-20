@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" role="img" aria-label="Input tokens per task grow quadratically with agent steps">
+<rect width="720" height="400" fill="#ffffff"/>
+<line x1="90" y1="330.0" x2="680" y2="330.0" stroke="#e9ecef"/>
+<text x="80" y="335.0" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">0</text>
+<line x1="90" y1="260.0" x2="680" y2="260.0" stroke="#e9ecef"/>
+<text x="80" y="265.0" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">250k</text>
+<line x1="90" y1="190.0" x2="680" y2="190.0" stroke="#e9ecef"/>
+<text x="80" y="195.0" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">500k</text>
+<line x1="90" y1="120.0" x2="680" y2="120.0" stroke="#e9ecef"/>
+<text x="80" y="125.0" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">750k</text>
+<line x1="90" y1="50.0" x2="680" y2="50.0" stroke="#e9ecef"/>
+<text x="80" y="55.0" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">1000k</text>
+<text x="90.0" y="354" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">1</text>
+<text x="273.1" y="354" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">10</text>
+<text x="476.6" y="354" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">20</text>
+<text x="680.0" y="354" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6c757d">30</text>
+<text x="385.0" y="380" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#1f2328">agent steps in one task</text>
+<polygon points="90.0,327.8 110.3,325.5 130.7,323.3 151.0,321.0 171.4,318.8 191.7,316.6 212.1,314.3 232.4,312.1 252.8,309.8 273.1,307.6 293.4,305.4 313.8,303.1 334.1,300.9 354.5,298.6 374.8,296.4 395.2,294.2 415.5,291.9 435.9,289.7 456.2,287.4 476.6,285.2 496.9,283.0 517.2,280.7 537.6,278.5 557.9,276.2 578.3,274.0 598.6,271.8 619.0,269.5 639.3,267.3 659.7,265.0 680.0,262.8 680.0,73.8 659.7,88.4 639.3,102.6 619.0,116.4 598.6,129.8 578.3,142.8 557.9,155.3 537.6,167.4 517.2,179.1 496.9,190.3 476.6,201.2 456.2,211.6 435.9,221.6 415.5,231.2 395.2,240.4 374.8,249.1 354.5,257.5 334.1,265.4 313.8,272.9 293.4,279.9 273.1,286.6 252.8,292.8 232.4,298.6 212.1,304.0 191.7,309.0 171.4,313.6 151.0,317.7 130.7,321.4 110.3,324.7 90.0,327.6" fill="#d9480f" fill-opacity="0.18"/>
+<polygon points="90.0,330.0 90.0,327.8 110.3,325.5 130.7,323.3 151.0,321.0 171.4,318.8 191.7,316.6 212.1,314.3 232.4,312.1 252.8,309.8 273.1,307.6 293.4,305.4 313.8,303.1 334.1,300.9 354.5,298.6 374.8,296.4 395.2,294.2 415.5,291.9 435.9,289.7 456.2,287.4 476.6,285.2 496.9,283.0 517.2,280.7 537.6,278.5 557.9,276.2 578.3,274.0 598.6,271.8 619.0,269.5 639.3,267.3 659.7,265.0 680.0,262.8 680.0,330.0" fill="#1971c2" fill-opacity="0.16"/>
+<polyline points="90.0,327.6 110.3,324.7 130.7,321.4 151.0,317.7 171.4,313.6 191.7,309.0 212.1,304.0 232.4,298.6 252.8,292.8 273.1,286.6 293.4,279.9 313.8,272.9 334.1,265.4 354.5,257.5 374.8,249.1 395.2,240.4 415.5,231.2 435.9,221.6 456.2,211.6 476.6,201.2 496.9,190.3 517.2,179.1 537.6,167.4 557.9,155.3 578.3,142.8 598.6,129.8 619.0,116.4 639.3,102.6 659.7,88.4 680.0,73.8" fill="none" stroke="#d9480f" stroke-width="3"/>
+<polyline points="90.0,327.8 110.3,325.5 130.7,323.3 151.0,321.0 171.4,318.8 191.7,316.6 212.1,314.3 232.4,312.1 252.8,309.8 273.1,307.6 293.4,305.4 313.8,303.1 334.1,300.9 354.5,298.6 374.8,296.4 395.2,294.2 415.5,291.9 435.9,289.7 456.2,287.4 476.6,285.2 496.9,283.0 517.2,280.7 537.6,278.5 557.9,276.2 578.3,274.0 598.6,271.8 619.0,269.5 639.3,267.3 659.7,265.0 680.0,262.8" fill="none" stroke="#1971c2" stroke-width="3"/>
+<circle cx="680.0" cy="73.8" r="5" fill="#d9480f"/>
+<text x="670.0" y="59.8" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2328">≈ 915k input tokens</text>
+<text x="517.2" y="173.2" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#d9480f">resent history (Δn²/2)</text>
+<text x="619.0" y="296.4" text-anchor="end" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#1971c2">base context (nB)</text>
+<text x="90" y="28" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#6c757d">Illustrative: B = 8,000 tokens, Δ = 1,500 tokens per step</text>
+</svg>

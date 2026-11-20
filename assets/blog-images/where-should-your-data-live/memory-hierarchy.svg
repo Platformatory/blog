@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>The storage memory hierarchy, from CPU caches to object storage</title>
+  <rect width="1200" height="720" fill="#f7f7f5"/>
+
+  <!-- tiers: each a trapezoid band, widening toward the bottom -->
+  <g stroke="#ffffff" stroke-width="4">
+    <polygon points="540,70 660,70 690,150 510,150"   fill="#2f6418"/>
+    <polygon points="510,150 690,150 725,240 475,240" fill="#3f7d20"/>
+    <polygon points="475,240 725,240 765,340 435,340" fill="#5a9636"/>
+    <polygon points="435,340 765,340 810,450 390,450" fill="#7fae5e"/>
+    <polygon points="390,450 810,450 860,570 340,570" fill="#a9c98f"/>
+    <polygon points="340,570 860,570 915,690 285,690" fill="#d3e4c4"/>
+  </g>
+
+  <g font-weight="600" text-anchor="middle">
+    <text x="600" y="118" fill="#fff" font-size="22">CPU caches</text>
+    <text x="600" y="203" fill="#fff" font-size="24">DRAM</text>
+    <text x="600" y="298" fill="#fff" font-size="24">Local NVMe</text>
+    <text x="600" y="403" fill="#1a2b12" font-size="24">Network block storage</text>
+    <text x="600" y="518" fill="#1a2b12" font-size="24">Object storage (low-latency class)</text>
+    <text x="600" y="638" fill="#1a2b12" font-size="24">Object storage (S3 standard)</text>
+  </g>
+
+  <!-- latency hints on the left, durability/cost hints on the right -->
+  <g font-size="19" fill="#4a4a4a" text-anchor="end">
+    <text x="490" y="118">~ns</text>
+    <text x="455" y="203">~100 ns</text>
+    <text x="420" y="298">~10–100 µs</text>
+    <text x="375" y="403">~sub-ms</text>
+    <text x="325" y="518">single-digit ms</text>
+    <text x="270" y="638">~100–200 ms</text>
+  </g>
+  <g font-size="19" fill="#4a4a4a">
+    <text x="710" y="118">volatile, tiny</text>
+    <text x="745" y="203">volatile</text>
+    <text x="785" y="298">dies with the host</text>
+    <text x="830" y="403">replicated in-zone</text>
+    <text x="880" y="518">zonal</text>
+    <text x="935" y="638">regional, elastic</text>
+  </g>
+
+  <g font-size="17" fill="#7a7a7a" font-weight="600" letter-spacing="1.5">
+    <text x="60" y="60">FASTER · SMALLER · PRICIER PER GB</text>
+    <text x="60" y="700">SLOWER · BIGGER · CHEAPER · MORE DURABLE</text>
+  </g>
+  <g stroke="#9a9a9a" stroke-width="2" fill="none">
+    <line x1="80" y1="90" x2="80" y2="660"/>
+    <polyline points="72,648 80,664 88,648"/>
+    <polyline points="72,102 80,86 88,102"/>
+  </g>
+</svg>
