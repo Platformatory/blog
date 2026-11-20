@@ -11,14 +11,14 @@ title: Home
     <div class="section-title">
         <h2><span>Featured</span></h2>
     </div>
-    <div class="row">
+    <div class="row" id="featured-posts">
 
-{% assign sorted_posts = site.posts | sort: 'weight' | reverse %}
+{% assign featured_posts = site.posts | where_exp: "p", "p.featured == true" | sort: 'weight' | reverse %}
 
-{% for post in sorted_posts %}
-    {% if post.featured == true %}
-        {% include featuredbox.html %}
-    {% endif %}
+{% for post in featured_posts %}
+    {% if forloop.index > 10 %}<div class="rotate-extra" style="display:none">{% endif %}
+    {% include featuredbox.html %}
+    {% if forloop.index > 10 %}</div>{% endif %}
 {% endfor %}
 
     </div>
@@ -27,49 +27,73 @@ title: Home
 {% endif %}
 
 <!-- Posts Index
-     Non-featured, non-hidden posts only. Every visit shows a random 10;
-     without JS the newest 10 show (the rest are rendered hidden).
+     Non-featured, non-hidden posts, shuffled on every visit and revealed
+     a page at a time (newest first without JS).
 ================================================== -->
 {% assign listed_posts = site.posts | where_exp: "p", "p.hidden != true" | where_exp: "p", "p.featured != true" %}
 <section class="recent-posts">
 
     <div class="section-title">
 
-        <h2><span>More Posts</span></h2>
+        <h2><span>All Posts</span></h2>
 
     </div>
 
     <div class="row listrecent" id="all-posts">
 
         {% for post in listed_posts %}
-        {% if forloop.index > 10 %}<div class="d-contents" style="display:none">{% endif %}
+
         {% include postbox.html %}
-        {% if forloop.index > 10 %}</div>{% endif %}
+
         {% endfor %}
 
+    </div>
+
+    <div class="text-center mb-5">
+        <button type="button" id="show-more-posts" class="show-more-posts" hidden>Show more posts</button>
     </div>
 
 </section>
 
 <script>
   (function () {
-    var MAX = 10;
-    var list = document.getElementById('all-posts');
-    if (!list) return;
-    // unwrap the no-JS hidden wrappers so every post is a direct child
-    Array.prototype.slice.call(list.querySelectorAll(':scope > .d-contents')).forEach(function (w) {
-      while (w.firstChild) list.insertBefore(w.firstChild, w);
-      list.removeChild(w);
-    });
-    var items = Array.prototype.slice.call(list.querySelectorAll(':scope > .post-box'));
-
-    // Fisher–Yates shuffle, keep the first MAX, drop the rest
-    for (var i = items.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = items[i]; items[i] = items[j]; items[j] = t;
+    function shuffle(a) {
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
     }
-    items.forEach(function (el, k) {
-      if (k < MAX) list.appendChild(el); else list.removeChild(el);
-    });
+
+    // Featured: a random 10 of all featured posts on every visit.
+    var FEATURED = 10;
+    var feat = document.getElementById('featured-posts');
+    if (feat) {
+      Array.prototype.slice.call(feat.querySelectorAll(':scope > .rotate-extra')).forEach(function (w) {
+        while (w.firstChild) feat.insertBefore(w.firstChild, w);
+        feat.removeChild(w);
+      });
+      var boxes = Array.prototype.filter.call(feat.children, function (el) { return el.nodeType === 1; });
+      shuffle(boxes).forEach(function (el, k) {
+        if (k < FEATURED) feat.appendChild(el); else feat.removeChild(el);
+      });
+    }
+
+    // All posts: shuffled, revealed a page at a time.
+    var PAGE = 9;
+    var list = document.getElementById('all-posts');
+    var more = document.getElementById('show-more-posts');
+    if (!list || !more) return;
+    var items = shuffle(Array.prototype.slice.call(list.children));
+    items.forEach(function (el) { list.appendChild(el); });
+    var shown = 0;
+    function reveal() {
+      shown = Math.min(shown + PAGE, items.length);
+      items.forEach(function (el, k) { el.style.display = k < shown ? '' : 'none'; });
+      more.hidden = shown >= items.length;
+      more.textContent = 'Show more posts (' + (items.length - shown) + ')';
+    }
+    more.addEventListener('click', reveal);
+    reveal();
   })();
 </script>
