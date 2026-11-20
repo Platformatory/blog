@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Too Cheap to Meter: Intelligence as a Sovereign Utility'
+title: The Architecture & Economics of AI Sovereignty
 author: p6
 categories:
 - AI

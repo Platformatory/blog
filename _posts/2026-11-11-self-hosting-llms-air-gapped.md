@@ -1,6 +1,7 @@
 ---
 layout: post
-title: 'The Token Machine: Self-Hosting LLMs Air-Gapped'
+title: 'Self-Hosting Token Machines: AI & GPU Infra 101 for Distributed Training &
+  Inference'
 author: p6
 categories:
 - AI

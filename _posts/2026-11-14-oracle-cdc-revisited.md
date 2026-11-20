@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Oracle CDC, Revisited: Where Changes Wait'
+title: 'Oracle CDC with XStream and Debezium, Revisited: Where Changes Wait'
 author: p6
 categories:
 - Kafka

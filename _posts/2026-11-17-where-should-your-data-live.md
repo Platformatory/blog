@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Where Should Your Data Live? The Memory Hierarchy, from NVMe to Object Storage
+title: 'The Memory Hierarchy: Data Architectures Beyond Naive Disaggregation'
 author: p6
 categories:
 - Data
