@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-label="Decode ceilings on 273 GB/s of memory bandwidth">
+<rect width="720" height="340" fill="#ffffff"/>
+<text x="20" y="30" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#6c757d">Single-stream decode on 273 GB/s: tokens per second</text>
+<line x1="330.0" y1="50" x2="330.0" y2="280" stroke="#e9ecef"/>
+<text x="330.0" y="300" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">0</text>
+<line x1="409.5" y1="50" x2="409.5" y2="280" stroke="#e9ecef"/>
+<text x="409.5" y="300" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">25</text>
+<line x1="489.1" y1="50" x2="489.1" y2="280" stroke="#e9ecef"/>
+<text x="489.1" y="300" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">50</text>
+<line x1="568.6" y1="50" x2="568.6" y2="280" stroke="#e9ecef"/>
+<text x="568.6" y="300" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">75</text>
+<line x1="648.2" y1="50" x2="648.2" y2="280" stroke="#e9ecef"/>
+<text x="648.2" y="300" text-anchor="middle" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">100</text>
+<text x="20" y="86" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Llama 3.1 70B, FP8</text>
+<text x="20" y="106" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">70 GB read per token</text>
+<rect x="330" y="70" width="12.4" height="20" fill="#1971c2" opacity="0.25"/>
+<text x="348.4" y="85" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#1971c2">ceiling 3.9</text>
+<rect x="330" y="94" width="8.6" height="16" fill="#d9480f"/>
+<text x="344.6" y="107" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#d9480f">measured 2.7</text>
+<text x="20" y="158" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Llama 3.1 8B, FP8</text>
+<text x="20" y="178" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">8 GB per token</text>
+<rect x="330" y="142" width="108.6" height="20" fill="#1971c2" opacity="0.25"/>
+<text x="444.6" y="157" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#1971c2">ceiling 34.1</text>
+<rect x="330" y="166" width="65.2" height="16" fill="#d9480f"/>
+<text x="401.2" y="179" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#d9480f">measured 20.5</text>
+<text x="20" y="230" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f2328">gpt-oss-120b, MXFP4</text>
+<text x="20" y="250" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">≈2.7 GB of active experts</text>
+<rect x="330" y="214" width="318.2" height="20" fill="#1971c2" opacity="0.25"/>
+<text x="654.2" y="229" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#1971c2">ceiling 100.0</text>
+<rect x="330" y="314" width="14" height="10" fill="#1971c2" opacity="0.25"/><text x="350" y="324" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">bandwidth ceiling</text>
+<rect x="500" y="314" width="14" height="10" fill="#d9480f"/><text x="520" y="324" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6c757d">measured (LMSYS, SGLang)</text>
+</svg>
