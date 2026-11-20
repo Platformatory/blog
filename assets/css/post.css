@@ -496,3 +496,25 @@ html.ss-lightbox-open { overflow: hidden; }
 .ss-lightbox-stage > svg { width: min(100%, 1600px); height: auto; padding: 16px; }
 .ss-lightbox.is-actual .ss-lightbox-stage > * { max-width: none; max-height: none; cursor: zoom-out; }
 .ss-lightbox.is-actual .ss-lightbox-stage > svg { width: var(--nat-w, 1600px); }
+
+/* Collapsed refs sections (built by the script in _layouts/post.html) */
+.layout-post .ss-body details.ss-refs { margin: 2rem 0 1rem; }
+.layout-post .ss-body details.ss-refs > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+}
+.layout-post .ss-body details.ss-refs > summary::-webkit-details-marker { display: none; }
+.layout-post .ss-body details.ss-refs > summary::before {
+  content: "\25B8";
+  color: #00ab6b;
+  transition: transform .15s;
+}
+.layout-post .ss-body details.ss-refs[open] > summary::before { transform: rotate(90deg); }
+.layout-post .ss-body details.ss-refs > summary > :is(h1, h2, h3, h4, h5, h6) {
+  display: inline;
+  margin: 0;
+}
+

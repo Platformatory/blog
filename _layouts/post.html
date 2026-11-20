@@ -61,6 +61,42 @@ post_class: post-template
             {{ content }}
         </div>
 
+        <script>
+          // Collapse every "Refs"/"References" section by default: the heading
+          // becomes the <summary>, everything up to the next heading of the
+          // same or higher level goes inside the <details>.
+          (function () {
+            var body = document.querySelector('.article-post');
+            if (!body) return;
+            var heads = body.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            Array.prototype.forEach.call(heads, function (h) {
+              if (!/^\s*(refs?|references)\s*:?\s*$/i.test(h.textContent)) return;
+              var lvl = +h.tagName[1];
+              var det = document.createElement('details');
+              det.className = 'ss-refs';
+              var sum = document.createElement('summary');
+              h.parentNode.insertBefore(det, h);
+              sum.appendChild(h);
+              det.appendChild(sum);
+              var n = det.nextSibling;
+              while (n && !(/^H[1-6]$/.test(n.nodeName) && +n.nodeName[1] <= lvl)) {
+                var next = n.nextSibling;
+                det.appendChild(n);
+                n = next;
+              }
+            });
+            // Open the section when a link (e.g. the TOC) targets it.
+            function openTarget() {
+              var id = decodeURIComponent(location.hash.slice(1));
+              var el = id && document.getElementById(id);
+              var d = el && el.closest('details.ss-refs');
+              if (d) { d.open = true; el.scrollIntoView(); }
+            }
+            window.addEventListener('hashchange', openTarget);
+            openTarget();
+          })();
+        </script>
+
         {% if page.rating %}
         <div class="rating mb-4 d-flex align-items-center">
             <strong class="mr-1">Rating:</strong> {% include star_rating.html %}
