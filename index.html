@@ -27,58 +27,49 @@ title: Home
 {% endif %}
 
 <!-- Posts Index
-     All non-featured posts are rendered (newest first, so it still works
-     without JS); the script below shuffles them on every visit and reveals
-     them a few at a time. Featured posts above keep their weighted order.
+     Non-featured, non-hidden posts only. Every visit shows a random 10;
+     without JS the newest 10 show (the rest are rendered hidden).
 ================================================== -->
-{% assign listed_posts = site.posts | where_exp: "p", "p.hidden != true" %}
+{% assign listed_posts = site.posts | where_exp: "p", "p.hidden != true" | where_exp: "p", "p.featured != true" %}
 <section class="recent-posts">
 
     <div class="section-title">
 
-        <h2><span>All Posts</span></h2>
+        <h2><span>More Posts</span></h2>
 
     </div>
 
     <div class="row listrecent" id="all-posts">
 
         {% for post in listed_posts %}
-
+        {% if forloop.index > 10 %}<div class="d-contents" style="display:none">{% endif %}
         {% include postbox.html %}
-
+        {% if forloop.index > 10 %}</div>{% endif %}
         {% endfor %}
 
-    </div>
-
-    <div class="text-center mb-5">
-        <button type="button" id="show-more-posts" class="show-more-posts" hidden>Show more posts</button>
     </div>
 
 </section>
 
 <script>
   (function () {
-    var PAGE = 9;
+    var MAX = 10;
     var list = document.getElementById('all-posts');
-    var more = document.getElementById('show-more-posts');
-    if (!list || !more) return;
-    var items = Array.prototype.slice.call(list.children);
+    if (!list) return;
+    // unwrap the no-JS hidden wrappers so every post is a direct child
+    Array.prototype.slice.call(list.querySelectorAll(':scope > .d-contents')).forEach(function (w) {
+      while (w.firstChild) list.insertBefore(w.firstChild, w);
+      list.removeChild(w);
+    });
+    var items = Array.prototype.slice.call(list.querySelectorAll(':scope > .post-box'));
 
-    // Fisher–Yates shuffle, then re-append in the new order
+    // Fisher–Yates shuffle, keep the first MAX, drop the rest
     for (var i = items.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var t = items[i]; items[i] = items[j]; items[j] = t;
     }
-    items.forEach(function (el) { list.appendChild(el); });
-
-    var shown = 0;
-    function reveal() {
-      shown = Math.min(shown + PAGE, items.length);
-      items.forEach(function (el, k) { el.style.display = k < shown ? '' : 'none'; });
-      more.hidden = shown >= items.length;
-      more.textContent = 'Show more posts (' + (items.length - shown) + ')';
-    }
-    more.addEventListener('click', reveal);
-    reveal();
+    items.forEach(function (el, k) {
+      if (k < MAX) list.appendChild(el); else list.removeChild(el);
+    });
   })();
 </script>
