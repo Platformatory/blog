@@ -9,7 +9,8 @@ categories:
 - Kafka
 - Platform Engineering
 image: assets/blog-images/where-should-your-data-live/memory-hierarchy.svg
-featured: false
+featured: true
+weight: 0
 hidden: false
 teaser: Choosing local NVMe or object storage is choosing which tier holds the truth.
   Everything above it is a cache, priced by what a miss costs.
@@ -46,7 +47,7 @@ The cloud version swaps device prices for a bill. A local copy costs rent; a mis
 
 $$T = \frac{\text{price per GET}}{\text{cache price per GB-second} \times s}$$
 
-makes the cached copy cheaper, before counting latency. At S3 Standard's $0.0004 per 1,000 GETs, with gp3 block storage at $0.08 per GB-month standing in for cache rent:[^s3-pricing][^ebs-pricing]
+makes the cached copy cheaper, before counting latency. At S3 Standard's $0.0004 per 1,000 GETs, with gp3 block storage at $0.08 per GB-month standing in for cache rent (AWS US East list prices throughout):[^s3-pricing][^ebs-pricing]
 
 | Object size | Cache it if re-read within |
 |---|---|
@@ -54,7 +55,7 @@ makes the cached copy cheaper, before counting latency. At S3 Standard's $0.0004
 | 1 MB | about 3.6 hours |
 | 64 MB | about 3.4 minutes |
 
-Small objects and metadata: cache everything, because requests dominate the bill. Large segments read less often than every few minutes: leave them in the store. Latency only pushes the line towards caching more.
+Small objects and metadata: cache everything, because requests dominate the bill. Large segments read less often than every few minutes: leave them in the store. Latency only pushes the line towards caching more, and so does the stand-in: gp3 is conservative, and instance NVMe, bundled with the instance, makes caching pay off sooner.
 
 * * *
 
@@ -131,7 +132,7 @@ Replicating to two other zones costs $0.01 per GB out and $0.01 in, per copy: $0
 
 *AWS US East list prices: $0.005 per 1,000 PUTs; $0.01 per GB each way across zones.*
 
-The break-even batch is about 125 KB, and filling it takes time: $$b$$ divided by the writer's throughput. A writer producing 1 MB/s waits 125 ms per batch; at 10 MB/s, 12.5 ms. Object-store-first wins on cost for high-volume, log-shaped data, and pays for it in latency on low-volume streams. The sums leave out storage, consumer GETs, and the producer's own hop across zones.
+The break-even batch is about 125 KB, and filling it takes time: $$b$$ divided by the writer's throughput. A writer producing 1 MB/s waits 125 ms per batch; at 10 MB/s, 12.5 ms. Object-store-first wins on cost for high-volume, log-shaped data, and pays for it in latency on low-volume streams. Storage rent tilts it further. S3 Standard costs about $0.023 per GB-month; three replicas on gp3 cost about $0.24, ten times as much, and for long retention that outweighs every write-path term above.[^s3-pricing][^ebs-pricing]  The sums still leave out consumer GETs and the producer's own hop across zones.
 
 * * *
 
@@ -156,7 +157,7 @@ Capacity and durability get simpler. The system doesn't: on-call moves to the ca
 Streaming systems have already made this move. We operate self-hosted Kafka, Flink and related data infrastructure for customers as a managed service, so we have a stake in where its data lives.
 
 - **Tiered storage** ([KIP-405](https://cwiki.apache.org/confluence/display/KAFKA/KIP-405%3A+Kafka+Tiered+Storage)): hot segments local, cold segments in object storage. Early access in Kafka 3.6, production-ready in 3.9.[^kafka39]
-- **Diskless topics** ([KIP-1150](https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150%3A+Diskless+Topics)) and object-store-native Kafka-compatible systems: the write path on object storage, trading produce latency for no cross-zone replication traffic and nearly stateless brokers. KIP-1150 was accepted in March 2026; its implementation is in follow-up KIPs still under way.[^kip1150]
+- **Diskless topics** ([KIP-1150](https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150%3A+Diskless+Topics)) and object-store-native Kafka-compatible systems: the write path on object storage, trading produce latency for no cross-zone replication traffic and nearly stateless brokers. KIP-1150 was accepted in March 2026; its core design, in KIP-1163 and KIP-1164, was still under discussion in August 2026, with no release named.[^kip1150][^diskless-status]
 
 Choose per workload:
 
@@ -182,7 +183,7 @@ Choose per workload:
 
 * * *
 
-Miss-heavy OLTP belongs on local NVMe; high-volume logs belong in cached object storage. Durability costs a round trip either way. Pick the tier that holds the truth, cache the rest, and keep misses rare and cheap.
+Miss-heavy OLTP belongs on local NVMe; high-volume logs belong in cached object storage. Durability costs one round trip either way: a few milliseconds across zones, or about 100 ms to a standard object store. Pick the tier that holds the truth, cache the rest, and keep misses rare and cheap.
 
 [^thread]: Thread on X. <https://x.com/jorandirkgreef/status/2118057836207104173>
 [^s3-perf]: AWS, "Best practices design patterns: optimizing Amazon S3 performance" (at least 3,500 PUT and 5,500 GET requests per second per prefix; 503 Slow Down while scaling; small-object latencies of roughly 100–200 ms). <https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html>
@@ -195,6 +196,7 @@ Miss-heavy OLTP belongs on local NVMe; high-volume logs belong in cached object 
 [^kafka39]: Apache Kafka, "Apache Kafka 3.9.0 Release Announcement," 6 November 2024. <https://kafka.apache.org/blog/2024/11/06/apache-kafka-3.9.0-release-announcement/>
 [^kip1150]: Aiven, "KIP-1150 accepted, and the road ahead," 12 March 2026. <https://aiven.io/blog/kip-1150-accepted-and-the-road-ahead>
 [^haas]: Gabriel Haas and Viktor Leis, "What Modern NVMe Storage Can Do, And How To Exploit It: High-Performance I/O for High-Performance Storage Engines," *PVLDB* 16(9), 2090–2102, 2023. <https://www.vldb.org/pvldb/vol16/p2090-haas.pdf>
+[^diskless-status]: SoftwareMill, "Diskless Kafka: object storage, KIP-1150 and Kafka's future," August 2026; Apache Kafka wiki, "KIP-1163: Diskless Core." <https://softwaremill.com/diskless-kafka-object-storage-kip-1150-and-kafkas-future/>; <https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core>
 
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
 

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title>An enterprise agentic AI platform, with the software factory as its first tenant</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a4a48"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="780" fill="#f7f7f5"/>
+
+  <!-- inputs -->
+  <g font-size="14" fill="#2b2b2a">
+    <rect x="40" y="30" width="250" height="64" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="165" y="57" text-anchor="middle" font-weight="600">Triggers</text>
+    <text x="165" y="78" text-anchor="middle" font-size="12" fill="#5c5c58">tickets · chat · CI failures · schedules</text>
+    <rect x="910" y="30" width="250" height="64" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="1035" y="57" text-anchor="middle" font-weight="600">Humans</text>
+    <text x="1035" y="78" text-anchor="middle" font-size="12" fill="#5c5c58">specs · scenarios · review · approvals</text>
+  </g>
+
+  <!-- durable execution band -->
+  <rect x="40" y="120" width="1120" height="250" rx="14" fill="#eef3f8" stroke="#7d9bb8"/>
+  <text x="60" y="146" font-size="13" font-weight="600" fill="#3d5f80">Durable execution: each factory run is a workflow that survives crashes and multi-day waits</text>
+
+  <!-- context -->
+  <rect x="60" y="168" width="220" height="180" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+  <text x="170" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#2b2b2a">Standard work</text>
+  <g font-size="12" fill="#5c5c58" text-anchor="middle">
+    <text x="170" y="224">AGENTS.md · skills</text>
+    <text x="170" y="246">golden paths</text>
+    <text x="170" y="268">curated tool subsets</text>
+    <text x="170" y="290">code · docs · tickets</text>
+    <text x="170" y="312">enterprise data context</text>
+  </g>
+
+  <!-- sandbox + harness -->
+  <rect x="320" y="168" width="280" height="180" rx="10" fill="#ffffff" stroke="#2b2b2a" stroke-width="1.5"/>
+  <text x="460" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#2b2b2a">Isolated sandbox</text>
+  <text x="460" y="216" text-anchor="middle" font-size="12" fill="#5c5c58">Sandbox CRD · gVisor / Kata · warm pools</text>
+  <rect x="345" y="236" width="230" height="92" rx="8" fill="#f2efe6" stroke="#b5a57a"/>
+  <text x="460" y="266" text-anchor="middle" font-size="14" font-weight="600" fill="#2b2b2a">Agent harness</text>
+  <text x="460" y="288" text-anchor="middle" font-size="12" fill="#5c5c58">two or three sanctioned harnesses</text>
+  <text x="460" y="308" text-anchor="middle" font-size="12" fill="#5c5c58">one identity per agent instance</text>
+
+  <!-- gates -->
+  <rect x="640" y="168" width="230" height="180" rx="10" fill="#fdf1ef" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="755" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#8e2a1f">Validation gates</text>
+  <g font-size="12" fill="#5c5c58" text-anchor="middle">
+    <text x="755" y="224">tests · type checks</text>
+    <text x="755" y="246">policy as code</text>
+    <text x="755" y="268">scenarios on digital twins</text>
+    <text x="755" y="290">budget check</text>
+  </g>
+  <text x="755" y="326" text-anchor="middle" font-size="12" font-style="italic" fill="#8e2a1f">any gate stops the line</text>
+
+  <!-- review / merge -->
+  <rect x="910" y="168" width="230" height="80" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+  <text x="1025" y="200" text-anchor="middle" font-size="15" font-weight="600" fill="#2b2b2a">Human review</text>
+  <text x="1025" y="222" text-anchor="middle" font-size="12" fill="#5c5c58">after the gates</text>
+  <rect x="910" y="268" width="230" height="80" rx="10" fill="#e9f4ec" stroke="#4f8a5f"/>
+  <text x="1025" y="300" text-anchor="middle" font-size="15" font-weight="600" fill="#2f6b40">Verified merge</text>
+  <text x="1025" y="322" text-anchor="middle" font-size="12" fill="#5c5c58">the factory's yield</text>
+
+  <!-- flow arrows -->
+  <g stroke="#4a4a48" stroke-width="1.6" fill="none">
+    <path d="M165,94 L165,120 M165,120 L460,120 L460,166" marker-end="url(#a)"/>
+    <path d="M280,258 L318,258" marker-end="url(#a)"/>
+    <path d="M600,228 L638,228" marker-end="url(#a)"/>
+    <path d="M870,208 L908,208" marker-end="url(#a)"/>
+    <path d="M1025,248 L1025,266" marker-end="url(#a)"/>
+    <path d="M1035,94 L1035,166" marker-end="url(#a)"/>
+  </g>
+  <path d="M640,300 C620,300 620,300 602,300" stroke="#c0392b" stroke-width="1.8" fill="none" marker-end="url(#r)"/>
+  <text x="621" y="292" text-anchor="middle" font-size="11" fill="#8e2a1f">fail</text>
+
+  <!-- traffic plane -->
+  <rect x="40" y="400" width="1120" height="150" rx="14" fill="#f4eff8" stroke="#8c6ba8"/>
+  <text x="60" y="426" font-size="13" font-weight="600" fill="#5e3f7a">One traffic plane, three routing jobs · identity at the edge (CIMD, ID-JAG, SPIFFE) · credential swap · token budgets</text>
+  <g font-size="14" fill="#2b2b2a" text-anchor="middle">
+    <rect x="70" y="444" width="320" height="86" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="230" y="474" font-weight="600">Model selection</text>
+    <text x="230" y="496" font-size="12" fill="#5c5c58">which model answers</text>
+    <text x="230" y="514" font-size="12" fill="#5c5c58">in-path safety classifiers</text>
+    <rect x="440" y="444" width="320" height="86" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="600" y="474" font-weight="600">Inference endpoint picking</text>
+    <text x="600" y="496" font-size="12" fill="#5c5c58">which replica, given KV cache and load</text>
+    <text x="600" y="514" font-size="12" fill="#5c5c58">Gateway API Inference Extension</text>
+    <rect x="810" y="444" width="320" height="86" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="970" y="474" font-weight="600">Tool and agent traffic</text>
+    <text x="970" y="496" font-size="12" fill="#5c5c58">MCP and A2A, governed</text>
+    <text x="970" y="514" font-size="12" fill="#5c5c58">registry of servers and agents</text>
+  </g>
+  <path d="M460,348 L460,398" stroke="#4a4a48" stroke-width="1.6" fill="none" marker-end="url(#a)" marker-start="url(#a)"/>
+
+  <!-- destinations -->
+  <g font-size="13" fill="#2b2b2a" text-anchor="middle">
+    <rect x="70" y="580" width="320" height="56" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="230" y="604" font-weight="600">Models</text>
+    <text x="230" y="624" font-size="12" fill="#5c5c58">frontier APIs · self-hosted · hybrid</text>
+    <rect x="810" y="580" width="320" height="56" rx="10" fill="#ffffff" stroke="#9a9a96"/>
+    <text x="970" y="604" font-weight="600">Tools and systems</text>
+    <text x="970" y="624" font-size="12" fill="#5c5c58">MCP servers · repos · CI · enterprise APIs</text>
+  </g>
+  <g stroke="#4a4a48" stroke-width="1.6" fill="none">
+    <path d="M230,530 L230,578" marker-end="url(#a)"/>
+    <path d="M600,530 L600,560 L330,560 L330,578" marker-end="url(#a)"/>
+    <path d="M970,530 L970,578" marker-end="url(#a)"/>
+  </g>
+
+  <!-- observability streams -->
+  <g font-size="13" fill="#2b2b2a" text-anchor="middle">
+    <rect x="430" y="580" width="170" height="56" rx="10" fill="#fff8e6" stroke="#c79a2a"/>
+    <text x="515" y="604" font-weight="600">Audit log</text>
+    <text x="515" y="624" font-size="11" fill="#5c5c58">complete · replayable</text>
+    <rect x="620" y="580" width="170" height="56" rx="10" fill="#ffffff" stroke="#c79a2a" stroke-dasharray="5 4"/>
+    <text x="705" y="604" font-weight="600">Ops telemetry</text>
+    <text x="705" y="624" font-size="11" fill="#5c5c58">OTel · tail-sampled</text>
+  </g>
+
+  <!-- substrate -->
+  <rect x="40" y="670" width="1120" height="80" rx="14" fill="#2b2b2a"/>
+  <text x="600" y="704" text-anchor="middle" font-size="16" font-weight="600" fill="#ffffff">Substrate: Kubernetes and operators</text>
+  <text x="600" y="728" text-anchor="middle" font-size="12" fill="#d6d6d2">sandboxes, agents, gateways and model endpoints as declared resources, reconciled wherever they run</text>
+</svg>
