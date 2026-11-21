@@ -11,14 +11,12 @@ title: Home
     <div class="section-title">
         <h2><span>Featured</span></h2>
     </div>
-    <div class="row" id="featured-posts">
+    <div class="row">
 
 {% assign featured_posts = site.posts | where_exp: "p", "p.featured == true" | sort: 'weight' | reverse %}
 
-{% for post in featured_posts %}
-    {% if forloop.index > 10 %}<div class="rotate-extra" style="display:none">{% endif %}
+{% for post in featured_posts limit: 10 %}
     {% include featuredbox.html %}
-    {% if forloop.index > 10 %}</div>{% endif %}
 {% endfor %}
 
     </div>
@@ -63,20 +61,6 @@ title: Home
         var t = a[i]; a[i] = a[j]; a[j] = t;
       }
       return a;
-    }
-
-    // Featured: a random 10 of all featured posts on every visit.
-    var FEATURED = 10;
-    var feat = document.getElementById('featured-posts');
-    if (feat) {
-      Array.prototype.slice.call(feat.querySelectorAll(':scope > .rotate-extra')).forEach(function (w) {
-        while (w.firstChild) feat.insertBefore(w.firstChild, w);
-        feat.removeChild(w);
-      });
-      var boxes = Array.prototype.filter.call(feat.children, function (el) { return el.nodeType === 1; });
-      shuffle(boxes).forEach(function (el, k) {
-        if (k < FEATURED) feat.appendChild(el); else feat.removeChild(el);
-      });
     }
 
     // All posts: shuffled, revealed a page at a time.
