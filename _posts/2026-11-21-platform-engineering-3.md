@@ -6,7 +6,8 @@ categories:
 - platform-engineering
 - ai
 image: assets/blog-images/platform-engineering-3/factory-tier.svg
-featured: false
+featured: true
+weight: 5
 hidden: false
 teaser: Platform Engineering 3.0 means running agentic AI as an enterprise platform.
   The software factory is where it has to pay off first.
