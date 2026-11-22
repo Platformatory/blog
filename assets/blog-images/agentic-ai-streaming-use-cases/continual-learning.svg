@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" role="img" aria-label="Continual learning loop: agent traces go to Kafka, Flink joins late labels and detects drift, fast updates go back to the agent, Iceberg holds training and regression sets, evals gate promotion or rollback, and weight retraining runs in batch from Iceberg">
+  <rect width="760" height="470" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#495057"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d9480f"/></marker>
+  </defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1f2328">
+    <!-- agent -->
+    <rect x="20" y="40" width="160" height="70" rx="8" fill="#f7f7f5" stroke="#495057"/>
+    <text x="100" y="70" text-anchor="middle" font-weight="700">Agent</text>
+    <text x="100" y="92" text-anchor="middle" font-size="14" fill="#495057">prompts, memory, tools</text>
+
+    <!-- kafka -->
+    <rect x="290" y="40" width="180" height="70" rx="8" fill="#f7f7f5" stroke="#495057"/>
+    <text x="380" y="70" text-anchor="middle" font-weight="700">Kafka</text>
+    <text x="380" y="92" text-anchor="middle" font-size="14" fill="#495057">traces, outputs, labels</text>
+
+    <!-- flink -->
+    <rect x="560" y="40" width="180" height="70" rx="8" fill="#f7f7f5" stroke="#495057"/>
+    <text x="650" y="70" text-anchor="middle" font-weight="700">Flink</text>
+    <text x="650" y="92" text-anchor="middle" font-size="14" fill="#495057">late-label joins, drift</text>
+
+    <!-- iceberg -->
+    <rect x="560" y="200" width="180" height="70" rx="8" fill="#f7f7f5" stroke="#1971c2"/>
+    <text x="650" y="230" text-anchor="middle" font-weight="700">Iceberg</text>
+    <text x="650" y="252" text-anchor="middle" font-size="14" fill="#495057">training, regression sets</text>
+
+    <!-- evals -->
+    <rect x="290" y="200" width="180" height="70" rx="8" fill="#f7f7f5" stroke="#495057"/>
+    <text x="380" y="230" text-anchor="middle" font-weight="700">Evals</text>
+    <text x="380" y="252" text-anchor="middle" font-size="14" fill="#495057">promote or roll back</text>
+
+    <!-- retrain -->
+    <rect x="560" y="360" width="180" height="70" rx="8" fill="#f7f7f5" stroke="#1971c2"/>
+    <text x="650" y="390" text-anchor="middle" font-weight="700">Retraining</text>
+    <text x="650" y="412" text-anchor="middle" font-size="14" fill="#495057">weights, in batch</text>
+
+    <!-- arrows -->
+    <line x1="180" y1="75" x2="288" y2="75" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="470" y1="75" x2="558" y2="75" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="650" y1="110" x2="650" y2="198" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="560" y1="235" x2="472" y2="235" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="650" y1="270" x2="650" y2="358" stroke="#1971c2" stroke-width="2" marker-end="url(#a)"/>
+    <path d="M560,395 L380,395 L380,272" fill="none" stroke="#1971c2" stroke-width="2" marker-end="url(#a)"/>
+    <path d="M290,235 L100,235 L100,112" fill="none" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <path d="M650,40 L650,16 L100,16 L100,38" fill="none" stroke="#d9480f" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#b)"/>
+
+    <text x="375" y="12" text-anchor="middle" font-size="14" fill="#d9480f">fast path: memory, retrieval, prompt updates</text>
+    <text x="110" y="262" font-size="14" fill="#495057">promoted change</text>
+    <text x="390" y="420" font-size="14" fill="#1971c2">new weights</text>
+  </g>
+</svg>
