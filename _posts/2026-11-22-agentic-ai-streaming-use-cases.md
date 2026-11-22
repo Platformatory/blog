@@ -104,6 +104,31 @@ The training and regression sets belong in Iceberg, large trajectories belong in
 
 The recorded model outputs that make replay honest are the same records this loop learns from.
 
+## What each is worth
+
+Ranking both piles by what they're worth and what they cost changes the reading order. The scores are my own assessment, from 1 to 5, for a team already running Kafka and Flink. Value is the upside if it works: revenue, risk avoided, quality, money saved. Cost is what it takes to adopt and run: new spend, operations, people and tokens.
+
+![Thirteen opportunities plotted by business value against cost to adopt, each from 1 to 5. High value at low cost: the action log (value 4, cost 1.3), record and replay of model outputs (4.2, 2), budget backpressure (3.6, 1.8) and share groups (3, 1). High value at high cost: threat response (5, 4.5), continual learning (4.5, 3.6), the delegated principal (4.2, 3.4) and, near the line, diskless storage (3.7, 2.8). Low value for their cost: context engines (2, 3) and Streaming and Flink Agents (2, 4). New items are orange triangles, old wine grey circles.](../assets/blog-images/agentic-ai-streaming-use-cases/value-vs-cost.svg)
+*My assessment, scored 1 to 5, November 2026.*
+
+| Opportunity | Pile | Value | Cost | Why |
+|---|---|---|---|---|
+| Threat response at machine speed | New | 5 | 4.5 | Breach and regulatory cost avoided; flow-level volume and round-the-clock operations |
+| Continual learning | New | 4.5 | 3.6 | Agent quality compounds; labelling, graders and evals cost people |
+| Delegated principal | New | 4.2 | 3.4 | Often the gate to production; identity plumbing across teams |
+| Record and replay of model outputs | New | 4.2 | 2 | Reproducible, testable agents; mostly design discipline and storage |
+| Agent action log | Old | 4 | 1.3 | Audit, evals and replay start here, on a topic you already have |
+| Diskless storage | Old | 3.7 | 2.8 | A real saving on cross-zone traffic; a migration, and no upstream release yet |
+| Budget backpressure | New | 3.6 | 1.8 | Its value is the bill it cuts; mostly a policy layer |
+| Share groups for agent tasks | Old | 3 | 1 | Free from Kafka 4.2; no ordering or dead-letter queue yet |
+| AI gateway, agent data plane | Old | 3 | 2.5 | Governance is needed anyway; buying beats building |
+| Forecast or anomaly triggers an agent | Old | 2.8 | 2 | Cheap complex event processing; the agent adds little over a runbook |
+| Context engines | Old | 2 | 3 | New managed spend, Flink still upstream, single-table queries |
+| Streaming and Flink Agents | Old | 2 | 4 | Model calls in the hot path, replay cost, operational coupling |
+| MCP tooling for coding assistants | Old | 1.5 | 1 | Pleasant and free with the platform |
+
+The cheapest wins are in the new pile, or rest on old wine you already own. Recording model outputs in the action log and putting a budget on model calls pay off three times, in audit, in evals and on the bill, and continual learning is built on the same records. At the illustrative \$259,000 a day above, sampling out a tenth of the model calls saves about \$26,000 a day. The three strategic bets (threat response, continual learning and the delegated principal) carry the most value and the most cost, and none of them is a single product you can buy: each is an integration project. The headline launches, agents inside the pipeline and context engines, score lowest for what they cost, unless the data is born as events and decisions turn over in seconds. Diskless storage is the old wine worth chasing, for savings that have little to do with agents.
+
 ## Which launch to buy, and when
 
 As of November 2026, the choice follows where the data is born and what the agent does with it:
