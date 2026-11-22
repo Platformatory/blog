@@ -11,12 +11,14 @@ title: Home
     <div class="section-title">
         <h2><span>Featured</span></h2>
     </div>
-    <div class="row">
+    <div class="row" id="featured-posts">
 
 {% assign featured_posts = site.posts | where_exp: "p", "p.featured == true" | sort: 'weight' | reverse %}
 
-{% for post in featured_posts limit: 10 %}
+{% for post in featured_posts %}
+    {% if forloop.index > 10 %}<div class="rotate-extra" style="display:none">{% endif %}
     {% include featuredbox.html %}
+    {% if forloop.index > 10 %}</div>{% endif %}
 {% endfor %}
 
     </div>
@@ -25,8 +27,8 @@ title: Home
 {% endif %}
 
 <!-- Posts Index
-     Non-featured, non-hidden posts, shuffled on every visit and revealed
-     a page at a time (newest first without JS).
+     Non-featured, non-hidden posts, shuffled on every visit with newer
+     posts weighted higher, revealed a page at a time (newest first without JS).
 ================================================== -->
 {% assign listed_posts = site.posts | where_exp: "p", "p.hidden != true" | where_exp: "p", "p.featured != true" %}
 <section class="recent-posts">
@@ -55,20 +57,41 @@ title: Home
 
 <script>
   (function () {
-    function shuffle(a) {
-      for (var i = a.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var t = a[i]; a[i] = a[j]; a[j] = t;
-      }
-      return a;
+    // Recency-weighted shuffle: weight halves every HALF_LIFE days, with a
+    // small floor so old posts still surface now and then.
+    var HALF_LIFE = 90, FLOOR = 0.02, DAY = 86400;
+    function weightedShuffle(a) {
+      var now = Date.now() / 1000;
+      return a.map(function (el) {
+        var age = Math.max(0, (now - (+el.getAttribute('data-date') || 0)) / DAY);
+        var w = Math.max(Math.pow(0.5, age / HALF_LIFE), FLOOR);
+        // Efraimidis-Spirakis: key = u^(1/w), compared in log space.
+        return { el: el, k: Math.log(Math.random()) / w };
+      }).sort(function (x, y) { return y.k - x.k; })
+        .map(function (x) { return x.el; });
     }
 
-    // All posts: shuffled, revealed a page at a time.
+    // Featured: a recency-weighted 10 of all featured posts on every visit
+    // (top 10 by weight without JS).
+    var FEATURED = 10;
+    var feat = document.getElementById('featured-posts');
+    if (feat) {
+      Array.prototype.slice.call(feat.querySelectorAll(':scope > .rotate-extra')).forEach(function (w) {
+        while (w.firstChild) feat.insertBefore(w.firstChild, w);
+        feat.removeChild(w);
+      });
+      var boxes = Array.prototype.filter.call(feat.children, function (el) { return el.nodeType === 1; });
+      weightedShuffle(boxes).forEach(function (el, k) {
+        if (k < FEATURED) feat.appendChild(el); else feat.removeChild(el);
+      });
+    }
+
+    // All posts: recency-weighted shuffle, revealed a page at a time.
     var PAGE = 9;
     var list = document.getElementById('all-posts');
     var more = document.getElementById('show-more-posts');
     if (!list || !more) return;
-    var items = shuffle(Array.prototype.slice.call(list.children));
+    var items = weightedShuffle(Array.prototype.slice.call(list.children));
     items.forEach(function (el) { list.appendChild(el); });
     var shown = 0;
     function reveal() {
