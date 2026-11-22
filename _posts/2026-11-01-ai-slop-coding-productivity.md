@@ -21,7 +21,7 @@ Since 2023 we have gone through a new meme every year or so about what these mac
 
 - **2023, the parrot:** fancy autocomplete, stitching together the form of language without its meaning. The best model resolved 1.96% of real GitHub issues on SWE-bench.[^swe-bench]  The job of the future was *prompt engineer*, and one posting paid up to $335,000.[^prompt-engineer]
 - **2025, the vibes:** "a new kind of coding I call 'vibe coding'," where you "forget that the code even exists."[^vibe] In March, Anthropic's CEO expected AI to be writing 90% of the code within three to six months.[^amodei]  The sceptics had their own refrain: it's slop.
-- **2026, the factory:** agents running for hours with nobody watching, sixteen of them building a C compiler, leaderboards ranking engineers by tokens burned, and a claimed proof of a Millennium Prize problem.
+- **2026, the factory:** agents running for hours with nobody watching, sixteen of them building a C compiler, leaderboards ranking engineers by tokens burned, and machine-checked proofs offered for Millennium Prize problems.
 
 Each meme was half right, and each aged faster than the last.
 
@@ -166,6 +166,7 @@ Mathematics went first, because there the checker already existed. Lean checks a
 - **January 2026:** GPT-5.2 Pro and Harmonic's Aristotle, operated by Kevin Barreto, resolved Erdős problem #728 with a formal proof in Lean, the first Erdős problem regarded as resolved autonomously by AI.[^erdos-728]
 - **May 2026:** a formal proof-search agent autonomously resolved 9 of 353 open Erdős problems.[^proof-search]
 - **September 2026:** OpenAI claimed a resolution of the Navier–Stokes Millennium Prize problem, a finite-time singularity from smooth initial data, found by about 10,000 concurrent agents in 88 hours and formalised in Lean. Mathematicians are still checking it, and the Clay Institute rules only after peer review and a two-year wait.[^navier-stokes]
+- **November 2026:** Terence Tao reported Lean-formalised proofs of finite-time blowup for the unforced Euler and Navier–Stokes equations by Levent Alpöge and colleagues, with heavy AI assistance.[^tao-grh]  A day later the Lean and Mathlib communities certified a proof of the Riemann Hypothesis by Alpöge, generated with an internal AI model:[^tao-grh] a Lean library of 17 million lines.[^rh-lean]
 
 The people in those stories chose the problem, built the setup and checked the result.
 
@@ -176,6 +177,22 @@ That points to a meta-language for the rest of us. Spec-driven development is it
 - **Platform teams** throwing deterministic simulation and fuzzing at all their infrastructure; FoundationDB was built inside a simulator from the start, and ran the equivalent of a trillion CPU-hours of simulated stress tests[^fdb]
 
 The first is speculative. The other two are how the most reliable systems were already built.
+
+* * *
+
+Larry Page made a prediction at the American Association for the Advancement of Science in 2007: when AI happens, "it's going to be a lot of computation, and not so much clever blackboard, whiteboard kind of stuff."[^page]  He was right, and you can see it in the output. What computation finds tends to be exhaustive: it covers every case where a person would have spotted the shortcut.
+
+- **Writing:** a lack of brevity is the typical AI smell; the extra clause, the recap, three examples where one would do.
+- **Code:** way more verbose than the best programmers write it.
+- **Mathematics,** ironically, the purest form: the Riemann Hypothesis proof is 17 million lines of Lean, and digesting it will "take some time."[^tao-grh]
+
+Do we really learn much from AI? Machines checked those 17 million lines within a day of their release. The Lean community's own announcement ends by looking forward to mathematicians explaining the new ideas in them.[^rh-lean] The prices around the oldest gap in computer science, between finding an answer and checking one (P versus NP, which AI hasn't settled), now look like this:
+
+- **Finding:** cheap, bought with computation.
+- **Checking:** cheap wherever a checker exists: Lean for proofs, tests and evals for code.
+- **Understanding:** still human, and still expensive.
+
+That reconciles brevity with my advice to the artisans. Verbose code is a fair price where a machine checks it and nobody has to read it. Where a person has to understand the result (a post, a proof, the theory of a program) verbosity is a cost, and somebody has to pay it down.
 
 * * *
 
@@ -216,7 +233,7 @@ What holds is software that is very cheap, wins on scale, provides real security
 
 A bespoke world multiplies programs, and by Naur's definition a program whose theory nobody holds is born dead. Naur said the theory can never be fully written down. Its most important part can: the invariants and the evals. *Balances never go negative. Every message is delivered at least once. No user reads another tenant's data.* The evals are the part of the theory that survives the team. People own the spec, the evals and the signature; machines own the middle. When code is cheap and everyone has the aimer, the scarce skill is calling the pocket before the shot.
 
-For all of that, AI is still a stochastic parrot, a far better one, and we're all training parrots, more or less: every eval, golden set and harness is a lesson. The next ones may be categorical parrots. Jev, from TypeSafe AI, never writes prose: it answers typed questions (true or false, a choice, a score) with probabilities its makers train to be calibrated, for software to act on, and it is named after Jevons, on the bet that cheaper judgment means far more of it.[^jev]  A parrot that answers in categories, with its confidence attached, is one you can check. The right tools in the right hands still make the difference, and the human edge shows in all the path-breaking work above. A person operated the system that resolved Erdős #728. A person built the harness that let sixteen agents write a compiler. People chose Navier–Stokes, and people are checking the proof.
+For all of that, AI is still a stochastic parrot, a far better one, and we're all training parrots, more or less: every eval, golden set and harness is a lesson. The next ones may be categorical parrots. Jev, from TypeSafe AI, never writes prose: it answers typed questions (true or false, a choice, a score) with probabilities its makers train to be calibrated, for software to act on, and it is named after Jevons, on the bet that cheaper judgment means far more of it.[^jev]  A parrot that answers in categories, with its confidence attached, is one you can check. The right tools in the right hands still make the difference, and the human edge shows in all the path-breaking work above. A person operated the system that resolved Erdős #728. A person built the harness that let sixteen agents write a compiler. People chose Navier–Stokes and the Riemann Hypothesis, and people are now digesting the proofs.
 
 So, was it worth it? The auto-aimer won me every game, and taught me the lesson that still applies: to bend a system, you first have to understand it. The machines draw every line now. Somebody still has to know where the ball needs to go, and put their name on the shot.
 
@@ -258,6 +275,9 @@ So, was it worth it? The auto-aimer won me every game, and taught me the lesson 
 [^cybernetic]: Fabrizio Dell'Acqua et al., "The Cybernetic Teammate: A Field Experiment on Generative AI Reshaping Teamwork and Expertise," NBER Working Paper 33641, April 2025; published in *Organization Science*, 2026. <https://www.nber.org/papers/w33641>
 [^erdos-728]: Nat Sothanaphan, "Resolution of Erdős Problem #728: a writeup of Aristotle's Lean proof," arXiv:2601.07421, January 2026. <https://arxiv.org/abs/2601.07421>
 [^proof-search]: George Tsoukalas et al., "Advancing Mathematics Research with AI-Driven Formal Proof Search," arXiv:2605.22763, May 2026. <https://arxiv.org/abs/2605.22763>
+[^tao-grh]: Terence Tao, "Unforced Euler singularity, unforced Navier-Stokes singularity, and the Generalized Riemann Hypothesis," 20 November 2026 (Tao describes the AI-generated proof as one of the Generalized Riemann Hypothesis). <https://terrytao.wordpress.com/2026/11/20/unforced-euler-singularity-unforced-navier-stokes-singularity-and-the-generalized-riemann-hypothesis/>
+[^rh-lean]: Lean and Mathlib communities, "Lean verification of the Riemann Hypothesis," 21 November 2026. <https://leanprover-community.github.io/blog/posts/riemann-hypothesis/>
+[^page]: Larry Page, talk at the American Association for the Advancement of Science, 2007, as transcribed in "How Larry Page had correctly predicted in 2007 that increased computation instead of clever algorithms would lead to AI progress," OfficeChai, 20 April 2026. <https://officechai.com/ai/how-larry-page-had-correctly-predicted-in-2007-that-increased-computation-instead-of-clever-algorithms-would-lead-to-ai-progress/>
 [^navier-stokes]: OpenAI, "On the Navier–Stokes Millennium Prize Problem," 8 September 2026 (claims statements C and D of the official problem; Lean formalisation published). Verification status and the Clay Institute's rules: Wikipedia, "Millennium Prize Problems". <https://openai.com/index/navier-stokes-solution/>; <https://en.wikipedia.org/wiki/Millennium_Prize_Problems>
 [^rl-envs]: TechCrunch, "Silicon Valley bets big on 'environments' to train AI agents," 16 September 2025. <https://techcrunch.com/2025/09/16/silicon-valley-bets-big-on-environments-to-train-ai-agents/>
 [^swe-bench]: Carlos E. Jimenez et al., "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?," arXiv:2310.06770, October 2023 (Claude 2, with BM25 retrieval). <https://arxiv.org/abs/2310.06770>
