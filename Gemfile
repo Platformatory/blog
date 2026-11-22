@@ -18,3 +18,9 @@ group :jekyll_plugins do
     gem 'kramdown'
     gem 'rouge'
 end
+
+# Removed from Ruby 3.4+ default gems; Jekyll needs them.
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+gem "logger"
