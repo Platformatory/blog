@@ -3,9 +3,9 @@ layout: post
 title: 'The Memory Hierarchy: Data Architectures Beyond Naive Disaggregation'
 author: p6
 categories:
-- Data
-- Infrastructure
+- Storage
 - Distributed Systems
+- Infrastructure
 - Kafka
 - Platform Engineering
 image: assets/blog-images/where-should-your-data-live/memory-hierarchy.svg

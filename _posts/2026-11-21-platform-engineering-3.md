@@ -3,8 +3,9 @@ layout: post
 title: Running Agentic AI as an Enterprise Platform
 author: p6
 categories:
-- platform-engineering
-- ai
+- Platform Engineering
+- AI
+- Software Engineering
 image: assets/blog-images/platform-engineering-3/factory-tier.svg
 featured: true
 weight: 5
