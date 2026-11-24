@@ -3,11 +3,13 @@ layout: post
 title: 'Agentic AI on Kafka and Flink: What Agents Really Change in Streaming'
 author: p6
 categories:
-- Kafka
-- Streaming
 - AI
+- Kafka
+- Stream Processing
+- Apache Flink
 image: assets/blog-images/agentic-ai-streaming-use-cases/hero.svg
-featured: false
+featured: true
+weight: 6
 hidden: false
 teaser: Most of this year's agentic streaming launches repackage patterns Kafka users
   already run. A few things agents change really are new.
