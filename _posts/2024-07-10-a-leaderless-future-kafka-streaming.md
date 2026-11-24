@@ -1,12 +1,13 @@
 ---
 layout: post
-title:  "A leaderless future: kafka-esque story on what is becoming mainstream"
+title: "A Leaderless Future for Kafka: Why Object Storage Is Going Mainstream"
 author: p6
 categories: [Kafka, Distributed Systems, Real-time, Platform Engineering]
 image: assets/blog-images/kafka-leaderless-future/hero.svg
 featured: true
 hidden: false
-teaser: kafka-esque story on what is becoming mainstream
+teaser: "Kafka got the fundamentals right, but on the cloud it costs more than it needs to. The Kafka protocol on object storage is where streaming is heading."
+description: "Why Kafka is moving to leaderless brokers on object storage: what Kafka got right, how TCO drives the shift, and where value in streaming moves next."
 toc: true
 weight: -1
 
@@ -61,7 +62,7 @@ We talked previously about the mushrooming of the _de-novo Kafkaesque_. While yo
 
 TCO is a very subjective and opaque metric that needs quantification of the customer's operating capability, personnel costs and most importantly tangible opportunity cost. In most cases, this is not an honest conversation between sellers and enterprise  buyers.
 
-This leads to very contrived forms of differentiation and commercial discounting from vendors of a “must win” nature, relationship plays, package deals, FUD about competition, and often, plain bs.
+This leads to very contrived forms of differentiation and commercial discounting from vendors of a “must win” nature, relationship plays, package deals, FUD about competition, and often, plain nonsense.
 
 At the end of the day, it is pretty simple. In private cloud, on-premise and BYOC environments it reduces to these factors:
 
