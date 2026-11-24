@@ -2,6 +2,8 @@
 name: "The Write Ahead Log"
 title: "The Write Ahead Log"
 description: "Platform and Product Engineering Journal"
+url: "https://platformatory.io"
+timezone: UTC
 logo: 'assets/images/plf-logo.svg'
 favicon: 'assets/images/logo.png'
 baseurl: '/blog'
@@ -10,6 +12,17 @@ google_analytics: 'G-PWW2W71JX1'
 mailchimp-list: 'https://platformatory.us17.list-manage.com/subscribe/post?u=8cc2e44e80300ae193f198bcc&amp;id=6246b12a61'
 include: ["_pages"]
 permalink: /:title/
+
+# SEO / social
+twitter:
+  username: platformatory
+organization:
+  name: Platformatory
+  url: https://platformatory.io
+  logo: assets/images/plf-logo.png
+  same_as:
+    - https://twitter.com/platformatory
+    - https://github.com/platformatory
 
 # Authors
 authors:
@@ -162,7 +175,6 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
-  - jekyll-seo-tag
   - jekyll-archives
     
 # Archives
@@ -195,4 +207,4 @@ kramdown:
 # Lazy Images ("enabled" or "disabled")
 lazyimages: "disabled"
 
-exclude: [changelog.md, LICENSE.txt, README.md, CLAUDE.md, Gemfile, Gemfile.lock]
+exclude: [changelog.md, LICENSE.txt, README.md, CLAUDE.md, Gemfile, Gemfile.lock, docker-compose.yml, site, vendor]
