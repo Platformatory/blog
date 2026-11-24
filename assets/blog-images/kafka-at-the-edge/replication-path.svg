@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" role="img" aria-label="The acks=all write path in a replicated cluster compared with a single-node write with O_DSYNC">
+  <rect width="760" height="440" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#495057"/></marker>
+  </defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#1f2328">
+    <text x="20" y="30" font-size="17" font-weight="700">Replicated cluster, acks=all</text>
+    <rect x="20" y="50" width="110" height="56" rx="8" fill="#f7f7f5" stroke="#868e96"/><text x="75" y="83" text-anchor="middle">Producer</text>
+    <rect x="160" y="50" width="130" height="56" rx="8" fill="#ffffff" stroke="#868e96"/><text x="225" y="75" text-anchor="middle" font-weight="700">Leader</text><text x="225" y="94" text-anchor="middle" font-size="12" fill="#495057">append to page cache</text>
+    <rect x="320" y="50" width="130" height="56" rx="8" fill="#ffffff" stroke="#868e96"/><text x="385" y="75" text-anchor="middle" font-weight="700">Purgatory</text><text x="385" y="94" text-anchor="middle" font-size="12" fill="#495057">request parked</text>
+    <rect x="480" y="50" width="130" height="56" rx="8" fill="#ffffff" stroke="#868e96"/><text x="545" y="75" text-anchor="middle" font-weight="700">Followers</text><text x="545" y="94" text-anchor="middle" font-size="12" fill="#495057">fetch over network</text>
+    <rect x="640" y="50" width="100" height="56" rx="8" fill="#ffffff" stroke="#868e96"/><text x="690" y="75" text-anchor="middle" font-weight="700">Ack</text><text x="690" y="94" text-anchor="middle" font-size="12" fill="#495057">HW passes it</text>
+    <line x1="130" y1="78" x2="156" y2="78" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="290" y1="78" x2="316" y2="78" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="450" y1="78" x2="476" y2="78" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="610" y1="78" x2="636" y2="78" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <rect x="160" y="130" width="450" height="44" rx="8" fill="#e7f5ff" stroke="#1971c2"/>
+    <text x="385" y="157" text-anchor="middle">KRaft controller quorum: liveness, leader election, ISR changes</text>
+    <text x="20" y="205" fill="#495057">Durability from copies on other brokers · no fsync by default · ISR lag limit 30 s</text>
+
+    <line x1="20" y1="240" x2="740" y2="240" stroke="#e9ecef"/>
+
+    <text x="20" y="280" font-size="17" font-weight="700">Single edge node, isolated mode with topic sync</text>
+    <rect x="20" y="300" width="110" height="56" rx="8" fill="#f7f7f5" stroke="#868e96"/><text x="75" y="333" text-anchor="middle">Producer</text>
+    <rect x="160" y="300" width="290" height="56" rx="8" fill="#ffffff" stroke="#d9480f" stroke-width="2.5"/><text x="305" y="325" text-anchor="middle" font-weight="700">Local log</text><text x="305" y="344" text-anchor="middle" font-size="12" fill="#495057">write with O_DSYNC, replication path off</text>
+    <rect x="640" y="300" width="100" height="56" rx="8" fill="#ffffff" stroke="#868e96"/><text x="690" y="325" text-anchor="middle" font-weight="700">Ack</text><text x="690" y="344" text-anchor="middle" font-size="12" fill="#495057">on disk</text>
+    <line x1="130" y1="328" x2="156" y2="328" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <line x1="450" y1="328" x2="636" y2="328" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
+    <text x="20" y="390" fill="#495057">Durability from the local disk · no purgatory, followers or quorum · forwarding upstream is asynchronous</text>
+    <text x="20" y="425" font-size="12" fill="#6c757d">Apache Kafka 4.1 design and broker-config documentation; Leafcuttr documentation v0.5.3.</text>
+  </g>
+</svg>

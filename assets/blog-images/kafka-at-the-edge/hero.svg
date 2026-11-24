@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="The compute continuum from device to cloud: consensus and parallelism grow toward the cloud while the Kafka protocol stays the same at every tier">
+  <rect width="1200" height="630" fill="#f7f7f5"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1971c2"/></marker>
+  </defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="60" y="64" font-size="30" font-weight="700" fill="#1f2328">One protocol across the compute continuum</text>
+    <text x="60" y="98" font-size="20" fill="#6c757d">Consensus and parallelism where they pay; the Kafka protocol everywhere</text>
+
+    <g font-size="22" font-weight="700" fill="#1f2328" text-anchor="middle">
+      <rect x="60" y="150" width="240" height="120" rx="10" fill="#ffffff" stroke="#868e96" stroke-width="2"/>
+      <text x="180" y="200">Device</text>
+      <text x="180" y="232" font-size="18" font-weight="400" fill="#495057">MQTT, HTTP, Kafka</text>
+      <rect x="340" y="150" width="240" height="120" rx="10" fill="#ffffff" stroke="#d9480f" stroke-width="3"/>
+      <text x="460" y="200">Edge sidecar</text>
+      <text x="460" y="232" font-size="18" font-weight="400" fill="#495057">1 node, sync write</text>
+      <rect x="620" y="150" width="240" height="120" rx="10" fill="#ffffff" stroke="#d9480f" stroke-width="3"/>
+      <text x="740" y="200">Site gateway</text>
+      <text x="740" y="232" font-size="18" font-weight="400" fill="#495057">1 node, many devices</text>
+      <rect x="900" y="150" width="240" height="120" rx="10" fill="#ffffff" stroke="#1971c2" stroke-width="3"/>
+      <text x="1020" y="200">Cloud streaming</text>
+      <text x="1020" y="232" font-size="18" font-weight="400" fill="#495057">replicas, quorum, Iceberg</text>
+    </g>
+    <g stroke="#1971c2" stroke-width="2.5" stroke-dasharray="9 6">
+      <line x1="580" y1="210" x2="616" y2="210" marker-end="url(#a)"/>
+      <line x1="860" y1="210" x2="896" y2="210" marker-end="url(#a)"/>
+    </g>
+    <line x1="300" y1="210" x2="336" y2="210" stroke="#495057" stroke-width="2.5"/>
+
+    <g font-size="20" fill="#1f2328">
+      <text x="60" y="340">Consensus and replication</text>
+      <rect x="400" y="322" width="740" height="24" rx="4" fill="#e9ecef"/>
+      <rect x="900" y="322" width="240" height="24" rx="4" fill="#1971c2"/>
+      <text x="60" y="400">Parallelism (partitions × brokers)</text>
+      <rect x="400" y="382" width="740" height="24" rx="4" fill="#e9ecef"/>
+      <rect x="620" y="382" width="240" height="24" rx="4" fill="#a5d8ff"/>
+      <rect x="900" y="382" width="240" height="24" rx="4" fill="#1971c2"/>
+      <text x="60" y="460">Kafka protocol and ecosystem</text>
+      <rect x="400" y="442" width="740" height="24" rx="4" fill="#d9480f"/>
+      <text x="60" y="520">Durability</text>
+      <text x="400" y="520" fill="#495057">local disk before ack</text>
+      <text x="900" y="520" fill="#495057">replicas before ack</text>
+    </g>
+    <text x="60" y="590" font-size="18" fill="#6c757d">Dashed: asynchronous forwarding when the link is up</text>
+  </g>
+</svg>
