@@ -2,7 +2,7 @@
 layout: post
 title:  "Command Processing and Event Driven Workflows with Apache Kafka and Airflow"
 author: ashwin
-categories: [ Airflow, Command processing, Event Driven Workflows, Kafka, Kafka Consumer, Docker]
+categories: [Event-Driven Architecture, Kafka, Workflow Orchestration]
 image: assets/blog-images/command_processing_blog/EventDrivenArchitecture.png
 featured: false
 hidden: false

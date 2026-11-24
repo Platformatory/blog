@@ -2,7 +2,7 @@
 layout: post
 title: "How to integrate WASM with Redpanda"
 author: Zeenia
-categories: [Apache Kafka, Docker Compose, WASM, Redpanda, Data processing]
+categories: [Redpanda, Stream Processing, WASM]
 image: assets/blog-images/wasm-integration/wasm_image.png
 teaser: Discover the powerful combination of WebAssembly (WASM) and Redpanda in our latest blog post! Learn how to perform real-time data transformations directly within Redpanda, minimizing latency and maximizing efficiency. With WASM, you can write custom processing logic in multiple languages and execute it seamlessly on your data streams. From sanitizing sensitive information to transforming data formats, we’ll guide you through practical examples and setup steps. Unlock the full potential of your streaming data with this innovative integration!
 featured: false

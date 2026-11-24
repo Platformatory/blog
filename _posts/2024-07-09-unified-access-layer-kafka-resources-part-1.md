@@ -2,7 +2,7 @@
 layout: post
 title: "Unified Access Layer for Kafka Resources: Part 1"
 authors: p6,raghav
-categories: [Platform Engineering, Infrastructure, Kafka, Unified Access Layer]
+categories: [Kafka, Unified Access Layer, Platform Engineering, Infrastructure]
 image: assets/blog-images/unified_access_layer/unified_access_layer_1.png
 featured: false
 hidden: false

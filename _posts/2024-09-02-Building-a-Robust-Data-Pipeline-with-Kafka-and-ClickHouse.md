@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Building a Robust Data Pipeline with Kafka and ClickHouse"
-categories: [Distributed Systems]
+categories: [Kafka, Data Engineering, ClickHouse]
 teaser: Discover how to build a powerful real-time data pipeline using Kafka and ClickHouse. This blog guides you through setting up a system that streams and analyzes data instantly, ensuring your insights are always up-to-date. Perfect for applications like monitoring, IoT analytics, and fraud detection, this combination of technologies will take your data processing to the next level.
 author: Shivaprakash
 image: /assets/blog-images/clickhouse/clickhouse/1.png

@@ -12,8 +12,8 @@ weight: 1
 hidden: false
 teaser: Code was never the hardest part. With agents writing it, the work that's left
   is proving it right and doing the domain work, one eval at a time.
-description: Code was never the hardest part. With agents writing it, the work that's
-  left is proving it right and doing the domain work, one eval at a time.
+description: Does AI coding pay off? With coding agents writing the code, the engineering
+  left is verification, a higher experience bar and eval-driven domain work.
 toc: false
 ---
 

@@ -2,11 +2,11 @@
 layout: post
 title:  "The 3 pillars of Platform architecture"
 author: p6
-categories: [ Platform Engineering, Data, Infrastructure, Kafka, Kong, Kubernetes ]
+categories: [Platform Engineering, Infrastructure, Kubernetes, Kafka, API Management]
 image: assets/blog-images/platform-arch-model.svg
 teaser: How to solve for data, connectivity and infrastructure foundations & platform primitives.
-featured: true
-hidden: true
+featured: false
+hidden: false
 toc: true
 ---
 
@@ -14,7 +14,7 @@ Platform Engineering is a hot topic. There is an optimist's view: That it can po
 
 The crucial question is, what even should be extracted into a "platform" boundary? Greedy platforms tend to stifle team autonomy. Loose platforms tend to add little value and more harm anything else.
 
-Allow us to provide a take on what we think should be the three most important pillars for a sound platform strategy. Our recommendation is based on real-life experience of enabling platform-led transformations and areas that have proved most conducive for such an operating model, while providing clear, discernbile business value. We will also talk through some universal platform building blocks that you must consider.
+Allow us to provide a take on what we think should be the three most important pillars for a sound platform strategy. Our recommendation is based on real-life experience of enabling platform-led transformations and areas that have proved most conducive for such an operating model, while providing clear, discernible business value. We will also talk through some universal platform building blocks that you must consider.
  
  
 ## Hybrid Cloud infrastructure platform
@@ -25,7 +25,7 @@ This also signals the rise of Kubernetes as a great leveler and making multi-clo
  
 As Kelsey Hightower puts it "Kubernetes is the interface to the cloud". If there's one thing K8S has cracked, it is the declarative control plane API model, and by that it ensures that even if a competitor were to emerge, it would begin by baselining itself against the same API standard. 
  
-> We will go out on a limb and make another prediction: in the same spirit of Atwood's law: Any sufficiently complicated distributed system that can be natively runon Kubernetes will eventually be run as an operator. 
+> We will go out on a limb and make another prediction: in the same spirit of Atwood's law: Any sufficiently complicated distributed system that can be natively run on Kubernetes will eventually be run as an operator. 
  
 That means, for those who may need to steer away from managed services for whatever reason, running an operator is very literally the next best thing. We expect K8S will be the chassis for building literally just about anything cloud native in the next 10 years; PaaS vendors will come up with even better and specialized Developer and operator experiences to run K8S-at-the-core apps with lesser hassle. 
  
@@ -54,7 +54,7 @@ Note that this problem has large-scale distributed system underpinnings to it. A
  
 Apart from these, Kafka also offers an ecosystem of connectors, stream processing bolt ons and schema management. 
  
-> Most of all, similar to K8S, Apache Kafka's data plane protocol has emerged as the defacto API standard for brokered eventing. This is evident in that even with Kafka's emergent competition,  such as Azure event hubs, Apache pulsar or the new kid on the block, RedPanda (formerly vectorized.io) –  that are innovating in the path of Kafka (in arguably superior ways), there is still conformance and compatibility to the same API protocol.
+> Most of all, similar to K8S, Apache Kafka's data plane protocol has emerged as the de facto API standard for brokered eventing. This is evident in that even with Kafka's emergent competition,  such as Azure event hubs, Apache pulsar or the new kid on the block, RedPanda (formerly vectorized.io) –  that are innovating in the path of Kafka (in arguably superior ways), there is still conformance and compatibility to the same API protocol.
  
 The Kafka based pub-sub streaming model is clearly emerging as the integration & data backbone of the enterprise. Data and eventing mesh like architectures will evolve on top of Kafka as the data plane standard and enable Data Productization that will be owned and stewarded by domains. App and services integrations will on the other hand, leverage changelog streams and increasingly lead to event-sourced architectures with newer Kafka centric API standards (such as AsyncAPI, CloudEvents) being the guardrails.
 

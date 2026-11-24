@@ -2,7 +2,7 @@
 layout: post
 title: "Comparison of Kafka Deployment Options on Kubernetes"
 authors: raghav
-categories: [Platform Engineering, Infrastructure, Kafka, Kubernetes]
+categories: [Kafka, Kubernetes, Platform Engineering, Infrastructure]
 image: assets/blog-images/kafka_on_kubernetes/kafka_on_kubernetes.png
 featured: false
 hidden: false

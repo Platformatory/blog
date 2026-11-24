@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How to migrate Kafka clusters without downtime"
-categories: [Kafka cluster migrattion]
+categories: [Kafka, Migration, Kafka Operations]
 teaser: Migrating Kafka clusters can be challenging, but with the right approach, you can minimize downtime and ensure a smooth transition. Explore our guide for practical steps and strategies to help make your migration process seamless.
 authors: Subramanya
 featured: false

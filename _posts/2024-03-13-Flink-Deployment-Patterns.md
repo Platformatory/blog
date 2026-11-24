@@ -2,7 +2,7 @@
 layout: post
 title: "Flink Deployment Patterns"
 authors: ashwin,avinash
-categories: [Platform Engineering, Data, Infrastructure, Kafka, Apache Flink, Kubernetes]
+categories: [Apache Flink, Stream Processing, Kubernetes, Platform Engineering]
 image: assets/blog-images/flink_deployment/flink-application.png
 featured: false
 hidden: false

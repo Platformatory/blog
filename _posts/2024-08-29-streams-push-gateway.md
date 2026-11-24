@@ -2,7 +2,7 @@
 layout: post
 title: "Kafka Streams Push Gateway"
 authors: raghav
-categories: [Platform Engineering, Infrastructure, Kafka, Kafka Streams, Web Socket, API Gateway, Kong]
+categories: [Kafka, Kafka Streams, API Management, Platform Engineering]
 image: assets/blog-images/streams-push-gateway/streams-push-gateway-architecture.png
 featured: false
 hidden: false

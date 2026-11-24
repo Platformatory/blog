@@ -2,7 +2,7 @@
 layout: post
 title: "Unified access layer for Kafka resources: Part 2A: Python Client SDK"
 authors: p6, ashwin
-categories: [Platform Engineering, Infrastructure, Kafka, Unified Access Layer]
+categories: [Kafka, Unified Access Layer, Platform Engineering, Infrastructure]
 image: assets/blog-images/unified_access_layer/rule_based_routing_layer.png
 featured: false
 hidden: false

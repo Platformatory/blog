@@ -2,7 +2,7 @@
 layout: post
 title: "Monitoring: How to monitor AWS MSK Cluster"
 author: Zeenia
-categories: [Apache Kafka, Docker Compose, AWS MSK cluster, Prometheus, Grafana]
+categories: [Kafka, Observability, AWS MSK]
 image: assets/blog-images/msk_monitoring/Prometheu.png
 teaser: Monitoring, How to monitor AWS MSK Cluster
 featured: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Seamless Authentication to Confluent Cloud Using OAuth/OIDC with Okta as Identity Provider"
-categories: [Kafka Architecture, Distributed Systems, Security]
+categories: [Security, Confluent Cloud, Kafka]
 teaser: Want to streamline your Kafka authentication? Learn how to effortlessly integrate Confluent Cloud with OAuth/OIDC using Okta as your identity provider. This guide covers everything you need to set up secure and seamless authentication, ensuring smooth access to your Kafka resources. Discover the power of modern authentication and simplify your Kafka management today!
 author: Shivaprakash
 image: assets/blog-images/oauth-oidc-blog/Oauth.jpeg

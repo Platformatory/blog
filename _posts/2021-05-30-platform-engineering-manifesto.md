@@ -2,11 +2,10 @@
 layout: post
 title: "A Platform engineering manifesto"
 author: p6
-categories:
-  [Platform Engineering, Data, Infrastructure, Kafka, Kong, Kubernetes]
+categories: [Platform Engineering, Infrastructure, Kubernetes, Kafka, API Management]
 image: assets/blog-images/platform-strategy.svg
-featured: true
-hidden: true
+featured: false
+hidden: false
 cat_box_title: Contact Us
 ctas:
   - title: Get In Touch
@@ -19,9 +18,9 @@ toc: true
 
 ![50-shades](/blog/assets/blog-images/50-shades.jpg "50 Shades of DevOps")
 
-There are many hot takes on Platform Engineering. There are success stories and there are horror stories. When done well, there is a team topology that enables a "do it like a digital native" operating model. When done not so well, you end up with a mess of 99 problems cherrypicked straight from the CNCF landscape graveyard of tools.
+There are many hot takes on Platform Engineering. There are success stories and there are horror stories. When done well, there is a team topology that enables a "do it like a digital native" operating model. When done not so well, you end up with a mess of 99 problems cherry-picked straight from the CNCF landscape graveyard of tools.
 
-As a company that has chosen to ride the trend, our belief is that platform engineering should be considered essential for any tech company operating in a complex domain, basically with the objective of providing a Dev X that helps you scale. Platforms don't exist in a vaccum; They are grounded ultimately in the reality of business domains and MUST accelerate product engineering teams in their endeavours.
+As a company that has chosen to ride the trend, our belief is that platform engineering should be considered essential for any tech company operating in a complex domain, basically with the objective of providing a Dev X that helps you scale. Platforms don't exist in a vacuum; They are grounded ultimately in the reality of business domains and MUST accelerate product engineering teams in their endeavours.
 
 To be clear, not everyone needs a platform engineering team in the first place. One is largely justified when the size of the engineering organization exceeds the Dunbar number or atleast a non-trivial problem of scale.
 
@@ -35,7 +34,7 @@ Nonetheless, if you do choose to build a platform engineering team, there are 3 
 
 Everything begins in robust product foundations and an (evolving) architecture vision. Platform teams must own both a product & an architecture charter. The unique requirements of platform products may themselves be driven by unique challenges in the domain (or specifically that of domain centred product engineering teams) and the incumbent IT landscape
 
-> ProTip: A pareto principle compliant north star vision of a robust platform architecture must think through the following concenrs: Smart Infrastructure, Data Integration & APIs.
+> ProTip: A pareto principle compliant north star vision of a robust platform architecture must think through the following concerns: Smart Infrastructure, Data Integration & APIs.
 
 # Building tooling and plugins: For the sake of developers, operators and everything in between
 

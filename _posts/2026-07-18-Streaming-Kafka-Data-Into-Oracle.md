@@ -2,8 +2,7 @@
 layout: post
 title: "Streaming Kafka Data into Oracle: JDBC Sink Connector, Upserts, and LOB Handling"
 author: Balaji
-categories:
-  [Kafka Connect,Kafka,Data Engineering, CDC, Oracle CDC]
+categories: [Kafka Connect, Oracle, Kafka, Data Engineering]
 image: assets/blog-images/StreamingKafkaDataIntoOracle/streaming-kafka-data-to-oracle.png
 featured: false
 hidden: false

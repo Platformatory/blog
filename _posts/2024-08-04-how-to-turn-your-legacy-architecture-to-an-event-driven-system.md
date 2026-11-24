@@ -2,11 +2,10 @@
 layout: post
 title: "Integrating APIs and Event Streaming: for fun and profit"
 authors: avinash
-categories: [Event-Driven Architecture, Kafka, Eventing, Command processing, Real-time, Event Driven Workflows, SaaS]
+categories: [Event-Driven Architecture, Kafka, Real-time]
 image: assets/blog-images/eventception/EventDrivenArchitectureAbstract.jpeg
-featured: true
-hidden: true
-weight: -10
+featured: false
+hidden: false
 teaser: "How to progressively get the best out of RESTful and event-driven architectures."
 toc: true
 ---

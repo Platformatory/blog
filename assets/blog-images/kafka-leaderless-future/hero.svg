@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Kafka's leader-based design replicates every partition between brokers on local disks, paying for cross-zone traffic; the leaderless alternative keeps the Kafka protocol and lets stateless brokers write to shared object storage.">
+  <rect width="1200" height="630" fill="#f7f7f5"/>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="60" y="64" font-size="30" font-weight="700" fill="#1f2328">A leaderless future for Kafka</text>
+    <text x="60" y="98" font-size="20" fill="#6c757d">Same protocol, different place for the data</text>
+    <!-- left: leader-based -->
+    <text x="60" y="138" font-size="22" font-weight="700" fill="#495057">Leader-based: brokers own the data</text>
+    <g font-size="20">
+      <rect x="60" y="175" width="160" height="70" rx="8" fill="#ffffff" stroke="#adb5bd"/><text x="140" y="217" text-anchor="middle" fill="#1f2328">Leader</text>
+      <rect x="250" y="175" width="160" height="70" rx="8" fill="#ffffff" stroke="#adb5bd"/><text x="330" y="217" text-anchor="middle" fill="#1f2328">Follower</text>
+      <rect x="440" y="175" width="160" height="70" rx="8" fill="#ffffff" stroke="#adb5bd"/><text x="520" y="217" text-anchor="middle" fill="#1f2328">Follower</text>
+      <rect x="60" y="265" width="160" height="50" rx="6" fill="#e9ecef"/><text x="140" y="297" text-anchor="middle" fill="#495057">local disk</text>
+      <rect x="250" y="265" width="160" height="50" rx="6" fill="#e9ecef"/><text x="330" y="297" text-anchor="middle" fill="#495057">local disk</text>
+      <rect x="440" y="265" width="160" height="50" rx="6" fill="#e9ecef"/><text x="520" y="297" text-anchor="middle" fill="#495057">local disk</text>
+    </g>
+    <g stroke="#d9480f" stroke-width="3" fill="none"><path d="M220 200 H250"/><path d="M140 175 Q 330 140 520 175"/></g>
+    <text x="60" y="355" font-size="20" fill="#d9480f">replication across zones: the network bill</text>
+    <!-- right: leaderless -->
+    <text x="660" y="138" font-size="22" font-weight="700" fill="#1971c2">Leaderless: any broker, shared storage</text>
+    <g font-size="20">
+      <rect x="660" y="175" width="150" height="70" rx="8" fill="#ffffff" stroke="#1971c2"/><text x="735" y="217" text-anchor="middle" fill="#1f2328">Broker</text>
+      <rect x="830" y="175" width="150" height="70" rx="8" fill="#ffffff" stroke="#1971c2"/><text x="905" y="217" text-anchor="middle" fill="#1f2328">Broker</text>
+      <rect x="1000" y="175" width="140" height="70" rx="8" fill="#ffffff" stroke="#1971c2"/><text x="1070" y="217" text-anchor="middle" fill="#1f2328">Broker</text>
+      <rect x="660" y="285" width="480" height="70" rx="8" fill="#e7f1fb" stroke="#1971c2"/><text x="900" y="327" text-anchor="middle" fill="#1f2328">Object storage (S3, GCS, Azure Blob)</text>
+    </g>
+    <g stroke="#1971c2" stroke-width="3"><path d="M735 245 V285"/><path d="M905 245 V285"/><path d="M1070 245 V285"/></g>
+    <text x="660" y="395" font-size="20" fill="#1971c2">stateless brokers; durability pushed down</text>
+    <!-- bottom: protocol -->
+    <rect x="60" y="440" width="1080" height="80" rx="8" fill="#ffffff" stroke="#1f2328"/>
+    <text x="600" y="476" text-anchor="middle" font-size="22" font-weight="700" fill="#1f2328">The Kafka protocol stays the contract</text>
+    <text x="600" y="505" text-anchor="middle" font-size="20" fill="#495057">producers, consumers and Kafka Connect see the same API either way</text>
+    <text x="60" y="580" font-size="18" fill="#6c757d">Trade: lower cost and simpler operations for higher write latency to object storage.</text>
+  </g>
+</svg>

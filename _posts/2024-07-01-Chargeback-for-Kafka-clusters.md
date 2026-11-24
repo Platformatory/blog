@@ -2,12 +2,14 @@
 layout: post
 title: "Chargeback for Kafka clusters"
 authors: ashwin
-categories: [Platform Engineering, Infrastructure, Kafka, Cost]
-image: assets/blog-images/kafka_chargeback_blog/TitleImage.jpg
-featured: false
+categories: [Kafka, Kafka Operations, Cost, Platform Engineering]
+image: assets/blog-images/kafka_chargeback_blog/hero.svg
+featured: true
 hidden: false
 teaser: Solving for cost attribution and chargeback in Multi-tenant Kafka clusters
 toc: true
+weight: -3
+
 ---
 # Introduction
 

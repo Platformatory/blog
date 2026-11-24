@@ -2,7 +2,7 @@
 layout: post
 title: "Operational DB Migrations with Zero Downtime"
 authors: raghav
-categories: [Platform Engineering, Infrastructure, Kafka, Kafka Connect, Debezium, Source Connector, Sink Connector, Database]
+categories: [Migration, CDC, Kafka Connect, Debezium, Kafka]
 image: assets/blog-images/operational_db_migration/ops-db-migration.png
 featured: false
 hidden: false

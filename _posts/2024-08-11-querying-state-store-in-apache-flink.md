@@ -2,7 +2,7 @@
 layout: post
 title: "Querying Stream Processing Systems (Apache Flink)"
 authors: avinash
-categories: [apache flink, Data, Stream Processing, Kafka Streams]
+categories: [Apache Flink, Stream Processing, Kafka Streams]
 image: assets/blog-images/queryable_state_apache_flink/QueryingStateStoreInStreamProcessing.png
 featured: false
 hidden: false

@@ -2,7 +2,7 @@
 layout: post
 title:  "Kafka batch processing with Airflow"
 author: ashwin
-categories: [ Airflow, Batch processing, Data, Kafka, Kafka Consumer, Docker]
+categories: [Kafka, Data Engineering, Workflow Orchestration]
 image: assets/blog-images/batch_processing_blog/KafkaBatchProcessing.png
 teaser: Batch processing from Kafka Topics by using Apache Airlfow DAG
 toc: true
