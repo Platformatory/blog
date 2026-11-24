@@ -1,0 +1,119 @@
+{% comment %}
+  SEO, social and agent metadata. Replaces jekyll-seo-tag so authors resolve
+  from site.authors, the publisher is the organisation, and SVG hero images
+  fall back to a PNG twin (social platforms don't render SVG).
+{% endcomment %}
+{%- assign seo_site_url = site.url | append: site.baseurl -%}
+{%- assign seo_is_home = false -%}
+{%- if page.url == "/" or paginator.page > 1 -%}{%- assign seo_is_home = true -%}{%- endif -%}
+{%- assign seo_is_post = false -%}
+{%- if page.layout == "post" and page.date -%}{%- assign seo_is_post = true -%}{%- endif -%}
+
+{%- if seo_is_home -%}
+  {%- capture seo_title -%}{{ site.title }} · {{ site.description }}{%- endcapture -%}
+  {%- assign seo_canonical = seo_site_url | append: "/" -%}
+{%- else -%}
+  {%- assign seo_page_title = page.title | default: site.title -%}
+  {%- if page.layout == "archive" and page.type == "category" -%}{%- capture seo_page_title -%}{{ page.title }} posts{%- endcapture -%}{%- endif -%}
+  {%- capture seo_title -%}{{ seo_page_title }} | {{ site.title }}{%- endcapture -%}
+  {%- assign seo_canonical = page.url | replace: "index.html", "" | prepend: seo_site_url -%}
+{%- endif -%}
+{%- assign seo_title = seo_title | strip_html | strip -%}
+
+{%- assign seo_desc = page.description | default: page.teaser -%}
+{%- if seo_desc == nil or seo_desc == "" -%}{%- if seo_is_post -%}{%- assign seo_desc = page.excerpt -%}{%- else -%}{%- assign seo_desc = site.description -%}{%- endif -%}{%- endif -%}
+{%- assign seo_desc = seo_desc | strip_html | strip_newlines | strip | truncate: 200 -%}
+
+{%- assign seo_image = page.image -%}
+{%- if seo_image and seo_image contains ".svg" -%}
+  {%- assign seo_png = seo_image | replace: ".svg", ".png" | prepend: "/" -%}
+  {%- assign seo_png_file = site.static_files | where: "path", seo_png | first -%}
+  {%- if seo_png_file -%}{%- assign seo_image = seo_png | remove_first: "/" -%}{%- else -%}{%- assign seo_image = nil -%}{%- endif -%}
+{%- endif -%}
+{%- if seo_image == nil or seo_image == "" -%}{%- assign seo_image = "assets/images/social-card.png" -%}{%- endif -%}
+{%- unless seo_image contains "://" -%}{%- assign seo_image = seo_image | prepend: "/" | prepend: seo_site_url -%}{%- endunless -%}
+
+{%- if page.authors -%}{%- assign seo_author_keys = page.authors | split: "," -%}
+{%- elsif page.author -%}{%- assign seo_author_keys = page.author | split: "," -%}
+{%- else -%}{%- assign seo_author_keys = "" | split: "," -%}{%- endif -%}
+{%- assign seo_keywords = "" | split: "," -%}
+{%- if seo_is_post -%}
+  {%- if page.categories -%}{%- assign seo_keywords = seo_keywords | concat: page.categories -%}{%- endif -%}
+  {%- if page.tags -%}{%- assign seo_keywords = seo_keywords | concat: page.tags -%}{%- endif -%}
+  {%- assign seo_keywords = seo_keywords | uniq -%}
+{%- endif -%}
+<title>{{ seo_title }}</title>
+<meta name="description" content="{{ seo_desc | escape }}">
+<link rel="canonical" href="{{ seo_canonical }}">
+{%- if page.noindex or page.sitemap == false %}
+<meta name="robots" content="noindex, follow">
+{%- endif %}
+{%- for k in seo_author_keys %}{% assign ak = k | strip %}{% assign a = site.authors[ak] %}{% if a %}
+<meta name="author" content="{{ a.display_name | escape }}">
+{%- endif %}{% endfor %}
+{%- if seo_keywords.size > 0 %}
+<meta name="keywords" content="{{ seo_keywords | join: ', ' | escape }}">
+{%- endif %}
+<link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ seo_site_url }}/feed.xml">
+<link rel="alternate" type="text/plain" title="llms.txt" href="{{ seo_site_url }}/llms.txt">
+<link rel="sitemap" type="application/xml" href="{{ seo_site_url }}/sitemap.xml">
+
+<meta property="og:site_name" content="{{ site.title | escape }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="{% if seo_is_home %}{{ site.title | escape }}{% else %}{{ page.title | default: site.title | strip_html | escape }}{% endif %}">
+<meta property="og:description" content="{{ seo_desc | escape }}">
+<meta property="og:url" content="{{ seo_canonical }}">
+<meta property="og:image" content="{{ seo_image }}">
+<meta property="og:image:alt" content="{{ page.title | default: site.title | strip_html | escape }}">
+{%- if seo_is_post %}
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+<meta property="article:modified_time" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+{%- for k in seo_author_keys %}{% assign ak = k | strip %}{% assign a = site.authors[ak] %}{% if a %}
+<meta property="article:author" content="{{ a.display_name | escape }}">
+{%- endif %}{% endfor %}
+{%- if page.categories.size > 0 %}
+<meta property="article:section" content="{{ page.categories | first | escape }}">
+{%- endif %}
+{%- for t in seo_keywords %}
+<meta property="article:tag" content="{{ t | escape }}">
+{%- endfor %}
+{%- else %}
+<meta property="og:type" content="website">
+{%- endif %}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@{{ site.twitter.username }}">
+<meta name="twitter:title" content="{% if seo_is_home %}{{ site.title | escape }}{% else %}{{ page.title | default: site.title | strip_html | escape }}{% endif %}">
+<meta name="twitter:description" content="{{ seo_desc | escape }}">
+<meta name="twitter:image" content="{{ seo_image }}">
+
+{%- capture seo_publisher -%}
+{"@type":"Organization","name":{{ site.organization.name | jsonify }},"url":{{ site.organization.url | jsonify }},"logo":{"@type":"ImageObject","url":{{ site.organization.logo | prepend: "/" | prepend: seo_site_url | jsonify }}},"sameAs":{{ site.organization.same_as | jsonify }}}
+{%- endcapture %}
+<script type="application/ld+json">
+{%- if seo_is_post %}
+{"@context":"https://schema.org","@type":"BlogPosting",
+"headline":{{ page.title | strip_html | jsonify }},
+"description":{{ seo_desc | jsonify }},
+"url":{{ seo_canonical | jsonify }},
+"mainEntityOfPage":{"@type":"WebPage","@id":{{ seo_canonical | jsonify }}},
+"image":{{ seo_image | jsonify }},
+"datePublished":{{ page.date | date_to_xmlschema | jsonify }},
+"dateModified":{{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+"author":[{% assign seo_first = true %}{% for k in seo_author_keys %}{% assign ak = k | strip %}{% assign a = site.authors[ak] %}{% if a %}{% unless seo_first %},{% endunless %}{"@type":"Person","name":{{ a.display_name | jsonify }},"url":{{ a.web | jsonify }}{% if a.description %},"description":{{ a.description | jsonify }}{% endif %}}{% assign seo_first = false %}{% endif %}{% endfor %}],
+"publisher":{{ seo_publisher }},
+"isPartOf":{"@type":"Blog","@id":{{ seo_site_url | append: "/#blog" | jsonify }},"name":{{ site.title | jsonify }}},
+"keywords":{{ seo_keywords | join: ", " | jsonify }},
+"articleSection":{{ page.categories | first | jsonify }},
+"wordCount":{{ page.content | strip_html | number_of_words }},
+"inLanguage":"en"}
+{%- elsif seo_is_home %}
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebSite","@id":{{ seo_site_url | append: "/#website" | jsonify }},"url":{{ seo_canonical | jsonify }},"name":{{ site.title | jsonify }},"description":{{ site.description | jsonify }},"inLanguage":"en","publisher":{{ seo_publisher }}},
+{"@type":"Blog","@id":{{ seo_site_url | append: "/#blog" | jsonify }},"url":{{ seo_canonical | jsonify }},"name":{{ site.title | jsonify }},"description":{{ site.description | jsonify }},"publisher":{{ seo_publisher }},
+"blogPost":[{% assign seo_recent = site.posts | where_exp: "p", "p.hidden != true" %}{% for p in seo_recent limit: 20 %}{"@type":"BlogPosting","headline":{{ p.title | strip_html | jsonify }},"url":{{ p.url | prepend: seo_site_url | jsonify }},"datePublished":{{ p.date | date_to_xmlschema | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]}]}
+{%- else %}
+{"@context":"https://schema.org","@type":"{% if page.layout == 'archive' %}CollectionPage{% else %}WebPage{% endif %}","name":{{ seo_title | jsonify }},"url":{{ seo_canonical | jsonify }},"description":{{ seo_desc | jsonify }},"isPartOf":{"@id":{{ seo_site_url | append: "/#website" | jsonify }}},"publisher":{{ seo_publisher }}}
+{%- endif %}
+</script>

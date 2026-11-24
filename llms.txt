@@ -1,0 +1,28 @@
+---
+layout: null
+permalink: /llms.txt
+sitemap: false
+---
+{%- assign base = site.url | append: site.baseurl -%}
+{%- assign listed = site.posts | where_exp: "p", "p.hidden != true" -%}
+{%- assign archived = site.posts | where_exp: "p", "p.hidden == true" -%}
+# {{ site.title }}
+
+> {{ site.description }} from [{{ site.organization.name }}]({{ site.organization.url }}): essays and hands-on guides on platform engineering, data streaming (Kafka, Flink, CDC), data infrastructure, SRE and applied AI.
+
+- Every post is HTML at its URL below; the full text of current posts is in [llms-full.txt]({{ base }}/llms-full.txt).
+- Feeds: [RSS]({{ base }}/feed.xml), [sitemap]({{ base }}/sitemap.xml).
+- Posts are listed newest first under their primary category.
+{% assign groups = listed | group_by_exp: "p", "p.categories | first" %}
+{%- for g in groups %}
+
+## {{ g.name | default: "General" }}
+{% for p in g.items %}
+- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip | truncate: 220 }} ({{ p.date | date: "%Y-%m-%d" }})
+{%- endfor %}
+{%- endfor %}
+
+## Optional
+{% for p in archived %}
+- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip | truncate: 220 }} ({{ p.date | date: "%Y-%m-%d" }})
+{%- endfor %}

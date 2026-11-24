@@ -1,0 +1,29 @@
+---
+layout: null
+permalink: /llms-full.txt
+sitemap: false
+---
+{%- assign base = site.url | append: site.baseurl -%}
+{%- assign listed = site.posts | where_exp: "p", "p.hidden != true" -%}
+# {{ site.title }}
+
+> {{ site.description }} from {{ site.organization.name }}. Full text of every current post, newest first. Index: {{ base }}/llms.txt
+{% for p in listed %}
+{%- assign keys = p.authors | default: p.author | split: "," %}
+
+---
+
+# {{ p.title | strip_html | strip }}
+
+URL: {{ base }}{{ p.url }}
+Published: {{ p.date | date: "%Y-%m-%d" }}
+Authors: {% for k in keys %}{% assign ak = k | strip %}{% assign a = site.authors[ak] %}{{ a.display_name | default: k }}{% unless forloop.last %}, {% endunless %}{% endfor %}
+Categories: {{ p.categories | join: ", " }}
+
+{%- capture nl %}
+{% endcapture -%}
+{%- assign lines = p.content | strip_html | split: nl -%}
+{%- for line in lines -%}{%- assign t = line | strip -%}{%- if t != "" %}
+{{ line | rstrip | replace: "&amp;", "&" | replace: "&lt;", "<" | replace: "&gt;", ">" | replace: "&quot;", '"' | replace: "&#39;", "'" }}
+{%- endif -%}{%- endfor -%}
+{%- endfor %}
