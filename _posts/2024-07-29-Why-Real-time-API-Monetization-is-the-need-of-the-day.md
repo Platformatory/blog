@@ -2,7 +2,7 @@
 layout: post
 title: "Monetizing APIs, Data through usage-based billing"
 authors: ashwin
-categories: [Data, SaaS, API Metering, Billing, Real-time, Cost]
+categories: [API Management, SaaS, Real-time, Cost]
 image: assets/blog-images/apinomy_blog/ApinomyBlogTitle.webp
 featured: true
 hidden: true
@@ -183,7 +183,7 @@ Apinomy works by integrating with your gateway to do the following things:
 5. Apinomy, collects logs from the gateway in near real-time and aggregates these in real-time to generate usage reports as well as billing to the bound of a minute.
 6. Apinomy seamlessly integrates with the billing solution of your choice: Stripe, Chargebee etc.
 
-Infact, this is only a fraction of what you can achieve with Apinomy. Over and above this, you can also use Apinomy as an ecosystem platform, to organize your APIs into multiple domains, products and to govern your ecosystem at large.
+In fact, this is only a fraction of what you can achieve with Apinomy. Over and above this, you can also use Apinomy as an ecosystem platform, to organize your APIs into multiple domains, products and to govern your ecosystem at large.
 
 To know more about how Apinomy works, take a look the [demo](https://www.youtube.com/watch?v=elNCHQDMn0E) video.
 

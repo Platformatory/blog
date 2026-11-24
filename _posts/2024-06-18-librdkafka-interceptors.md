@@ -2,7 +2,7 @@
 layout: post
 title: "Interceptors for Librdkafka"
 authors: avinash
-categories: [Data, Kafka, Librdkafka]
+categories: [Kafka, Kafka Clients, Observability]
 image: assets/blog-images/librdkafka_interceptors/KafkaInterceptors.png
 featured: false
 teaser: Building Kafka interceptors for librdkafka clients

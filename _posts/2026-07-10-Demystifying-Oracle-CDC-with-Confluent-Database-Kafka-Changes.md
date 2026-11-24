@@ -2,8 +2,7 @@
 layout: post
 title: "Demystifying Oracle CDC with Confluent: How Database Changes Flow into Kafka"
 author: Balaji
-categories:
-  [Platform Engineering, Data, Infrastructure, Kafka, CDC, Oracle, Connectors, LOB]
+categories: [CDC, Oracle, Kafka Connect, Kafka]
 image: assets/blog-images/DemystifyingOracleCDCwithConfluent/demystifying-oracleCDC-with-confluent.png
 featured: true
 hidden: true
@@ -721,7 +720,7 @@ For a production CDC pipeline, avoid treating all columns and topics the same wa
 A better pattern is:
 
 
-![Oracle CDC with Separate Primitve and LOB Path](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image8.png)
+![Oracle CDC with Separate Primitive and LOB Path](../assets/blog-images/DemystifyingOracleCDCwithConfluent/image8.png)
 
 This allows you to process normal relational data with standard patterns while applying special logic only where required.
 

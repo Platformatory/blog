@@ -2,7 +2,7 @@
 layout: post
 title:  "Building whatever (X) as a service: XaaS"
 author: p6
-categories: [ Platform Engineering, Data, SaaS, API Metering ]
+categories: [SaaS, Platform Engineering, API Management]
 image: assets/blog-images/mainfesto.jpg
 featured: true
 hidden: true
@@ -38,13 +38,13 @@ The least you must do is to start with the following fin-ops principles:
 
 # Don't reinvent the wheel - build on great platform primitives
 
-Tech-choices are hard, our biases notwithstanding. Unless you're building specifically for a totally different class of problems, you're likely to be building on the public cloud. While cloud providers seek to provide differentiated offerings, there is a risk of lock-in. Don't get us worng -- there are very many benefits in these offerings and the vertically integrated experience provided by the hyperscaler is very compelling; However, it does decrease your leverage in potentially migrating elsewhere when push comes to shove. This is also materially significant for those building with a multi-cloud, hybrid-cloud offering in the first place.
+Tech-choices are hard, our biases notwithstanding. Unless you're building specifically for a totally different class of problems, you're likely to be building on the public cloud. While cloud providers seek to provide differentiated offerings, there is a risk of lock-in. Don't get us wrong -- there are very many benefits in these offerings and the vertically integrated experience provided by the hyperscaler is very compelling; However, it does decrease your leverage in potentially migrating elsewhere when push comes to shove. This is also materially significant for those building with a multi-cloud, hybrid-cloud offering in the first place.
 
 It makes eminent sense to balance such risks pragmatically.
 
 - Standardize on mature open-source
 - Adopt ubiquitous tools, that have become platform interfaces by themselves
-- Adopt something conforms to both the above, with a managed service provided by the cloud (as opposed to a completely propreitary offering)
+- Adopt something conforms to both the above, with a managed service provided by the cloud (as opposed to a completely proprietary offering)
 
 # BYOC is critical in a multi-cloud hybrid-cloud landscape
 
@@ -62,9 +62,9 @@ Finally, hybrid cloud is a reality. If you need to support on-premise, the most 
 
 The maker's mind is fundamentally creative. There is always an urge to capture the greatest part of the value chain. However, one must weigh the costs, efforts and the RoI of building (and overreaching in the process); 
 
-The SaaS offering is fundamentally centred around owning the critical path of some user experience around a business problem. A PaaS offering is centred around the developer experience of a specific technology. No matter what the tierage of your offering is, there will alwyas likely be areas which could be catered to by someone else with a (even if marginal) competitive advantage. 
+The SaaS offering is fundamentally centred around owning the critical path of some user experience around a business problem. A PaaS offering is centred around the developer experience of a specific technology. No matter what the tierage of your offering is, there will always likely be areas which could be catered to by someone else with a (even if marginal) competitive advantage. 
 
-SaaS companies must therefore be brutally honest about areas that are core, adjacennt or peripheral to their business. A partner ecosystem can be a very effective leverage to creating an ecosystem and thus compounding the scale of your own business while improving integration and customer stickiness. It is crucial to think about:
+SaaS companies must therefore be brutally honest about areas that are core, adjacent or peripheral to their business. A partner ecosystem can be a very effective leverage to creating an ecosystem and thus compounding the scale of your own business while improving integration and customer stickiness. It is crucial to think about:
 
 - Your ecosystem proposition: 
 - What is in it for your partners (particularly makers or developers) - typically converging to a revenue sharing goal

@@ -2,7 +2,7 @@
 layout: post
 title:  "A leaderless future: kafka-esque story on what is becoming mainstream"
 author: p6
-categories: [ Platform Engineering, Data, Infrastructure, Kafka, Real-time ]
+categories: [Kafka, Distributed Systems, Real-time, Platform Engineering]
 image: assets/blog-images/kafka-leaderless-future/kafka-dystopian.webp
 featured: false
 hidden: false

@@ -2,7 +2,7 @@
 layout: post
 title: "Real Time Data Architecture In Retail"
 authors: ashwin
-categories: [Platform Engineering, Infrastructure, Kafka, Data, Retail]
+categories: [Real-time, Kafka, Data Engineering, Retail]
 image: assets/blog-images/real_time_retail/RealTimeRetailTitle.jpg
 featured: false
 hidden: false

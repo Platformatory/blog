@@ -1,7 +1,7 @@
 ---
 layout: post
 author: p6
-categories: [ Platform Engineering, Real-time, Stream Processing, Kafka ]
+categories: [Real-time, Stream Processing, Kafka, Platform Engineering]
 image: assets/blog-images/real-time-primetime/real-time-primetime.webp
 featured: true
 hidden: true
@@ -66,7 +66,7 @@ This begs the question: Why isn't incremental processing on data as it arrives t
 
 Since we're throwing physics metaphors in the post: Batch vs Streaming is a little like classical mechanics and quantum mechanics.
 
-> **Bottomline:** Optimizing for latency is hard. Real-time is hard. Think about a traffic flow analogy. It is easier to design a city with traffic lights than without. However, you need different principles to manage air traffic.
+> **Bottom line:** Optimizing for latency is hard. Real-time is hard. Think about a traffic flow analogy. It is easier to design a city with traffic lights than without. However, you need different principles to manage air traffic.
 
 ## Components for a Lower Latency, Real-time Stack
 
@@ -106,7 +106,7 @@ sequenceDiagram
 </div>
 
 
-Real-time databases are beautiful. They are amazing feats of computing that enable truly real-time classes of experiences that power thing like matching users to ads, players in real-time gaming and even stock market bids. However, with real-time (and the the regular databases), it is inevitable that data must at some point be copied over to the analytical estate. The lowest latency way to do it is through a database write-aside approach.
+Real-time databases are beautiful. They are amazing feats of computing that enable truly real-time classes of experiences that power thing like matching users to ads, players in real-time gaming and even stock market bids. However, with real-time (and the regular databases), it is inevitable that data must at some point be copied over to the analytical estate. The lowest latency way to do it is through a database write-aside approach.
 
 <div class="mermaid" style="display:flex; justify-content:center">
 graph LR
@@ -121,7 +121,7 @@ TL/DR
 
 > * Most SQL databases will come at high double digit latencies
 > * The most performant modern NoSQL stores can deliver low single digit millis latencies. Best representatives of real-time OLTPs would be: Aerospike DB, ScyllaDB, Apache Ignite, DynamoDB
-> * In-memory databases provide sub millisecond latencies consistently (but poor durability). Embeddable in-process databases like RocksDB spill to disk (therefore durable at only marginal latency cost) but require users to implemement many features themselves
+> * In-memory databases provide sub millisecond latencies consistently (but poor durability). Embeddable in-process databases like RocksDB spill to disk (therefore durable at only marginal latency cost) but require users to implement many features themselves
 > * You must think about how to transmit changes to real-time. Ideally, a dual-write to a system like Kafka, within the database transaction boundary OR through approaches like CDC
 
 ### (2) Streaming Pipes and Connectors
@@ -262,7 +262,7 @@ Distributed file systems have been at the backbone of every large scale data arc
 The recent years have seen the coalescence of lakes and warehouses, mainly owing to two important factors, namely the commodification of:
 
 * Open table formats on top of columnar storage formats
-* Query Engones: Robust vectorized query execution, predicate pushdowns, etc
+* Query Engines: Robust vectorized query execution, predicate pushdowns, etc
 
 While that has been the case, their utility in mainstream “streaming” applications has been relatively low because of prohibitively high latencies on the storage layer (which generally prefers larger files than smaller files) and some structural reasons of the table format themselves. For example, Apache Iceberg, the leading open table formats has major deficiencies with streaming workloads.
 
@@ -283,7 +283,7 @@ graph TD
     C -->|Schema Evolution| D
 </div>
 
-It is inevitable that any architecture that that could benefit from compute-storage separation, geo resillence and cost optimization will build on top of object stores like S3.
+It is inevitable that any architecture that could benefit from compute-storage separation, geo-resilience and cost optimization will build on top of object stores like S3.
 
 TL/DR
 

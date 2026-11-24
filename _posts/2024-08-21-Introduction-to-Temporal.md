@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Introduction to Temporal"
-categories: [Temporal, Temporal, Pyhton, Workflow Management, Durable Systems ]
+categories: [Durable Execution, Temporal, Python]
 teaser: Discover Temporal, a game-changer in building reliable distributed systems. Learn how its durable functions simplify complex systems and guarantee the reliability of your business logic
 authors: Subramanya
 featured: false

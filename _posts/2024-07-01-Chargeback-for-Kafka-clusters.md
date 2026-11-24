@@ -2,7 +2,7 @@
 layout: post
 title: "Chargeback for Kafka clusters"
 authors: ashwin
-categories: [Platform Engineering, Infrastructure, Kafka, Cost]
+categories: [Kafka, Kafka Operations, Cost, Platform Engineering]
 image: assets/blog-images/kafka_chargeback_blog/TitleImage.jpg
 featured: false
 hidden: false

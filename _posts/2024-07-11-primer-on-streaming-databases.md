@@ -2,7 +2,7 @@
 layout: post
 title: "A Primer on Streaming Databases"
 authors: avinash
-categories: [Data, Kafka, Streaming Databases, KSQL, Materialize, RisingWave]
+categories: [Streaming Databases, Stream Processing, Kafka, ksqlDB]
 image: assets/blog-images/streaming_databases/StreamingDatabase.png
 featured: false
 teaser: Why streaming databases are the rage and what makes them the hottest thing in the world of streaming. A deep dive into important characteristics of a few streaming DBs with a comparative lens.

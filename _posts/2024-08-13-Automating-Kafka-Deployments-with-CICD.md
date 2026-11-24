@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Automating Kafka Deployments with CI/CD"
-categories: [Kafka Architecture, Distributed Systems, DevOps, CI/CD]
+categories: [Kafka, DevOps, CI/CD, Kafka Operations]
 author: Vikhyat
 teaser: Unlock seamless Kafka cluster management with Kafka CP Deploy Manager! Discover how we can make deployments easier, mitigate human error, and ensures smooth upgrades— all with a user-friendly interface that doesn't require deep Kafka expertise. Ready to elevate your Kafka operations? Dive into our latest blog post!
 image: assets/blog-images/Automating-Kafka-Deployments-with-CICD/banner.jpg

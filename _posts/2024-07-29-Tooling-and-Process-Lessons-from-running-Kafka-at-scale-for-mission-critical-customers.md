@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Tooling and Process: Lessons from running Kafka at scale for mission critical customers"
-categories: [Apache Kafka, Mission-Critical Applications, High Availability Systems, Cluster Management, Performance, Operational Challenges, Kafka at Scale, SRE Practices, ]
+categories: [Kafka Operations, Kafka, SRE, Performance]
 teaser: Dive into our journey of deploying Apache Kafka at scale for fintech clients, navigating challenges and implementing solutions for mission-critical success
 authors: Arun
 featured: false

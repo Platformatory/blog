@@ -2,8 +2,7 @@
 layout: post
 title: "Stream Oracle DB Changes to Redis with Confluent Platform: An End-to-End Guide"
 author: Balaji
-categories:
-  [Platform Engineering, Data, Infrastructure, Kafka, Kubernetes]
+categories: [CDC, Oracle, Kafka Connect, Kafka]
 image: assets/blog-images/e2e_datapipeline/header.png
 featured: true
 hidden: true
@@ -63,7 +62,7 @@ In summary, a Redis Sink Connector is a vital component in real-time streaming a
 # OS Pre-requisite
 
 - Current user added into sudoers list
-- Docker enging installed 
+- Docker engine installed 
 
 # Setting up Environment
 > Note: The following setup is executed on  `Ubuntu 24.02 LTS` 
@@ -92,7 +91,7 @@ Unzip file redis-redis-enterprise-kafka-6.7.4.zip.
 
 # Bring Up Confluent Platform using Docker Compose
 
-1. Download or copy contents of [Docker Compose file] from Github repository for Confluent Platform Kraft all in one Docker Compose file.
+1. Download or copy contents of [Docker Compose file] from GitHub repository for Confluent Platform Kraft all in one Docker Compose file.
 
 ```sh
 $> wget https://d2p6pa21dvn84.cloudfront.net/api/plugins/redis/redis-enterprise-kafka/versions/6.7.4/redis-redis-enterprise-kafka-6.7.4.zip
@@ -139,7 +138,7 @@ $> wget https://d2p6pa21dvn84.cloudfront.net/api/plugins/redis/redis-enterprise-
 ```
 
 4. Save changes made in above steps in docker-compose file.
-5. Ensure Oracle CDC Connector and Redis Sink connector files are extraced
+5. Ensure Oracle CDC Connector and Redis Sink connector files are extracted
 6. Create a folder in current working directory where docker-compose.yml file is present along with Oracle CDC connector and Redis Sink Connector.
 
 ```sh
@@ -187,9 +186,9 @@ $> docker compose logs oracle
 &emsp;&emsp;&emsp;&emsp;Wait till the oracle container is fully initialized with message “DATABASE IS READY TO USE!
 
 
-# Oralce DB Configuration
+# Oracle DB Configuration
 
-After the Oracle database is operational, we must configure it to activate ARCHIVELOG mode, add users, and set up the necessary permissions. Follow the steps mentioned below to setup required configuraiton on Oracle DB.
+After the Oracle database is operational, we must configure it to activate ARCHIVELOG mode, add users, and set up the necessary permissions. Follow the steps mentioned below to setup required configuration on Oracle DB.
 
 1. Connect to Oracle container.
 ```
@@ -200,7 +199,7 @@ After the Oracle database is operational, we must configure it to activate ARCHI
 ```
     $> sqlplus ‘/ as sysdba’
 ```
-3. Check if Oracle DB is in Archivelog mode. This is needed to extact Logminer dictionary to the redo logs. 
+3. Check if Oracle DB is in Archivelog mode. This is needed to extract LogMiner dictionary to the redo logs. 
 ```
     SQL> select log_mode from v$database;
 
@@ -445,7 +444,7 @@ $> curl -s -X GET -H 'Content-Type: application/json' http://localhost:8083/conn
 ```
 With the userdata and clickstream source connector configured, the Oracle CDC source connector continuously monitors database, creating an event stream for any changes.
 
-# Create Stream Processing using Ksqldb Query
+# Create Stream Processing using ksqlDB Query
 
 1. Login to Confluent Control Center using http://<host-ip>:9021
 2. Navigate to Cluster Overview → ksqlDB.

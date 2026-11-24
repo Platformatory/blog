@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Unlocking The Potential of Local Kafka"
-categories: [Apache Kafka, Docker Compose, Ansible ]
+categories: [Kafka, Local Development, Docker]
 teaser: Unlock the full potential of local Kafka setups for rapid development, testing, and seamless management and discover the best method for your local kafka setup.
 authors: Subramanya
 featured: false
