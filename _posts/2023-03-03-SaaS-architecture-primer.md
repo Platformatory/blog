@@ -4,9 +4,8 @@ title:  "Building whatever (X) as a service: XaaS"
 author: p6
 categories: [SaaS, Platform Engineering, API Management]
 image: assets/blog-images/mainfesto.jpg
-featured: true
-hidden: true
-weight: -11
+featured: false
+hidden: false
 teaser: An architecture primer for SaaS upstarts.
 toc: true
 ---

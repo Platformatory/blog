@@ -5,8 +5,8 @@ author: p6
 categories: [Platform Engineering, Infrastructure, Kubernetes, Kafka, API Management]
 image: assets/blog-images/platform-arch-model.svg
 teaser: How to solve for data, connectivity and infrastructure foundations & platform primitives.
-featured: true
-hidden: true
+featured: false
+hidden: false
 toc: true
 ---
 

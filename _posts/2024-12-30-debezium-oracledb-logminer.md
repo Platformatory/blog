@@ -4,8 +4,8 @@ title: "Debezium with Oracle DB and LogMiner for Change Data Capture on Confluen
 author: Balaji
 categories: [CDC, Oracle, Debezium, Kafka Connect]
 image: assets/blog-images/oracleCDC-debezium-connector/debezium_header.jpg
-featured: true
-hidden: true
+featured: false
+hidden: false
 cat_box_title: Contact Us
 ctas:
   - title: Get In Touch

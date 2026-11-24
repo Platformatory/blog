@@ -4,8 +4,8 @@ title: "Debezium with Oracle DB and OpenLogReplicator for Change Data Capture on
 author: Balaji
 categories: [CDC, Oracle, Debezium, Kafka Connect]
 image: assets/blog-images/openlogreplicator/architecture.png
-featured: true
-hidden: true
+featured: false
+hidden: false
 cat_box_title: Contact Us
 ctas:
   - title: Get In Touch

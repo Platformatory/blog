@@ -4,8 +4,8 @@ title: "A Platform engineering manifesto"
 author: p6
 categories: [Platform Engineering, Infrastructure, Kubernetes, Kafka, API Management]
 image: assets/blog-images/platform-strategy.svg
-featured: true
-hidden: true
+featured: false
+hidden: false
 cat_box_title: Contact Us
 ctas:
   - title: Get In Touch

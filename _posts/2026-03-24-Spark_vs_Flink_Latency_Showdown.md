@@ -3,8 +3,8 @@ layout: post
 title: "Flink vs Spark: A Real-World Latency Showdown with Kafka"
 author: ShriVeena
 categories: [Stream Processing, Apache Flink, Apache Spark, Performance, Kafka]
-image: assets/blog-images/spark_vs_flink/spark_vs_flink.png
-featured: false
+image: assets/blog-images/spark_vs_flink/hero.svg
+featured: true
 hidden: false
 cat_box_title: Contact Us
 ctas:
@@ -14,6 +14,8 @@ ctas:
 
 teaser: A real-world latency comparison between Apache Spark and Apache Flink using Kafka under high-throughput streaming workloads.
 toc: true
+weight: -2
+
 ---
 
 ## Introduction

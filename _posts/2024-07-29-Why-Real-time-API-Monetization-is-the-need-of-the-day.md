@@ -4,10 +4,9 @@ title: "Monetizing APIs, Data through usage-based billing"
 authors: ashwin
 categories: [API Management, SaaS, Real-time, Cost]
 image: assets/blog-images/apinomy_blog/ApinomyBlogTitle.webp
-featured: true
-hidden: true
+featured: false
+hidden: false
 teaser: A guide to evolving new revenue streams in SaaS and beyond.
-weight: -10
 toc: true
 ---
 

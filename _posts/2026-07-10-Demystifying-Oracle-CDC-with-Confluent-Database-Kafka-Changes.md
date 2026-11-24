@@ -4,8 +4,8 @@ title: "Demystifying Oracle CDC with Confluent: How Database Changes Flow into K
 author: Balaji
 categories: [CDC, Oracle, Kafka Connect, Kafka]
 image: assets/blog-images/DemystifyingOracleCDCwithConfluent/demystifying-oracleCDC-with-confluent.png
-featured: true
-hidden: true
+featured: false
+hidden: false
 cat_box_title: Contact Us
 ctas:
   - title: Get In Touch

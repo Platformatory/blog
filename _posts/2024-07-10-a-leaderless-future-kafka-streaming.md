@@ -3,11 +3,13 @@ layout: post
 title:  "A leaderless future: kafka-esque story on what is becoming mainstream"
 author: p6
 categories: [Kafka, Distributed Systems, Real-time, Platform Engineering]
-image: assets/blog-images/kafka-leaderless-future/kafka-dystopian.webp
-featured: false
+image: assets/blog-images/kafka-leaderless-future/hero.svg
+featured: true
 hidden: false
 teaser: kafka-esque story on what is becoming mainstream
 toc: true
+weight: -1
+
 ---
 
 

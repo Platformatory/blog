@@ -4,8 +4,8 @@ title: "Stream Oracle DB Changes to Redis with Confluent Platform: An End-to-End
 author: Balaji
 categories: [CDC, Oracle, Kafka Connect, Kafka]
 image: assets/blog-images/e2e_datapipeline/header.png
-featured: true
-hidden: true
+featured: false
+hidden: false
 cat_box_title: Contact Us
 ctas:
   - title: Get In Touch

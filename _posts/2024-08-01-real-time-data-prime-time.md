@@ -3,11 +3,10 @@ layout: post
 author: p6
 categories: [Real-time, Stream Processing, Kafka, Platform Engineering]
 image: assets/blog-images/real-time-primetime/real-time-primetime.webp
-featured: true
-hidden: true
+featured: false
+hidden: false
 teaser: How to build intelligent applications and platforms to process data within seconds.
 toc: true
-weight: -11
 title: Real-time Data on Prime-Time
 ---
 
