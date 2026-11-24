@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" role="img" aria-label="Monthly cost of self-run Kafka infrastructure at 2 GB/s on seven clouds, with the Confluent Platform Gold and Platinum licence added on top">
+<rect width="760" height="520" fill="#ffffff"/>
+<g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+<line x1="80" y1="390.0" x2="740" y2="390.0" stroke="#e9ecef"/>
+<text x="72" y="395.0" text-anchor="end" font-size="13" fill="#6c757d">$0k</text>
+<line x1="80" y1="321.0" x2="740" y2="321.0" stroke="#e9ecef"/>
+<text x="72" y="326.0" text-anchor="end" font-size="13" fill="#6c757d">$100k</text>
+<line x1="80" y1="251.9" x2="740" y2="251.9" stroke="#e9ecef"/>
+<text x="72" y="256.9" text-anchor="end" font-size="13" fill="#6c757d">$200k</text>
+<line x1="80" y1="182.9" x2="740" y2="182.9" stroke="#e9ecef"/>
+<text x="72" y="187.9" text-anchor="end" font-size="13" fill="#6c757d">$300k</text>
+<line x1="80" y1="113.8" x2="740" y2="113.8" stroke="#e9ecef"/>
+<text x="72" y="118.8" text-anchor="end" font-size="13" fill="#6c757d">$400k</text>
+<text x="20" y="245" text-anchor="middle" font-size="13" fill="#6c757d" transform="rotate(-90 20 245)">per month, 2 GB/s</text>
+<rect x="100.1" y="163.0" width="54" height="227.0" fill="#1971c2"/>
+<rect x="100.1" y="126.4" width="54" height="36.6" fill="#d9480f"/>
+<rect x="100.1" y="117.3" width="54" height="9.1" fill="#ffa94d"/>
+<text x="127.1" y="110.3" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+16%</text>
+<text x="127.1" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">AWS</text>
+<rect x="194.4" y="252.8" width="54" height="137.2" fill="#1971c2"/>
+<rect x="194.4" y="216.2" width="54" height="36.6" fill="#d9480f"/>
+<rect x="194.4" y="207.1" width="54" height="9.1" fill="#ffa94d"/>
+<text x="221.4" y="200.1" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+27%</text>
+<text x="221.4" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">Google</text>
+<rect x="288.7" y="358.4" width="54" height="31.6" fill="#1971c2"/>
+<rect x="288.7" y="321.8" width="54" height="36.6" fill="#d9480f"/>
+<rect x="288.7" y="312.7" width="54" height="9.1" fill="#ffa94d"/>
+<text x="315.7" y="305.7" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+116%</text>
+<text x="315.7" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">Azure</text>
+<rect x="383.0" y="359.3" width="54" height="30.7" fill="#1971c2"/>
+<rect x="383.0" y="322.7" width="54" height="36.6" fill="#d9480f"/>
+<rect x="383.0" y="313.6" width="54" height="9.1" fill="#ffa94d"/>
+<text x="410.0" y="306.6" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+119%</text>
+<text x="410.0" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">Oracle</text>
+<rect x="477.3" y="355.8" width="54" height="34.2" fill="#1971c2"/>
+<rect x="477.3" y="319.2" width="54" height="36.6" fill="#d9480f"/>
+<rect x="477.3" y="310.1" width="54" height="9.1" fill="#ffa94d"/>
+<text x="504.3" y="303.1" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+107%</text>
+<text x="504.3" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">DigitalOcean</text>
+<rect x="571.6" y="354.2" width="54" height="35.8" fill="#1971c2"/>
+<rect x="571.6" y="317.6" width="54" height="36.6" fill="#d9480f"/>
+<rect x="571.6" y="308.4" width="54" height="9.1" fill="#ffa94d"/>
+<text x="598.6" y="301.4" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+102%</text>
+<text x="598.6" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">Akamai</text>
+<rect x="665.9" y="373.6" width="54" height="16.4" fill="#1971c2"/>
+<rect x="665.9" y="337.0" width="54" height="36.6" fill="#d9480f"/>
+<rect x="665.9" y="327.8" width="54" height="9.1" fill="#ffa94d"/>
+<text x="692.9" y="320.8" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2328">+223%</text>
+<text x="692.9" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2328">Hetzner</text>
+<line x1="80" y1="390" x2="740" y2="390" stroke="#868e96"/>
+<rect x="80" y="18" width="14" height="14" fill="#1971c2"/>
+<text x="100" y="30" font-size="14" fill="#1f2328">Self-run infrastructure</text>
+<rect x="300" y="18" width="14" height="14" fill="#d9480f"/>
+<text x="320" y="30" font-size="14" fill="#1f2328">Confluent Platform Gold licence</text>
+<rect x="520" y="18" width="14" height="14" fill="#ffa94d"/>
+<text x="540" y="30" font-size="14" fill="#1f2328">Platinum, on top of Gold</text>
+<text x="20" y="458" font-size="12" fill="#6c757d">Model estimate at list prices; negotiated licences and cloud prices differ. Licence: 53 production nodes (50 brokers,</text>
+<text x="20" y="476" font-size="12" fill="#6c757d">3 KRaft controllers) at $12,000 (Gold) or $15,000 (Platinum) a node-year, excluding pre-production and DR. Upstream</text>
+<text x="20" y="494" font-size="12" fill="#6c757d">Kafka and Strimzi add nothing. Labels show the Gold licence as a share of infrastructure.</text>
+</g></svg>

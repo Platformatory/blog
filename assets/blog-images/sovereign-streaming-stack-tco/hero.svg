@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="One management contract over a mixed estate: intent goes into a management plane with a durable executor, travels over a private mesh to an agent in each fleet, and runs on cloud, on-premises, edge and air-gapped fleets with different distributions">
+  <rect width="1200" height="630" fill="#f7f7f5"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1971c2"/></marker>
+  </defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="60" y="64" font-size="30" font-weight="700">One contract, many estates</text>
+    <text x="60" y="98" font-size="20" fill="#6c757d">What you run × where you run it, handled as what you run + where you run it</text>
+
+    <rect x="60" y="140" width="180" height="400" rx="10" fill="#ffffff" stroke="#868e96" stroke-width="2"/>
+    <text x="150" y="178" font-size="20" font-weight="700" text-anchor="middle">Intent</text>
+    <g font-size="17" fill="#495057" text-anchor="middle">
+      <text x="150" y="230">2 GB/s</text><text x="150" y="262">7 days</text><text x="150" y="294">3 zones</text>
+      <text x="150" y="380">Console · CLI</text><text x="150" y="410">Terraform · API</text><text x="150" y="440">MCP</text>
+    </g>
+
+    <rect x="290" y="140" width="300" height="400" rx="10" fill="#ffffff" stroke="#d9480f" stroke-width="3"/>
+    <text x="440" y="178" font-size="20" font-weight="700" text-anchor="middle">Management plane</text>
+    <g font-size="17" text-anchor="middle">
+      <rect x="315" y="205" width="250" height="56" rx="6" fill="#fff4e6"/><text x="440" y="239">API · state · audit</text>
+      <rect x="315" y="280" width="250" height="56" rx="6" fill="#fff4e6"/><text x="440" y="314">Durable executor</text>
+      <rect x="315" y="355" width="250" height="56" rx="6" fill="#fff4e6"/><text x="440" y="389">Meta-operator</text>
+      <text x="440" y="455" fill="#495057" font-size="16">hosted · self-hosted · air-gapped</text>
+    </g>
+
+    <line x1="240" y1="340" x2="286" y2="340" stroke="#495057" stroke-width="2.5"/>
+    <line x1="590" y1="340" x2="676" y2="340" stroke="#1971c2" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#a)"/>
+    <text x="633" y="322" font-size="15" fill="#1971c2" text-anchor="middle">private mesh</text>
+
+    <g font-size="17">
+      <rect x="680" y="140" width="460" height="400" rx="10" fill="none" stroke="#868e96" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="700" y="178" font-size="20" font-weight="700">Your estate (agent per fleet)</text>
+      <rect x="700" y="200" width="200" height="72" rx="6" fill="#ffffff" stroke="#adb5bd"/><text x="800" y="230" text-anchor="middle" font-weight="700">Hyperscaler</text><text x="800" y="256" text-anchor="middle" font-size="15" fill="#495057">Apache Kafka</text>
+      <rect x="920" y="200" width="200" height="72" rx="6" fill="#ffffff" stroke="#adb5bd"/><text x="1020" y="230" text-anchor="middle" font-weight="700">Own Kubernetes</text><text x="1020" y="256" text-anchor="middle" font-size="15" fill="#495057">commercial, BYOL</text>
+      <rect x="700" y="292" width="200" height="72" rx="6" fill="#ffffff" stroke="#adb5bd"/><text x="800" y="322" text-anchor="middle" font-weight="700">Data centre</text><text x="800" y="348" text-anchor="middle" font-size="15" fill="#495057">diskless, Flink</text>
+      <rect x="920" y="292" width="200" height="72" rx="6" fill="#ffffff" stroke="#adb5bd"/><text x="1020" y="322" text-anchor="middle" font-weight="700">Edge</text><text x="1020" y="348" text-anchor="middle" font-size="15" fill="#495057">edge broker</text>
+      <rect x="700" y="384" width="420" height="72" rx="6" fill="#ffffff" stroke="#c92a2a"/><text x="910" y="414" text-anchor="middle" font-weight="700">Air-gapped</text><text x="910" y="440" text-anchor="middle" font-size="15" fill="#495057">management plane inside the boundary</text>
+      <text x="700" y="508" font-size="15" fill="#495057">your PKI · identity · registry · licences · models</text>
+    </g>
+    <text x="60" y="590" font-size="18" fill="#6c757d">m distributions on n substrates: m × n procedures by hand, m + n adapters behind one contract</text>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Three ways to run streaming: fully managed, bring your own cloud, and sovereign, by where the data plane and control plane sit relative to your boundary">
+  <rect width="1200" height="630" fill="#f7f7f5"/>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="60" y="64" font-size="30" font-weight="700" fill="#1f2328">Who holds each plane</text>
+    <text x="60" y="98" font-size="20" fill="#6c757d">Your boundary is the orange line</text>
+
+    <g font-size="22" font-weight="700" fill="#1f2328">
+      <text x="200" y="160" text-anchor="middle">Managed</text>
+      <text x="600" y="160" text-anchor="middle">Bring your own cloud</text>
+      <text x="1000" y="160" text-anchor="middle">Sovereign</text>
+    </g>
+
+    <!-- managed: both outside -->
+    <rect x="80" y="190" width="240" height="110" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2"/>
+    <text x="200" y="240" text-anchor="middle" font-size="22" fill="#1f2328">Control plane</text>
+    <text x="200" y="272" text-anchor="middle" font-size="18" fill="#6c757d">vendor</text>
+    <rect x="80" y="320" width="240" height="110" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2"/>
+    <text x="200" y="370" text-anchor="middle" font-size="22" fill="#1f2328">Data plane</text>
+    <text x="200" y="402" text-anchor="middle" font-size="18" fill="#6c757d">vendor account</text>
+    <rect x="70" y="460" width="260" height="90" rx="10" fill="none" stroke="#d9480f" stroke-width="3" stroke-dasharray="8 6"/>
+    <text x="200" y="512" text-anchor="middle" font-size="20" fill="#d9480f">your apps only</text>
+
+    <!-- byoc: data inside -->
+    <rect x="480" y="190" width="240" height="110" rx="8" fill="#ffffff" stroke="#868e96" stroke-width="2"/>
+    <text x="600" y="240" text-anchor="middle" font-size="22" fill="#1f2328">Control plane</text>
+    <text x="600" y="272" text-anchor="middle" font-size="18" fill="#6c757d">vendor</text>
+    <rect x="470" y="310" width="260" height="240" rx="10" fill="none" stroke="#d9480f" stroke-width="3" stroke-dasharray="8 6"/>
+    <rect x="480" y="320" width="240" height="110" rx="8" fill="#ffffff" stroke="#1971c2" stroke-width="2"/>
+    <text x="600" y="370" text-anchor="middle" font-size="22" fill="#1f2328">Data plane</text>
+    <text x="600" y="402" text-anchor="middle" font-size="18" fill="#6c757d">your account</text>
+    <text x="600" y="512" text-anchor="middle" font-size="20" fill="#d9480f">your apps</text>
+
+    <!-- sovereign: both inside -->
+    <rect x="870" y="180" width="260" height="370" rx="10" fill="none" stroke="#d9480f" stroke-width="3" stroke-dasharray="8 6"/>
+    <rect x="880" y="190" width="240" height="110" rx="8" fill="#ffffff" stroke="#1971c2" stroke-width="2"/>
+    <text x="1000" y="240" text-anchor="middle" font-size="22" fill="#1f2328">Control plane</text>
+    <text x="1000" y="272" text-anchor="middle" font-size="18" fill="#6c757d">your team</text>
+    <rect x="880" y="320" width="240" height="110" rx="8" fill="#ffffff" stroke="#1971c2" stroke-width="2"/>
+    <text x="1000" y="370" text-anchor="middle" font-size="22" fill="#1f2328">Data plane</text>
+    <text x="1000" y="402" text-anchor="middle" font-size="18" fill="#6c757d">your account</text>
+    <text x="1000" y="512" text-anchor="middle" font-size="20" fill="#d9480f">your apps</text>
+
+    <g font-size="20" fill="#1f2328">
+      <text x="200" y="600" text-anchor="middle">Pay per GB</text>
+      <text x="600" y="600" text-anchor="middle">Pay per GB, bytes inside</text>
+      <text x="1000" y="600" text-anchor="middle">Pay for people and infrastructure</text>
+    </g>
+  </g>
+</svg>
