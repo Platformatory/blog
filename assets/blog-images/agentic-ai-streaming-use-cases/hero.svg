@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="The agentic streaming stack: most 2026 launches sit on layers that already existed; the new pressures are replay, delegated authority, cost per message, threat response and continual learning">
   <rect width="1200" height="630" fill="#f7f7f5"/>
   <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
-    <text x="60" y="64" font-size="30" font-weight="700" fill="#1f2328">Old wine, new bottles</text>
+    <text x="60" y="64" font-size="30" font-weight="700" fill="#1f2328">Mostly familiar patterns</text>
     <text x="60" y="98" font-size="20" fill="#6c757d">2026 agent launches, by the layer they already sat on</text>
 
     <!-- stack -->

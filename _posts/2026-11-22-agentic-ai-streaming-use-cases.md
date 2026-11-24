@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Old Wine on the Stream: What Agents Really Change in Streaming'
+title: 'Agentic AI on Kafka and Flink: What Agents Really Change in Streaming'
 author: p6
 categories:
 - Kafka
@@ -11,16 +11,16 @@ featured: false
 hidden: false
 teaser: Most of this year's agentic streaming launches repackage patterns Kafka users
   already run. A few things agents change really are new.
-description: Most of this year's agentic streaming launches repackage patterns Kafka
-  users already run. A few things agents change really are new.
+description: Which of 2026's agentic AI launches for Kafka and Flink are new, which
+  repackage old streaming patterns, and what to build or buy instead.
 toc: true
 ---
 
-I've been living under my own rock beside the stream for a while, and Current '26 was a good porthole to what everyone else seems to be up to. For a few months I'd found myself wondering what Redpanda was up to these days, and wtf an agentic data plane is. I even attended a Confluent hackathon (an elaborate copy-pasta drill, as it turned out) and TIL'd about Lightning Tables.
+I'd been heads-down for a while, and Current '26 was a useful window onto what the rest of the streaming world had been building. For a few months I'd been curious what Redpanda was shipping, and what exactly an agentic data plane is. I also attended a Confluent hackathon, which turned out to be mostly a guided copy-and-paste exercise, and came away knowing what Lightning Tables are.
 
 What everyone seems to be up to is agents: the major streaming vendors all shipped agent infrastructure in 2026. Confluent added a fifth pillar to its platform, called Query, and put agents on top of it.[^streamhouse] Redpanda built an agentic data plane,[^redpanda] and Apache Flink grew an agents sub-project.[^flink-agents] Read against their own documentation, most of it is a pattern Kafka users have run for years under another name. A few things are new, and they're mostly missing from the launch slides.
 
-The question for anyone running Kafka and Flink is which of these launches to buy, which to build, and which to ignore. Sorting them takes two piles: old wine in new bottles, and use-cases that genuinely didn't exist before agents.
+The question for anyone running Kafka and Flink is which of these launches to buy, which to build, and which to ignore. Sorting them takes two piles: familiar patterns under a new name, and use-cases that genuinely didn't exist before agents.
 
 * * *
 
@@ -33,7 +33,7 @@ The pivot has a cause. The log itself stopped being something a vendor could cha
 
 When the protocol is common property and storage is moving to object storage, the margin moves up the stack, to serving, processing and governance. My read is that agents are the story that sells those layers. Each product still has to be judged on what it does that the layer beneath it couldn't.
 
-## Mostly old wine
+## Mostly familiar patterns
 
 **4 November 2026: Lightning Tables and the Real-Time Context Engine.** Confluent's Streamhouse adds Query as a fifth pillar beside Stream, Connect, Process and Govern. At its centre is Lightning Tables: switch it on for a topic and the topic becomes a read-only table, refreshed within about 100 ms, queryable from SQL, HTTP, the CLI, JDBC and MCP. Confluent's own tests put queries at 10 to 100 ms and above 1,000 per second, on AWS only for now.[^streamhouse][^lt]  The Real-Time Context Engine is the MCP face of the same tables: an agent lists the topics, reads their schemas and writes its own SQL.[^rtce]
 
@@ -60,7 +60,7 @@ The SQL is single-table. Key lookups, filters, `ORDER BY` and `LIMIT` work; join
 | Agent action log | Event sourcing |
 | Diskless, streamhouse | Storage cost architecture |
 
-## Five things that are new
+## Five things agents genuinely change in streaming
 
 The new pile is shorter, and most of it is about the consumer.
 
@@ -108,7 +108,7 @@ The recorded model outputs that make replay honest are the same records this loo
 
 Ranking both piles by what they're worth and what they cost changes the reading order. The scores are my own assessment, from 1 to 5, for a team already running Kafka and Flink. Value is the upside if it works: revenue, risk avoided, quality, money saved. Cost is what it takes to adopt and run: new spend, operations, people and tokens.
 
-![Thirteen opportunities plotted by business value against cost to adopt, each from 1 to 5. High value at low cost: the action log (value 4, cost 1.3), record and replay of model outputs (4.2, 2), budget backpressure (3.6, 1.8) and share groups (3, 1). High value at high cost: threat response (5, 4.5), continual learning (4.5, 3.6), the delegated principal (4.2, 3.4) and, near the line, diskless storage (3.7, 2.8). Low value for their cost: context engines (2, 3) and Streaming and Flink Agents (2, 4). New items are orange triangles, old wine grey circles.](../assets/blog-images/agentic-ai-streaming-use-cases/value-vs-cost.svg)
+![Thirteen opportunities plotted by business value against cost to adopt, each from 1 to 5. High value at low cost: the action log (value 4, cost 1.3), record and replay of model outputs (4.2, 2), budget backpressure (3.6, 1.8) and share groups (3, 1). High value at high cost: threat response (5, 4.5), continual learning (4.5, 3.6), the delegated principal (4.2, 3.4) and, near the line, diskless storage (3.7, 2.8). Low value for their cost: context engines (2, 3) and Streaming and Flink Agents (2, 4). New items are orange triangles, familiar patterns grey circles.](../assets/blog-images/agentic-ai-streaming-use-cases/value-vs-cost.svg)
 *My assessment, scored 1 to 5, November 2026.*
 
 | Opportunity | Pile | Value | Cost | Why |
@@ -127,9 +127,9 @@ Ranking both piles by what they're worth and what they cost changes the reading 
 | Streaming and Flink Agents | Old | 2 | 4 | Model calls in the hot path, replay cost, operational coupling |
 | MCP tooling for coding assistants | Old | 1.5 | 1 | Pleasant and free with the platform |
 
-The cheapest wins are in the new pile, or rest on old wine you already own. Recording model outputs in the action log and putting a budget on model calls pay off three times, in audit, in evals and on the bill, and continual learning is built on the same records. At the illustrative \$259,000 a day above, sampling out a tenth of the model calls saves about \$26,000 a day. The three strategic bets (threat response, continual learning and the delegated principal) carry the most value and the most cost, and none of them is a single product you can buy: each is an integration project. The headline launches, agents inside the pipeline and context engines, score lowest for what they cost, unless the data is born as events and decisions turn over in seconds. Diskless storage is the old wine worth chasing, for savings that have little to do with agents.
+The cheapest wins are in the new pile, or rest on infrastructure you already own. Recording model outputs in the action log and putting a budget on model calls pay off three times, in audit, in evals and on the bill, and continual learning is built on the same records. At the illustrative \$259,000 a day above, sampling out a tenth of the model calls saves about \$26,000 a day. The three strategic bets (threat response, continual learning and the delegated principal) carry the most value and the most cost, and none of them is a single product you can buy: each is an integration project. The headline launches, agents inside the pipeline and context engines, score lowest for what they cost, unless the data is born as events and decisions turn over in seconds. Diskless storage is the familiar pattern worth chasing, for savings that have little to do with agents.
 
-## Which launch to buy, and when
+## Which agentic streaming launch to buy, and when
 
 As of November 2026, the choice follows where the data is born and what the agent does with it:
 
@@ -142,7 +142,7 @@ As of November 2026, the choice follows where the data is born and what the agen
 - **Security:** Kafka and Flink where detection fans out, correlates or replays; filtering at the sensor everywhere else.
 - **Continual learning:** Kafka carries traces and joins labels, and Iceberg keeps what the models learn from.
 
-These piles would shift if the products changed. A serving layer that joins and searches, a log that records and replays model outputs as a primitive, or budget-aware backpressure in the broker would each move something from the second pile into a product worth buying. None has shipped yet. Until one does, most of the new bottles hold wine you already own.
+These piles would shift if the products changed. A serving layer that joins and searches, a log that records and replays model outputs as a primitive, or budget-aware backpressure in the broker would each move something from the second pile into a product worth buying. None has shipped yet. Until one does, most of what's being sold as agent infrastructure is infrastructure you already run.
 
 [^kip1150]: [Diskless Kafka: what happens when brokers stop owning the data?](https://softwaremill.com/diskless-kafka-object-storage-kip-1150-and-kafkas-future/), SoftwareMill; [Data streaming trends Q3 2026](https://www.kai-waehner.de/blog/2026/09/21/data-streaming-trends-q3-2026-what-changes-through-2027/), Kai Waehner, 21 September 2026.
 [^ursa]: [StreamNative introduces Lakestream architecture and launches native Kafka service](https://www.businesswire.com/news/home/20260407143701/en/StreamNative-Introduces-Lakestream-Architecture-and-Launches-Native-Kafka-Service-Unifying-Streaming-and-the-Lakehouse), Business Wire, 7 April 2026.
