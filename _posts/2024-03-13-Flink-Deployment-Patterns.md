@@ -6,7 +6,7 @@ categories: [Apache Flink, Stream Processing, Kubernetes, Platform Engineering]
 image: assets/blog-images/flink_deployment/flink-application.png
 featured: false
 hidden: false
-teaser: Overview of available deployment patterns for Flink Cluster
+teaser: "Flink's application and session modes, and how to deploy them standalone, on YARN and on Kubernetes."
 toc: true
 ---
 # Introduction

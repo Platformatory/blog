@@ -4,10 +4,12 @@ permalink: /llms-full.txt
 sitemap: false
 ---
 {%- assign base = site.url | append: site.baseurl -%}
-{%- assign listed = site.posts | where_exp: "p", "p.hidden != true" -%}
+{%- assign listed = site.posts | where_exp: "p", "p.title" -%}
 # {{ site.title }}
 
-> {{ site.description }} from {{ site.organization.name }}. Full text of every current post, newest first. Index: {{ base }}/llms.txt
+> {{ site.data.llms.summary }}
+
+Full text of every post, newest first. Index with topics and summaries: {{ base }}/llms.txt
 {% for p in listed %}
 {%- assign keys = p.authors | default: p.author | split: "," %}
 

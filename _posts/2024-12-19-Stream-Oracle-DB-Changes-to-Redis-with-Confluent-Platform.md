@@ -12,7 +12,7 @@ ctas:
     description: "Have questions or need assistance? Our team is here to help"
     url: "/contact/"
 
-teaser: Platform Engineering is dead. Long live platform engineering!
+teaser: "End-to-end Oracle to Redis with Confluent Platform: Oracle CDC Source connector, Redis Sink connector, database prerequisites and setup."
 toc: true
 ---
 

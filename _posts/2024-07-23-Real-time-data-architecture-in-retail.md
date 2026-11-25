@@ -6,7 +6,7 @@ categories: [Real-time, Kafka, Data Engineering, Retail]
 image: assets/blog-images/real_time_retail/RealTimeRetailTitle.jpg
 featured: false
 hidden: false
-teaser: Discover how real-time data architecture can revolutionize retail operations, from customer engagement to dynamic pricing and inventory management.
+teaser: "What real-time data does for retail, from inventory visibility and omnichannel to dynamic pricing and fulfilment speed, and the architecture behind it."
 toc: true
 ---
 

@@ -13,6 +13,7 @@ ctas:
     url: "/contact/"
 
 toc: true
+teaser: "Step-by-step Oracle CDC with Debezium and LogMiner on Confluent Platform: archive logs, supplemental logging, connector configuration and validation."
 ---
 
 # Introduction

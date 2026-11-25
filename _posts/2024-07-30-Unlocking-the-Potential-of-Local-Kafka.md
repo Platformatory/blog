@@ -2,7 +2,7 @@
 layout: post
 title:  "Unlocking The Potential of Local Kafka"
 categories: [Kafka, Local Development, Docker]
-teaser: Unlock the full potential of local Kafka setups for rapid development, testing, and seamless management and discover the best method for your local kafka setup.
+teaser: "Why run Kafka locally, the ways to do it, and using the Confluent Platform sandbox for development and testing."
 authors: Subramanya
 featured: false
 hidden: false
