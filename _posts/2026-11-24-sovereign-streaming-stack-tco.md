@@ -18,6 +18,8 @@ description: 'Kafka TCO compared: when self-hosting Kafka on Kubernetes beats ma
 toc: true
 ---
 
+At Current 2026 in San Francisco on 5 November, I gave a lightning talk on running a sovereign streaming cloud yourself, on BYOC or plain Kubernetes.[^current]  Its premise was price: on-premises hardware and the long tail of cloud providers are still the cheapest tier per GB/s streamed, by an order of magnitude or more against some hyperscalers. Here is the arithmetic behind that.
+
 You already run Kafka yourself. Maybe it's upstream Kafka on VMs, Strimzi on Kubernetes, Cloudera's streaming stack in your data centre or Confluent Platform under licence. Every renewal cycle, someone proposes moving it to a managed service and getting out of the operations business.
 
 Run the numbers before you agree. At 2 GB/s of writes with a week of retention, Confluent Cloud's list prices come to about $870,000 a month for Kafka alone. Nobody at that scale pays list. But to match what the same workload costs you to run on AWS, the discount has to reach 62%, or 73% once you count the PrivateLink charges private access adds to your own AWS bill, and on Azure or Oracle Cloud it has to be about 95%.   The question worth answering is when running your own stack wins, by how much, and when you should stop.
@@ -299,6 +301,7 @@ Don't, or not yet, when:
 
 We run self-hosted Kafka and Flink for customers as a managed service, sell Kafka support per production cluster and build [Streamtime](https://streamtime.ai/), a private cloud for streaming, so we have a stake in where the line sits.
 
+[^current]: [Current 2026 San Francisco: Towards a sovereign streaming cloud](https://current.confluent.io/san-francisco/sessions#session-SESS-185), lightning talk, 5 November 2026.
 [^ccloud]: [Confluent Cloud pricing](https://www.confluent.io/confluent-cloud/pricing/), list prices, read November 2026; ranges vary by cloud and region.
 [^aws-xaz]: AWS EC2 data transfer pricing; corroborated in [Why your Kafka bill is mostly network](https://dev.to/devopsdaily/why-your-kafka-bill-is-mostly-network-30a3).
 [^gcp-net]: [Google Cloud: all networking pricing](https://cloud.google.com/vpc/network-pricing).
