@@ -46,7 +46,7 @@ The SQL is single-table. Key lookups, filters, `ORDER BY` and `LIMIT` work; join
 **The rest of the year.** The pattern holds:
 
 - **Forecasts and anomalies that trigger an agent** to restock or escalate:[^q3] complex event processing with an alert that runs a runbook.
-- **Share groups for agent tasks:** a work queue. Useful, with two caveats: no per-partition ordering, and no dead-letter queue until KIP-1191 lands.[^share]
+- **Share groups for agent tasks:** a work queue, and a weak one for the jobs agents hand each other (below).[^share]
 - **AI gateways and agent data planes:** an API gateway and an identity provider. Redpanda's version issues short-lived, agent-bound tokens and logs every agent interaction for replay, which points at a real problem picked up below.[^redpanda]
 - **Agent action logs:** event sourcing.
 - **Managed MCP servers and agent skills for coding assistants:** developer tooling, welcome and unrelated to streaming.
@@ -61,6 +61,15 @@ The SQL is single-table. Key lookups, filters, `ORDER BY` and `LIMIT` work; join
 | AI gateway, agentic data plane | An API gateway and an identity provider |
 | Agent action log | Event sourcing |
 | Diskless, streamhouse | Storage cost architecture |
+
+*Updated 24 November 2026: share groups and agent-to-agent traffic.* Kafka as the transport between agents has been pitched since Confluent's April 2025 case that Agent2Agent needs it: one event backbone, where agents publish what they know and subscribe to what they need.[^a2a-kafka]  For the jobs agents hand each other, the fit is poor, share groups included.
+
+- **Exclusive jobs.** Share groups do track each record. A consumer acquires it under a lock, 30 seconds by default, then accepts, releases or rejects it, and the broker counts deliveries.[^kip932] An agent task that outlives the lock goes back to the pool and is handed out again unless the consumer keeps renewing it,[^kip1222] and after five attempts the record is archived, out of the queue, with no dead-letter queue until KIP-1191, accepted but not yet released, ships.[^kip1191]
+- **Head-of-line blocking.** Each partition has a capped window of records in flight. Once it fills, fetches return nothing until acquired records are settled, so a few slow jobs hold up the fast ones behind them.[^kip932]
+- **Selective fan-out.** Neither consumer groups nor share groups filter. Every member sees the whole topic, so routing work to the agents that can handle it takes a topic per audience or filtering in the client.
+- **Foreign parties.** A Kafka client talks to each partition's leader directly, so every broker has to be reachable by every client. Exposing that beyond a private network takes a Kafka-aware proxy that routes by SNI, a private endpoint per broker, or an HTTP front end, and each puts a gateway at the edge that speaks some other protocol anyway.
+
+Share groups suit what the Kafka project itself recommends them for, records processed one at a time:[^kafka42] short, idempotent work fanned out from a topic you already have. Agent-to-agent calls across a boundary belong on A2A over HTTP, with a job queue or a durable workflow engine behind them. Kafka earns its place behind that boundary, as the log every agent's actions and outputs are recorded to.
 
 ## Five things agents genuinely change in streaming
 
@@ -83,6 +92,12 @@ A topic that spikes tenfold multiplies the bill tenfold. Which events earn a mod
 **Threat response at machine speed.** Kafka in front of the SIEM is an old idea: security data pipelines that route, cut and enrich logs before indexing built a business out of it, with Cribl alone reported past \$200 million in annual recurring revenue.[^cribl]  The adversary is what changed. In the espionage campaign Anthropic disrupted in late 2025, AI performed 80 to 90% of the work, at peak making thousands of requests, often several a second.[^anthropic]  Response measured in hours stops being good enough against that, and detection is moving into the pipeline: SOC Prime's DetectFlow runs Sigma rules with Flink on live Kafka streams, before the data reaches the SIEM.[^detectflow]  The layers are network flows, DNS, identity and endpoint signals, far more than observability telemetry, and the cost equation above rules out sending all of it to a model. The shape that works is tiered: cheap rules and models on every record, and an agent triaging the small residue that's left.
 
 That makes Kafka and Flink necessary infrastructure where detection fans out to several detectors, correlates signals across layers, or needs to replay history against a new rule. The usual objection is that a broker is one more hop before detection. That stops holding when the broker runs next to the workload, which is a story for another day.
+
+*Updated 24 November 2026: runtime shielding.* Response is moving onto the host too. Shirudo, an open-source Linux runtime from Cisco and OpenAI released on 23 November 2026 and still pre-release, lets an agent write a small eBPF program, or a bytecode check inside a running JVM, that blocks a vulnerable code path until the real patch lands. Its launch demonstration blocked a Java4Shell exploit against a running Elasticsearch without a restart.[^shirudo]  Delivery stays with the operator: shields are signed with the operator's own key, served from its own registry and pulled by every host about once a minute by default, and a shield copied in by hand loads offline.[^shirudo-docs]
+
+It's fantastic technology, and still speculative. The dependence it adds is on the frontier model that writes the shield, since the runtime "does not judge what a upatch does":[^shirudo-docs] an operator approving one vouches for kernel code a model wrote against a disclosure that may be hours old. The failure it invites is on record. On 19 July 2024, a CrowdStrike content update, configuration data delivered from the cloud and interpreted by its kernel driver, hit an estimated 8.5 million Windows machines, and the fixes that followed were staged rollout rings and customer control over each update.[^crowdstrike]  BGP and DNS taught the same lesson at internet scale: the systems every host trusts automatically have caused some of the largest outages.[^bgp-dns]  Expect shields to join them unless they move through rings like any other change.
+
+Keeping attackers out still comes first. Where a workload can tolerate it, ring-fence it with an air-gap, and treat shields as a stopgap inside the fence for the code paths an insider or a poisoned update can still reach. Shirudo runs offline, so the two compose.
 
 **Continual learning from agent traces.** Online learning on Kafka and Flink is established practice. ByteDance's Monolith logged user actions to Kafka, joined features in Flink and updated model parameters as the data arrived, back in 2022.[^monolith]  Continual learning for agents mostly changes prompts, retrieval, memory, tools and routing, and only sometimes weights, in a governed loop from production traces.[^arize]
 
@@ -110,7 +125,7 @@ The recorded model outputs that make replay honest are the same records this loo
 
 Ranking both piles by what they're worth and what they cost changes the reading order. The scores are my own assessment, from 1 to 5, for a team already running Kafka and Flink. Value is the upside if it works: revenue, risk avoided, quality, money saved. Cost is what it takes to adopt and run: new spend, operations, people and tokens.
 
-![Thirteen opportunities plotted by business value against cost to adopt, each from 1 to 5. High value at low cost: the action log (value 4, cost 1.3), record and replay of model outputs (4.2, 2), budget backpressure (3.6, 1.8) and share groups (3, 1). High value at high cost: threat response (5, 4.5), continual learning (4.5, 3.6), the delegated principal (4.2, 3.4) and, near the line, diskless storage (3.7, 2.8). Low value for their cost: context engines (2, 3) and Streaming and Flink Agents (2, 4). New items are orange triangles, familiar patterns grey circles.](../assets/blog-images/agentic-ai-streaming-use-cases/value-vs-cost.svg)
+![Thirteen opportunities plotted by business value against cost to adopt, each from 1 to 5. High value at low cost: the action log (value 4, cost 1.3), record and replay of model outputs (4.2, 2), and budget backpressure (3.6, 1.8). High value at high cost: threat response (5, 4.5), continual learning (4.5, 3.6), the delegated principal (4.2, 3.4) and, near the line, diskless storage (3.7, 2.8). Low value for their cost: context engines (2, 3) and Streaming and Flink Agents (2, 4). Share groups for agent tasks are cheap and of low value (2, 1). New items are orange triangles, familiar patterns grey circles.](../assets/blog-images/agentic-ai-streaming-use-cases/value-vs-cost.svg)
 *My assessment, scored 1 to 5, November 2026.*
 
 | Opportunity | Pile | Value | Cost | Why |
@@ -122,7 +137,7 @@ Ranking both piles by what they're worth and what they cost changes the reading 
 | Agent action log | Old | 4 | 1.3 | Audit, evals and replay start here, on a topic you already have |
 | Diskless storage | Old | 3.7 | 2.8 | A real saving on cross-zone traffic; a migration, and no upstream release yet |
 | Budget backpressure | New | 3.6 | 1.8 | Its value is the bill it cuts; mostly a policy layer |
-| Share groups for agent tasks | Old | 3 | 1 | Free from Kafka 4.2; no ordering or dead-letter queue yet |
+| Share groups for agent tasks | Old | 2 | 1 | Free from Kafka 4.2; lock timeouts, no dead-letter queue and no filters make a poor job queue for agents |
 | AI gateway, agent data plane | Old | 3 | 2.5 | Governance is needed anyway; buying beats building |
 | Forecast or anomaly triggers an agent | Old | 2.8 | 2 | Cheap complex event processing; the agent adds little over a runbook |
 | Context engines | Old | 2 | 3 | New managed spend, Flink still upstream, single-table queries |
@@ -139,7 +154,7 @@ As of November 2026, the choice follows where the data is born and what the agen
 - **The agent needs joins and aggregates over live data:** a streaming database (Materialize, RisingWave, Feldera) or Flink writing into a database you already run.
 - **The context lives in systems of record** (the CRM record, the contract, the ticket): MCP on the source or a read replica, or change data capture into a store you operate. A stream adds a copy without adding freshness the agent can use.
 - **The agent needs crash-safety, long waits and retries:** a durable execution engine (Temporal, Restate, DBOS) handles model calls as side effects more naturally than an agent inside a stream operator.
-- **Agent tasks need dispatching:** share groups, if you're on Kafka 4.2 or later and can live without ordering and a dead-letter queue for now.
+- **Agent tasks need dispatching:** a job queue or a durable execution engine; share groups only for short, idempotent work on Kafka 4.2 or later.
 - **Agents need an action log:** a topic you already have, with model outputs recorded so the log replays.
 - **Security:** Kafka and Flink where detection fans out, correlates or replays; filtering at the sensor everywhere else.
 - **Continual learning:** Kafka carries traces and joins labels, and Iceberg keeps what the models learn from.
@@ -148,7 +163,16 @@ These piles would shift if the products changed. A serving layer that joins and 
 
 [^kip1150]: [Diskless Kafka: what happens when brokers stop owning the data?](https://softwaremill.com/diskless-kafka-object-storage-kip-1150-and-kafkas-future/), SoftwareMill; [Data streaming trends Q3 2026](https://www.kai-waehner.de/blog/2026/09/21/data-streaming-trends-q3-2026-what-changes-through-2027/), Kai Waehner, 21 September 2026.
 [^ursa]: [StreamNative introduces Lakestream architecture and launches native Kafka service](https://www.businesswire.com/news/home/20260407143701/en/StreamNative-Introduces-Lakestream-Architecture-and-Launches-Native-Kafka-Service-Unifying-Streaming-and-the-Lakehouse), Business Wire, 7 April 2026.
-[^share]: [Kafka share groups](https://thoughtworks.com/radar/platforms/kafka-share-groups), Thoughtworks Technology Radar, 4 November 2026.
+[^shirudo]: OpenAI, [Introducing Shirudo](https://openai.com/index/introducing-shirudo/), 23 November 2026; Cisco, [Expanding the defender's window with self-defending infrastructure](https://blogs.cisco.com/news/expanding-the-defenders-window-with-self-defending-infrastructure), 23 November 2026.
+[^shirudo-docs]: [Shirudo documentation](https://docs.shirudo.dev/start/what-is-shirudo.html) and [repository](https://github.com/shirudo-dev/shirudo), pre-release (0.0.0-dev), read November 2026; it requires a patched bpf-next kernel and a TPM 2.0.
+[^crowdstrike]: CrowdStrike, [Channel File 291 Incident: External Technical Root Cause Analysis](https://www.crowdstrike.com/wp-content/uploads/2024/08/Channel-File-291-Incident-Root-Cause-Analysis-08.06.2024.pdf), 6 August 2024; Microsoft, [Helping our customers through the CrowdStrike outage](https://blogs.microsoft.com/blog/2024/07/20/helping-our-customers-through-the-crowdstrike-outage/), 20 July 2024.
+[^bgp-dns]: Meta, [More details about the October 4 outage](https://engineering.fb.com/2021/10/05/networking-traffic/outage-details/), 5 October 2021 (a backbone command, then DNS servers withdrawing their BGP advertisements); AWS, [Summary of the Amazon DynamoDB service disruption in US-EAST-1](https://aws.amazon.com/message/101925/), October 2025 (an empty DNS record from DynamoDB's DNS automation).
+[^share]: [Kafka share groups](https://thoughtworks.com/radar/platforms/kafka-share-groups), Thoughtworks Technology Radar, 4 November 2026; [Apache Kafka 4.2 upgrade notes](https://kafka.apache.org/42/getting-started/upgrade/): "production-ready in Apache Kafka 4.2".
+[^a2a-kafka]: Sean Falconer, [Why Google's Agent2Agent protocol needs Apache Kafka](https://www.confluent.io/blog/google-agent2agent-protocol-needs-kafka/), Confluent, 28 April 2025.
+[^kip932]: [KIP-932: Queues for Kafka](https://cwiki.apache.org/confluence/display/KAFKA/KIP-932%3A+Queues+for+Kafka): acquisition locks, delivery counts, a delivery attempt limit of 5 by default and a cap on in-flight records per share-partition; the lock default is `share.record.lock.duration.ms`, 30,000 ms, in the [Kafka 4.2 group configs](https://kafka.apache.org/42/configuration/group-configs/).
+[^kip1222]: [KIP-1222: Acquisition lock timeout renewal in share consumer explicit mode](https://cwiki.apache.org/confluence/display/KAFKA/KIP-1222:+Acquisition+lock+timeout+renewal+in+share+consumer+explicit+mode).
+[^kip1191]: [KIP-1191: Dead-letter queues for share groups](https://cwiki.apache.org/confluence/display/KAFKA/KIP-1191%3A+Dead-letter+queues+for+share+groups), accepted.
+[^kafka42]: [Apache Kafka 4.2 upgrade notes](https://kafka.apache.org/42/getting-started/upgrade/): "Use share groups in cases where records are processed one at a time, rather than as part of an ordered stream."
 [^streamhouse]: [Confluent introduces its Streamhouse architecture](https://newsroom.ibm.com/2026-11-04-confluent-introduces-its-streamhouse-architecture-to-power-ai-with-real-time-business-context), IBM Newsroom, 4 November 2026. Performance figures are Confluent's internal testing.
 [^lt]: [Lightning Tables in Confluent Cloud](https://docs.confluent.io/cloud/current/lightning-tables/overview.html), Confluent documentation, updated 16 November 2026.
 [^rtce]: [Query a Lightning Table with MCP](https://docs.confluent.io/cloud/current/ai/real-time-context-engine/query-data.html), Confluent documentation.

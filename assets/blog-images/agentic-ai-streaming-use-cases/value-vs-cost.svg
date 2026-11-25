@@ -23,7 +23,7 @@
       <text x="712" y="460" text-anchor="end">Avoid unless event-born</text>
     </g>
     <g fill="#868e96" stroke="#ffffff" stroke-width="2">
-      <circle cx="425" cy="372" r="7"/><circle cx="559" cy="372" r="7"/><circle cx="291" cy="294" r="7"/><circle cx="157" cy="275" r="7"/>
+      <circle cx="425" cy="372" r="7"/><circle cx="559" cy="372" r="7"/><circle cx="291" cy="294" r="7"/><circle cx="157" cy="372" r="7"/>
       <circle cx="358" cy="270" r="7"/><circle cx="197" cy="177" r="7"/><circle cx="157" cy="421" r="7"/><circle cx="398" cy="206" r="7"/>
     </g>
     <g fill="#d9480f" stroke="#ffffff" stroke-width="2">
@@ -34,7 +34,7 @@
       <text x="437" y="377">Context engines</text>
       <text x="559" y="398" text-anchor="middle">Streaming and Flink Agents</text>
       <text x="303" y="299">Forecast triggers agent</text>
-      <text x="169" y="280">Share groups</text>
+      <text x="169" y="377">Share groups</text>
       <text x="370" y="262">AI gateway</text>
       <text x="209" y="182">Action log</text>
       <text x="169" y="426">MCP tooling</text>
