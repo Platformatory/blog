@@ -3,26 +3,61 @@ layout: null
 permalink: /llms.txt
 sitemap: false
 ---
+{%- comment -%} Generated at build time. Brand text and topics: _data/llms.yml {%- endcomment -%}
+{%- assign L = site.data.llms -%}
 {%- assign base = site.url | append: site.baseurl -%}
-{%- assign listed = site.posts | where_exp: "p", "p.hidden != true" -%}
-{%- assign archived = site.posts | where_exp: "p", "p.hidden == true" -%}
+{%- assign posts = site.posts | where_exp: "p", "p.title" -%}
+{%- assign featured = posts | where_exp: "p", "p.featured == true" | sort: "weight" | reverse -%}
+{%- assign mapped = "" | split: "," -%}
+{%- for t in L.topics -%}{%- assign mapped = mapped | concat: t.categories -%}{%- endfor -%}
 # {{ site.title }}
 
-> {{ site.description }} from [{{ site.organization.name }}]({{ site.organization.url }}): essays and hands-on guides on platform engineering, data streaming (Kafka, Flink, CDC), data infrastructure, SRE and applied AI.
+> {{ L.summary }}
 
-- Every post is HTML at its URL below; the full text of current posts is in [llms-full.txt]({{ base }}/llms-full.txt).
-- Feeds: [RSS]({{ base }}/feed.xml), [sitemap]({{ base }}/sitemap.xml).
-- Posts are listed newest first under their primary category.
-{% assign groups = listed | group_by_exp: "p", "p.categories | first" %}
-{%- for g in groups %}
+{{ site.title }} publishes {{ posts.size }} posts ({{ posts.last.date | date: "%Y" }}–{{ posts.first.date | date: "%Y" }}), newest {{ posts.first.date | date: "%Y-%m-%d" }}. Full text of every post: [llms-full.txt]({{ base }}/llms-full.txt). Feeds: [RSS]({{ base }}/feed.xml), [sitemap]({{ base }}/sitemap.xml).
 
-## {{ g.name | default: "General" }}
-{% for p in g.items %}
-- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip | truncate: 220 }} ({{ p.date | date: "%Y-%m-%d" }})
+Point of view:
+{% for v in L.point_of_view %}
+- {{ v }}
 {%- endfor %}
+
+Notes for agents:
+{% for n in L.notes %}
+- {{ n }}
 {%- endfor %}
+
+## Start here
+{% for p in featured %}
+- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip }} ({{ p.date | date: "%Y-%m-%d" }})
+{%- endfor %}
+{% for t in L.topics %}
+{%- capture items -%}
+{%- for p in posts -%}{%- assign pc = p.categories | first -%}{%- if t.categories contains pc %}
+- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip }} ({{ p.date | date: "%Y-%m-%d" }})
+{%- endif -%}{%- endfor -%}
+{%- endcapture -%}
+{%- if items != "" %}
+
+## {{ t.name }}
+{{ items }}
+{%- endif -%}
+{%- endfor -%}
+{%- capture more -%}
+{%- for p in posts -%}{%- assign pc = p.categories | first -%}{%- unless mapped contains pc %}
+- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip }} ({{ p.date | date: "%Y-%m-%d" }})
+{%- endunless -%}{%- endfor -%}
+{%- endcapture -%}
+{%- if more != "" %}
+
+## More
+{{ more }}
+{%- endif %}
+
+## Authors
+{% for a in site.authors %}{% assign key = a[0] %}{% assign n = 0 %}{% for p in posts %}{% assign keys = p.authors | default: p.author | split: "," %}{% for k in keys %}{% assign ks = k | strip %}{% if ks == key %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}{% endfor %}{% if n > 0 %}
+- {{ a[1].display_name }} ({{ n }} post{% if n > 1 %}s{% endif %}): {{ a[1].description | strip }}{% endif %}{% endfor %}
 
 ## Optional
-{% for p in archived %}
-- [{{ p.title | strip_html | strip }}]({{ base }}{{ p.url }}): {{ p.teaser | default: p.description | default: p.excerpt | strip_html | strip_newlines | strip | truncate: 220 }} ({{ p.date | date: "%Y-%m-%d" }})
+{% for c in L.company %}
+- [{{ c.title }}]({{ c.url }}): {{ c.desc }}
 {%- endfor %}

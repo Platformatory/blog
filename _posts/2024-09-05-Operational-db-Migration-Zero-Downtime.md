@@ -6,7 +6,7 @@ categories: [Migration, CDC, Kafka Connect, Debezium, Kafka]
 image: assets/blog-images/operational_db_migration/ops-db-migration.png
 featured: false
 hidden: false
-teaser: Operational DB Migrations with Zero Downtime
+teaser: "Migrating SQL Server to MySQL with zero downtime using Debezium CDC, Kafka Connect and single message transforms to keep both databases in sync until cutover."
 toc: true
 ---
 

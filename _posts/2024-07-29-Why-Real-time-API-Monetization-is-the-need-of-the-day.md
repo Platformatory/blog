@@ -6,7 +6,7 @@ categories: [API Management, SaaS, Real-time, Cost]
 image: assets/blog-images/apinomy_blog/ApinomyBlogTitle.webp
 featured: false
 hidden: false
-teaser: A guide to evolving new revenue streams in SaaS and beyond.
+teaser: "APIs have become products. How usage-based billing, metering and federated API management turn APIs and data into revenue."
 toc: true
 ---
 

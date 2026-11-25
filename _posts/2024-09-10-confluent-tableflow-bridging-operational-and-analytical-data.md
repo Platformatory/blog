@@ -2,7 +2,7 @@
 layout: post
 title:  "Confluent Tableflow: Bridging Operational and Analytical Data"
 categories: [Confluent Cloud, Data Engineering, Lakehouse, Kafka]
-teaser: Unlock seamless data integration with Confluent Tableflow and Apache Iceberg. Bridge the gap between operational and analytical data effortlessly, ensuring real-time insights and efficiency.
+teaser: "Confluent Tableflow materialises Kafka topics as Apache Iceberg tables on object storage, closing the gap between operational and analytical data."
 authors: Sathishkumar
 featured: false
 hidden: true

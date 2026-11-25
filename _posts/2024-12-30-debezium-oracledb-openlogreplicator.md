@@ -13,6 +13,7 @@ ctas:
     url: "/contact/"
 
 toc: true
+teaser: "Step-by-step Oracle CDC with Debezium and OpenLogReplicator on Confluent Platform, reading redo logs directly instead of through LogMiner."
 ---
 
 # Introduction

@@ -2,7 +2,7 @@
 layout: post
 title:  "Understanding Redpanda Connect / Benthos"
 categories: [Redpanda, Stream Processing, Redpanda Connect]
-teaser: Learn how Redpanda Connect, formerly Benthos, simplifies real-time data streaming and processing. This blog covers its key features, practical use cases, and a comparison to Kafka Connect. Dive in to see how it can streamline your data workflows.
+teaser: "Redpanda Connect, formerly Benthos: components, how pipelines run, use cases, and how it compares with Kafka Connect."
 authors: Subramanya
 featured: false
 hidden: false

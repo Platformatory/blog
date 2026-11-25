@@ -1,35 +1,24 @@
 ---
 layout: page
-title: Mediumish Template for Jekyll
+title: About
 permalink: /about
-comments: true
+description: "The Write Ahead Log is Platformatory's engineering journal on platform engineering, data streaming, data infrastructure, SRE and applied AI."
 ---
 
-<div class="row justify-content-between">
-<div class="col-md-8 pr-5">
+**The Write Ahead Log** is the engineering journal of [Platformatory]({{ site.organization.url }}). It covers what we build and run for clients: platform engineering, Kafka and stream processing, change data capture, data infrastructure, SRE and applied AI.
 
-<p>This website is built with Jekyll and Mediumish template for Jekyll. It's for demonstration purposes, no real content can be found. Mediumish template for Jekyll is compatible with Github pages, in fact even this demo is created with Github Pages and hosted with Github.</p>
+## Topics
 
-<p class="mb-5"><img class="shadow-lg" src="{{site.baseurl}}/assets/images/mediumish-jekyll-template.png" alt="jekyll template mediumish" /></p>
-<h4>Documentation</h4>
+{% assign cats = site.categories | sort %}
+{% for c in cats %}{% if c[1].size > 1 %}[{{ c[0] }}]({{ site.baseurl }}/category/{{ c[0] | slugify }}/) ({{ c[1].size }}){% unless forloop.last %} · {% endunless %}{% endif %}{% endfor %}
 
-<p>Please, read the docs <a href="https://bootstrapstarter.com/bootstrap-templates/template-mediumish-bootstrap-jekyll/">here</a>.</p>
+## Authors
 
-<h4>Questions or bug reports?</h4>
+{% for a in site.authors %}{% assign key = a[0] %}{% assign n = 0 %}{% for p in site.posts %}{% assign keys = p.authors | default: p.author | split: "," %}{% for k in keys %}{% assign ks = k | strip %}{% if ks == key %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}{% endfor %}{% if n > 0 %}
+- **{{ a[1].display_name }}**: {{ a[1].description }}{% endif %}{% endfor %}
 
-<p>Head over to our <a href="https://github.com/wowthemesnet/mediumish-theme-jekyll">Github repository</a>!</p>
+## Follow
 
-</div>
-
-<div class="col-md-4">
-
-<div class="sticky-top sticky-top-80">
-<h5>Buy me a coffee</h5>
-
-<p>Thank you for your support! Your donation helps me to maintain and improve <a target="_blank" href="https://github.com/wowthemesnet/mediumish-theme-jekyll">Mediumish <i class="fab fa-github"></i></a>.</p>
-
-<a target="_blank" href="https://www.wowthemes.net/donate/" class="btn btn-danger">Buy me a coffee</a> <a target="_blank" href="https://bootstrapstarter.com/bootstrap-templates/template-mediumish-bootstrap-jekyll/" class="btn btn-warning">Documentation</a>
-
-</div>
-</div>
-</div>
+- [RSS feed]({{ site.baseurl }}/feed.xml)
+- [llms.txt]({{ site.baseurl }}/llms.txt) for AI agents, with [full text]({{ site.baseurl }}/llms-full.txt)
+- [Twitter](https://twitter.com/{{ site.twitter.username }}) · [GitHub](https://github.com/platformatory)

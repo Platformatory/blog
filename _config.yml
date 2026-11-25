@@ -60,7 +60,7 @@ authors:
     email: ashwin@platformatory.io
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
-    description: "Platform Engineer at Platformatory specialzing in streaming; Ashwin has previously dabbled in data science, machine learning and predicting box office success for Tollywood movies"
+    description: "Platform Engineer at Platformatory specializing in streaming; Ashwin has previously dabbled in data science, machine learning and predicting box office success for Tollywood movies"
   venkatesh:
     name: venkatesh
     display_name: Venkatesh Keshavamurthy
@@ -123,7 +123,7 @@ authors:
       email: subramanya@platformatory.io
       web: https://www.platformatory.io
       twitter: https://twitter.com/platformatory
-      description: "Devops Engineer at Platformatory specializing in Site Reliability Engineeing and Infrastructure."
+      description: "Devops Engineer at Platformatory specializing in Site Reliability Engineering and Infrastructure."
   Vikhyat:
       name: Vikhyat Shetty
       display_name: Vikhyat Shetty
@@ -141,7 +141,7 @@ authors:
     email: zeenia@platformatory.com
     web: https://www.platformatory.io
     twitter: https://twitter.com/platformatory
-    description: "DevOps engineer at Platformatory specializing in Site Reliability Engineeing (SRE) and Infrastructure. The role involves managing the infrastructre and make sure the cluster are working fine."
+    description: "DevOps engineer at Platformatory specializing in Site Reliability Engineering (SRE) and Infrastructure. The role involves managing the infrastructure and keeping clusters healthy."
   ShriVeena:
     name: Shri Veena M P
     display_name: Shri Veena M P

@@ -1,10 +1,10 @@
-﻿---
+---
 layout: post
 title: "Monitoring: How to monitor AWS MSK Cluster"
 author: Zeenia
 categories: [Kafka, Observability, AWS MSK]
 image: assets/blog-images/msk_monitoring/Prometheu.png
-teaser: Monitoring, How to monitor AWS MSK Cluster
+teaser: "Monitoring an Amazon MSK cluster with Prometheus and Grafana instead of CloudWatch: open monitoring, scrape configuration, networking and dashboards."
 featured: false
 hidden: false
 toc: true

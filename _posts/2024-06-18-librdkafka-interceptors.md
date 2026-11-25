@@ -5,7 +5,7 @@ authors: avinash
 categories: [Kafka, Kafka Clients, Observability]
 image: assets/blog-images/librdkafka_interceptors/KafkaInterceptors.png
 featured: false
-teaser: Building Kafka interceptors for librdkafka clients
+teaser: "Writing producer and consumer interceptors for librdkafka clients in C, for observability, auditing and light transformation without touching application code."
 toc: true
 ---
 

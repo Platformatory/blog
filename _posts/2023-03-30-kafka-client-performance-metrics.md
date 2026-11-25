@@ -4,7 +4,7 @@ title: "The Kafka benchmarking suite"
 categories: [Kafka, Performance, Observability, Kubernetes]
 featured: false
 image: assets/blog-images/kafka-perf-suite/kafka-benchmark-metrics-featured.png
-teaser: "Distributed testing grid for Kafka on top of Kubernetes"
+teaser: "Benchmarking Kafka for throughput and end-to-end latency with OpenMessaging, Trogdor, JMeter and the Kafka perf tools, then scaling the test grid on Kubernetes."
 authors: badri,p6
 toc: true   
 ---

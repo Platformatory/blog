@@ -140,7 +140,7 @@ post_class: post-template
         {% if page.categories.size > 0 %}
         <div class="ss-pills ss-pills-inline">
             {% for category in page.categories limit: 5 %}
-            <a href="{{ site.baseurl }}/categories#{{ category | replace: ' ', '-' }}">{{ category }}</a>
+            <a href="{{ site.baseurl }}/category/{{ category | slugify }}/">{{ category }}</a>
             {% endfor %}
         </div>
         {% endif %}
@@ -213,7 +213,7 @@ post_class: post-template
                 <p class="ss-rail-label">Topics</p>
                 <div class="ss-pills ss-pills-rail">
                     {% for category in page.categories limit: 5 %}
-                    <a href="{{ site.baseurl }}/categories#{{ category | replace: ' ', '-' }}">{{ category }}</a>
+                    <a href="{{ site.baseurl }}/category/{{ category | slugify }}/">{{ category }}</a>
                     {% endfor %}
                 </div>
             </div>

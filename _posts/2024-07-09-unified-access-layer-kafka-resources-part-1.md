@@ -6,7 +6,7 @@ categories: [Kafka, Unified Access Layer, Platform Engineering, Infrastructure]
 image: assets/blog-images/unified_access_layer/unified_access_layer_1.png
 featured: false
 hidden: false
-teaser: Unified access layer for Kafka resources, Part 1
+teaser: "Four ways to decouple Kafka clients from clusters and topics: SDK-side routing, a service mesh, a Kafka gateway, or a data catalog with self-service."
 toc: true
 ---
 

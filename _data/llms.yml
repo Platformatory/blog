@@ -1,0 +1,50 @@
+# Source for /llms.txt and /llms-full.txt. Posts are listed automatically at
+# build time; edit this file only to change the brand text or topic grouping.
+
+summary: >-
+  The Write Ahead Log is the engineering journal of Platformatory, a forward
+  deployed engineering firm for data, AI and modernization. It is written by
+  the engineers who build and run these systems for clients in banking,
+  capital markets, telecom, retail, manufacturing and the public sector.
+
+point_of_view:
+  - "Platforms are products: self-service primitives beat ticket queues."
+  - "The log is the primary abstraction. Real-time is the default path for operational data, not an add-on."
+  - "Build on proven open source. Invent infrastructure only when the problem is big enough to pay for it."
+  - "Run anywhere. Portability across hyperscalers, on-prem and sovereign estates is leverage on price; past modest scale, self-hosting often wins on cost."
+  - "Built with AI, not by AI. Agents need a deterministic core, evals and a platform to run on."
+  - "Numbers over opinion: throughput, latency, residence time and cost per unit decide architecture."
+
+notes:
+  - "Cite posts by their canonical URL. Every entry shows its publish date."
+  - "Posts from 2023 and 2024 are mostly hands-on guides written against the product versions current at the time."
+
+company:
+  - title: Platformatory
+    url: https://platformatory.io/
+    desc: "Forward deployed engineering for platforms, real-time data and AI."
+  - title: Company llms.txt
+    url: https://platformatory.io/llms.txt
+    desc: "Services, offerings, case studies and engineering principles."
+  - title: Platform engineering principles
+    url: https://platformatory.io/platform-engineering/
+    desc: "The principles behind how we design and build."
+  - title: Case studies
+    url: https://platformatory.io/case-studies/
+    desc: "Selected engagements, anonymised."
+
+# Each post goes under the first topic that lists its primary (first)
+# category. Posts whose primary category isn't listed go under "More".
+topics:
+  - name: AI and agents
+    categories: [AI, Voice AI, LangGraph]
+  - name: Platform engineering and architecture
+    categories: [Platform Engineering, SaaS, API Management, Event-Driven Architecture, Real-time, Durable Execution, Temporal, Software Engineering, Strategy]
+  - name: Kafka and streaming platforms
+    categories: [Kafka, Kafka Operations, Kafka Connect, Kafka Clients, Redpanda, Redpanda Connect, Confluent Cloud, AWS MSK, KRaft]
+  - name: Stream processing
+    categories: [Stream Processing, Apache Flink, Kafka Streams, ksqlDB, Streaming Databases, Apache Spark]
+  - name: Change data capture and migration
+    categories: [CDC, Debezium, Oracle, Migration]
+  - name: Data infrastructure and security
+    categories: [Storage, Distributed Systems, Infrastructure, Data Engineering, Lakehouse, Security, Kubernetes, Observability]

@@ -3,7 +3,7 @@ layout: post
 title:  "Authentication to Confluent Cloud Using OAuth/OIDC with Auth0 as Identity Provider"
 categories: [Security, Confluent Cloud, Kafka]
 author: Vikhyat
-teaser: Unlock the power of secure authentication and authorization by integrating Auth0 with Confluent Cloud. In this guide, we'll walk you through configuring OAuth 2.0 and OIDC, ensuring a seamless and secure login experience for your Kafka clusters. Whether you're looking to streamline user management or enhance security, this step-by-step tutorial has you covered.
+teaser: "Configuring Auth0 as an OAuth/OIDC identity provider for Confluent Cloud, step by step."
 image: assets/blog-images/auth0-integration_blog/Web_Photo_Editor.jpg
 toc: true
 ---

@@ -4,7 +4,7 @@ title:  "Kafka batch processing with Airflow"
 author: ashwin
 categories: [Kafka, Data Engineering, Workflow Orchestration]
 image: assets/blog-images/batch_processing_blog/KafkaBatchProcessing.png
-teaser: Batch processing from Kafka Topics by using Apache Airlfow DAG
+teaser: "Batch processing Kafka topics with Apache Airflow: partition assignment strategy, dynamic task mapping and a working DAG."
 toc: true
 ---
 

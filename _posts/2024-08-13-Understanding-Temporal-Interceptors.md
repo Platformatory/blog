@@ -2,7 +2,7 @@
 layout: post
 title:  "Understanding Temporal Interceptors: Enhancing Workflow Management"
 categories: [Durable Execution, Temporal]
-teaser: Boost Your Temporal Workflows with Interceptors - Dive into how you can leverage Temporal Interceptors to inject custom logic into your workflows and activities, enhancing control flow, and adding a new layer of flexibility to your distributed systems.
+teaser: "Temporal interceptors in the Python SDK: the types, how they wrap workflows and activities, and using them to track workflow status without touching workflow code."
 authors: Subramanya
 featured: false
 hidden: false

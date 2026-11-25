@@ -6,7 +6,7 @@ categories: [Kafka, Kafka Streams, API Management, Platform Engineering]
 image: assets/blog-images/streams-push-gateway/streams-push-gateway-architecture.png
 featured: false
 hidden: false
-teaser: Kafka Streams Push Gateway
+teaser: "Pushing real-time order status to customers: CDC into Kafka, Kafka Streams for filtering, and a push gateway that holds client connections."
 toc: true
 ---
 

@@ -6,7 +6,7 @@ categories: [SaaS, Platform Engineering, API Management]
 image: assets/blog-images/mainfesto.jpg
 featured: false
 hidden: false
-teaser: An architecture primer for SaaS upstarts.
+teaser: "Architecture principles for early SaaS: treat everything as a tenancy problem, build on platform primitives, support BYOC and design for an ecosystem."
 toc: true
 ---
 

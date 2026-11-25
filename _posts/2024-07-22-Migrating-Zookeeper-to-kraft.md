@@ -2,7 +2,7 @@
 layout: post
 title:  "Migrating Zookeeper to Kraft"
 categories: [Kafka, Migration, KRaft, Kafka Operations]
-teaser: Ready to simplify your Kafka setup? Discover why moving from ZooKeeper to KRaft could be a game-changer for your infrastructure. This guide walks you through each step of the migration process, from retrieving your cluster ID to completing the transition. Unlock the benefits of KRaft and streamline your Kafka management today!
+teaser: "Why Kafka dropped ZooKeeper for KRaft, and the migration step by step: cluster ID, controller quorum, migration mode and broker cutover."
 author: Shivaprakash
 image: assets/blog-images/migrations/0_TB4m7ZfPMgHF_ljN.png
 toc: true

@@ -6,7 +6,7 @@ categories: [Kafka, Kubernetes, Platform Engineering, Infrastructure]
 image: assets/blog-images/kafka_on_kubernetes/kafka_on_kubernetes.png
 featured: false
 hidden: false
-teaser: Comparison of Kafka Deployment Options on Kubernetes
+teaser: "Running Kafka on Kubernetes: security, operations, resource modelling and how the main operators and deployment options compare."
 toc: true
 ---
 
