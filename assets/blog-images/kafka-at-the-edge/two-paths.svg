@@ -12,7 +12,7 @@
     <line x1="140" y1="75" x2="176" y2="75" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
     <line x1="330" y1="75" x2="366" y2="75" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
     <line x1="520" y1="75" x2="556" y2="75" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
-    <text x="20" y="140" font-size="14" fill="#495057">3 processes · 2 translations · data at risk = rate × save interval</text>
+    <text x="20" y="140" font-size="14" fill="#495057">3 processes · 2 translations · backlog persists only if configured</text>
 
     <line x1="20" y1="175" x2="740" y2="175" stroke="#e9ecef"/>
 
