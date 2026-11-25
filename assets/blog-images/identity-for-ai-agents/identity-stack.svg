@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 450" role="img" aria-label="Five layers of agent identity, each with its question, mechanisms and maturity">
+  <rect width="760" height="450" fill="#ffffff"/>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1f2328">
+    <rect x="30" y="20" width="700" height="70" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="50" y="50" font-weight="700">Registration</text><text x="50" y="74" font-size="14" fill="#495057">which software: metadata documents, pre-registration (DCR deprecated)</text>
+    <text x="710" y="50" text-anchor="end" font-size="14" fill="#6c757d">deployed</text>
+    <rect x="30" y="102" width="700" height="70" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="50" y="132" font-weight="700">Workload identity</text><text x="50" y="156" font-size="14" fill="#495057">which instance: SPIFFE SVIDs, cloud workload identity</text>
+    <text x="710" y="132" text-anchor="end" font-size="14" fill="#6c757d">graduated; client-auth draft</text>
+    <rect x="30" y="184" width="700" height="70" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="50" y="214" font-weight="700">Delegation</text><text x="50" y="238" font-size="14" fill="#495057">for whom, how much: token exchange, assertion grants, identity chaining</text>
+    <text x="710" y="214" text-anchor="end" font-size="14" fill="#6c757d">RFC; grants in draft</text>
+    <rect x="30" y="266" width="700" height="70" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="50" y="296" font-weight="700">Audience and binding</text><text x="50" y="320" font-size="14" fill="#495057">for which server, held by whom: resource indicators, no passthrough, DPoP, mTLS</text>
+    <text x="710" y="296" text-anchor="end" font-size="14" fill="#6c757d">RFCs</text>
+    <rect x="30" y="348" width="700" height="70" rx="8" fill="#ffffff" stroke="#d9480f" stroke-width="2.5"/>
+    <text x="50" y="378" font-weight="700" fill="#d9480f">Call-chain context</text><text x="50" y="402" font-size="14" fill="#495057">what happened before this hop: transaction tokens, inside one trust domain</text>
+    <text x="710" y="378" text-anchor="end" font-size="14" fill="#d9480f">draft</text>
+  </g>
+</svg>

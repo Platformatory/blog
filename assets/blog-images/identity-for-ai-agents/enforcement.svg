@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="Enforcement architecture: runtime, traffic-plane gateway, tool servers, services and agents evaluating one policy engine">
+  <rect width="900" height="560" fill="#ffffff"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#495057"/></marker></defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#1f2328">
+    <!-- trust domain -->
+    <rect x="20" y="20" width="720" height="520" rx="10" fill="none" stroke="#adb5bd" stroke-dasharray="6 5"/>
+    <text x="36" y="44" font-size="13" fill="#6c757d">your trust domain</text>
+    <!-- user -->
+    <rect x="40" y="70" width="140" height="56" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="110" y="94" text-anchor="middle" font-weight="700">User</text><text x="110" y="114" text-anchor="middle" font-size="12" fill="#495057">delegates via SSO</text>
+    <!-- runtime -->
+    <rect x="40" y="170" width="140" height="120" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="110" y="194" text-anchor="middle" font-weight="700">Agent runtime</text>
+    <text x="110" y="216" text-anchor="middle" font-size="12" fill="#495057">model chooses actions</text>
+    <text x="110" y="234" text-anchor="middle" font-size="12" fill="#495057">keys outside the model</text>
+    <text x="110" y="252" text-anchor="middle" font-size="12" fill="#495057">DPoP / mTLS, SVID</text>
+    <text x="110" y="270" text-anchor="middle" font-size="12" fill="#495057">attaches task context</text>
+    <line x1="110" y1="126" x2="110" y2="168" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <!-- gateway -->
+    <rect x="215" y="150" width="250" height="160" rx="8" fill="#ffffff" stroke="#d9480f" stroke-width="2.5"/>
+    <text x="340" y="176" text-anchor="middle" font-weight="700" fill="#d9480f">Traffic-plane gateway</text>
+    <text x="340" y="200" text-anchor="middle" font-size="12" fill="#495057">token exchange, per-server audience</text>
+    <text x="340" y="218" text-anchor="middle" font-size="12" fill="#495057">tool allowlist</text>
+    <text x="340" y="236" text-anchor="middle" font-size="12" fill="#495057">guardrail and domain policy</text>
+    <text x="340" y="254" text-anchor="middle" font-size="12" fill="#495057">budgets, egress filtering</text>
+    <text x="340" y="272" text-anchor="middle" font-size="12" fill="#495057">upstream refresh-token vault</text>
+    <line x1="180" y1="230" x2="213" y2="230" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="197" y="216" text-anchor="middle" font-size="11" fill="#6c757d">every</text><text x="197" y="248" text-anchor="middle" font-size="11" fill="#6c757d">call</text>
+    <!-- downstream -->
+    <rect x="520" y="84" width="190" height="64" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="615" y="108" text-anchor="middle" font-weight="700">Tool servers</text><text x="615" y="128" text-anchor="middle" font-size="12" fill="#495057">audience, issuer, no passthrough</text>
+    <rect x="520" y="192" width="190" height="78" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="615" y="218" text-anchor="middle" font-weight="700">Services</text><text x="615" y="240" text-anchor="middle" font-size="12" fill="#495057">platform library: own targets, lists</text><text x="615" y="258" text-anchor="middle" font-size="12" fill="#495057">accept only gateway tokens</text>
+    <rect x="520" y="316" width="190" height="64" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="615" y="340" text-anchor="middle" font-weight="700">Other agents (A2A)</text><text x="615" y="360" text-anchor="middle" font-size="12" fill="#495057">card schemes, skill and task</text>
+    <line x1="465" y1="200" x2="518" y2="120" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <line x1="465" y1="230" x2="518" y2="230" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <line x1="465" y1="260" x2="518" y2="346" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <!-- policy -->
+    <rect x="215" y="420" width="495" height="96" rx="8" fill="#fff4e6" stroke="#d9480f"/>
+    <text x="462" y="446" text-anchor="middle" font-weight="700">One policy repository, one decision point</text>
+    <text x="462" y="468" text-anchor="middle" font-size="12" fill="#495057">security operations writes guardrails as forbid policies</text>
+    <text x="462" y="486" text-anchor="middle" font-size="12" fill="#495057">domain teams write policies for their own resources</text>
+    <text x="462" y="504" text-anchor="middle" font-size="12" fill="#495057">answers the gateway and the platform library</text>
+    <line x1="340" y1="418" x2="340" y2="312" stroke="#d9480f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#a)"/>
+    <path d="M700,418 L725,418 L725,214 L712,214" fill="none" stroke="#d9480f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#a)"/>
+    <!-- audit -->
+    <line x1="110" y1="290" x2="110" y2="328" stroke="#868e96" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#a)"/>
+    <path d="M215,300 L195,300 L195,360 L182,360" fill="none" stroke="#868e96" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#a)"/>
+    <path d="M520,262 L490,262 L490,330 L204,330 L204,384 L182,384" fill="none" stroke="#868e96" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#a)"/>
+    <rect x="40" y="330" width="140" height="80" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="110" y="354" text-anchor="middle" font-weight="700">Audit</text>
+    <text x="110" y="374" text-anchor="middle" font-size="12" fill="#495057">joined on user, agent,</text>
+    <text x="110" y="392" text-anchor="middle" font-size="12" fill="#495057">instance and task</text>
+    <path d="M400,150 L400,58 L825,58 L825,196" fill="none" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="612" y="52" text-anchor="middle" font-size="11" fill="#6c757d">egress: identity chaining or assertion grants</text>
+    <!-- other domain -->
+    <rect x="760" y="198" width="130" height="120" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="825" y="224" text-anchor="middle" font-weight="700">Other domain</text>
+    <text x="825" y="246" text-anchor="middle" font-size="12" fill="#495057">its gateway</text>
+    <text x="825" y="264" text-anchor="middle" font-size="12" fill="#495057">and its policy</text>
+    
+    
+  </g>
+</svg>
