@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-label="The operational factory: telemetry, post-mortems and code context feed an agent that diagnoses and proposes actions; every proposed action passes an action gate (operations-spec check, typed risk score, rollback path) before GitOps applies it to the managed systems; irreversible, out-of-contract actions and novel failures go to a named human captain; incidents feed new specs, and agent-off drills keep the humans practised">
+  <rect width="900" height="600" fill="#ffffff"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#495057"/></marker></defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#1f2328">
+    <!-- signals -->
+    <rect x="20" y="40" width="170" height="190" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="105" y="64" text-anchor="middle" font-weight="700">Signals</text>
+    <text x="105" y="90" text-anchor="middle" font-size="12" fill="#495057">logs, metrics, traces</text>
+    <text x="105" y="110" text-anchor="middle" font-size="12" fill="#495057">hardware sensors, BMC</text>
+    <text x="105" y="130" text-anchor="middle" font-size="12" fill="#495057">incidents, post-mortems</text>
+    <text x="105" y="150" text-anchor="middle" font-size="12" fill="#495057">code semantics</text>
+    <text x="105" y="170" text-anchor="middle" font-size="12" fill="#495057">business context</text>
+    <line x1="190" y1="135" x2="238" y2="135" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <!-- agent -->
+    <rect x="240" y="70" width="160" height="130" rx="8" fill="#eef4fb" stroke="#4a78a8"/>
+    <text x="320" y="96" text-anchor="middle" font-weight="700">Ops agents</text>
+    <text x="320" y="120" text-anchor="middle" font-size="12" fill="#495057">first-pass diagnosis</text>
+    <text x="320" y="140" text-anchor="middle" font-size="12" fill="#495057">propose typed actions</text>
+    <text x="320" y="160" text-anchor="middle" font-size="12" fill="#495057">no standing credentials</text>
+    <line x1="400" y1="135" x2="448" y2="135" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="424" y="125" text-anchor="middle" font-size="11" fill="#6c757d">action</text>
+    <!-- gate -->
+    <rect x="450" y="40" width="200" height="200" rx="8" fill="#fdf6e9" stroke="#b07a1f"/>
+    <text x="550" y="64" text-anchor="middle" font-weight="700">Action gate</text>
+    <rect x="466" y="78" width="168" height="44" rx="6" fill="#ffffff" stroke="#c9a25a"/>
+    <text x="550" y="97" text-anchor="middle" font-size="12">operations-spec check</text>
+    <text x="550" y="113" text-anchor="middle" font-size="11" fill="#6c757d">preconditions, invariants</text>
+    <rect x="466" y="130" width="168" height="44" rx="6" fill="#ffffff" stroke="#c9a25a"/>
+    <text x="550" y="149" text-anchor="middle" font-size="12">typed risk score</text>
+    <text x="550" y="165" text-anchor="middle" font-size="11" fill="#6c757d">what the spec can't say</text>
+    <rect x="466" y="182" width="168" height="44" rx="6" fill="#ffffff" stroke="#c9a25a"/>
+    <text x="550" y="201" text-anchor="middle" font-size="12">rollback path exists?</text>
+    <text x="550" y="217" text-anchor="middle" font-size="11" fill="#6c757d">reversible or not</text>
+    <!-- gitops -->
+    <line x1="650" y1="110" x2="698" y2="110" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="674" y="100" text-anchor="middle" font-size="11" fill="#6c757d">allowed</text>
+    <rect x="700" y="60" width="180" height="100" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="790" y="86" text-anchor="middle" font-weight="700">GitOps apply</text>
+    <text x="790" y="110" text-anchor="middle" font-size="12" fill="#495057">versioned, reconciled</text>
+    <text x="790" y="130" text-anchor="middle" font-size="12" fill="#495057">rollback recorded</text>
+    <line x1="790" y1="160" x2="790" y2="208" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <rect x="700" y="210" width="180" height="80" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="790" y="238" text-anchor="middle" font-weight="700">Managed systems</text>
+    <text x="790" y="260" text-anchor="middle" font-size="12" fill="#495057">Kafka, databases, K8s,</text>
+    <text x="790" y="276" text-anchor="middle" font-size="12" fill="#495057">hardware</text>
+    <line x1="700" y1="250" x2="192" y2="200" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+    <text x="440" y="246" text-anchor="middle" font-size="11" fill="#6c757d">telemetry back</text>
+    <!-- captain -->
+    <line x1="550" y1="240" x2="550" y2="338" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="560" y="300" font-size="11" fill="#6c757d">irreversible or out of contract</text>
+    <line x1="320" y1="200" x2="470" y2="338" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="300" y="290" font-size="11" fill="#6c757d">novel or compound failure</text>
+    <rect x="400" y="340" width="300" height="100" rx="8" fill="#eaf5ec" stroke="#3f8a52"/>
+    <text x="550" y="366" text-anchor="middle" font-weight="700">Named human: the captain</text>
+    <text x="550" y="390" text-anchor="middle" font-size="12" fill="#495057">owns novel diagnosis, signs irreversible changes</text>
+    <text x="550" y="410" text-anchor="middle" font-size="12" fill="#495057">carries the consequence, can stop everything</text>
+    <line x1="700" y1="370" x2="788" y2="292" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+    <text x="760" y="350" font-size="11" fill="#6c757d">approved</text>
+    <!-- feedback -->
+    <rect x="40" y="480" width="300" height="80" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="190" y="506" text-anchor="middle" font-weight="700">Specs from incidents</text>
+    <text x="190" y="528" text-anchor="middle" font-size="12" fill="#495057">each post-mortem adds a precondition</text>
+    <text x="190" y="546" text-anchor="middle" font-size="12" fill="#495057">vendors ship theirs</text>
+    <line x1="340" y1="500" x2="548" y2="244" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+    <line x1="400" y1="430" x2="342" y2="500" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+    <rect x="540" y="480" width="320" height="80" rx="8" fill="#f7f7f5" stroke="#868e96"/>
+    <text x="700" y="506" text-anchor="middle" font-weight="700">Hand-flying drills</text>
+    <text x="700" y="528" text-anchor="middle" font-size="12" fill="#495057">agent-off game days, incident role-play</text>
+    <text x="700" y="546" text-anchor="middle" font-size="12" fill="#495057">keeps the captain current</text>
+    <line x1="640" y1="480" x2="610" y2="442" stroke="#495057" stroke-width="1.5" marker-end="url(#a)"/>
+  </g>
+</svg>

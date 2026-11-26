@@ -4,7 +4,7 @@ title: "Flink vs Spark: A Real-World Latency Showdown with Kafka"
 author: ShriVeena
 categories: [Stream Processing, Apache Flink, Apache Spark, Performance, Kafka]
 image: assets/blog-images/spark_vs_flink/hero.svg
-featured: true
+featured: false
 hidden: false
 cat_box_title: Contact Us
 ctas:
