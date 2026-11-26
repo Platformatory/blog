@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="VibeOps with a captain: ops agents propose actions; an action gate checks each against the operations specification, a risk score and a rollback path; allowed actions reach production; irreversible actions and novel failures go to a named human captain">
+  <rect width="1200" height="630" fill="#f7f7f5"/>
+  <defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2328"/></marker></defs>
+  <g font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" fill="#1f2328">
+    <rect x="50" y="150" width="250" height="160" rx="14" fill="#ffffff" stroke="#1971c2" stroke-width="3"/>
+    <text x="175" y="215" text-anchor="middle" font-size="34" font-weight="700">Ops agents</text>
+    <text x="175" y="262" text-anchor="middle" font-size="24" fill="#495057">diagnose, propose</text>
+    <line x1="300" y1="230" x2="408" y2="230" stroke="#1f2328" stroke-width="4" marker-end="url(#h)"/>
+    <rect x="410" y="80" width="380" height="300" rx="14" fill="#ffffff" stroke="#d9480f" stroke-width="4"/>
+    <text x="600" y="140" text-anchor="middle" font-size="36" font-weight="700">Action gate</text>
+    <text x="600" y="205" text-anchor="middle" font-size="28">operations spec</text>
+    <text x="600" y="255" text-anchor="middle" font-size="28">risk score</text>
+    <text x="600" y="305" text-anchor="middle" font-size="28">rollback path</text>
+    <line x1="790" y1="230" x2="898" y2="230" stroke="#1f2328" stroke-width="4" marker-end="url(#h)"/>
+    <text x="844" y="212" text-anchor="middle" font-size="22" fill="#495057">allowed</text>
+    <rect x="900" y="150" width="250" height="160" rx="14" fill="#ffffff" stroke="#868e96" stroke-width="3"/>
+    <text x="1025" y="240" text-anchor="middle" font-size="34" font-weight="700">Production</text>
+    <line x1="600" y1="380" x2="600" y2="458" stroke="#1f2328" stroke-width="4" marker-end="url(#h)"/>
+    <text x="620" y="428" font-size="22" fill="#495057">irreversible or novel</text>
+    <rect x="410" y="460" width="380" height="120" rx="14" fill="#ffffff" stroke="#2b8a3e" stroke-width="4"/>
+    <text x="600" y="512" text-anchor="middle" font-size="36" font-weight="700">The captain</text>
+    <text x="600" y="552" text-anchor="middle" font-size="24" fill="#495057">a named, practised human</text>
+  </g>
+</svg>
