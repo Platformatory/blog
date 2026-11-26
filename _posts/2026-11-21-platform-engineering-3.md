@@ -10,8 +10,7 @@ image: assets/blog-images/platform-engineering-3/factory-tier.svg
 featured: true
 weight: 5
 hidden: false
-teaser: Platform Engineering 3.0 means running agentic AI as an enterprise platform.
-  The software factory is where it has to pay off first.
+teaser: "Who runs the platform when the developers are agents?"
 description: 'Platform Engineering 3.0 for agentic AI: how to run coding agents across
   the enterprise as a software factory, with the platform tier that sets their yield.'
 toc: true

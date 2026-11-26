@@ -12,8 +12,7 @@ image: assets/blog-images/where-should-your-data-live/memory-hierarchy.svg
 featured: true
 weight: 0
 hidden: false
-teaser: Choosing local NVMe or object storage is choosing which tier holds the truth.
-  Everything above it is a cache, priced by what a miss costs.
+teaser: "Is your NVMe the source of truth, or just an expensive cache?"
 description: 'Local NVMe or object storage for databases and streaming: choose the
   tier that holds the truth, treat the rest as cache and price it by what a miss costs.'
 toc: false

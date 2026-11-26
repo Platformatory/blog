@@ -6,7 +6,7 @@ categories: [ Platform Engineering, Data, Infrastructure, Kafka, Kong, Kubernete
 image: assets/blog-images/platform-strategy.svg
 featured: true
 hidden: true
-teaser: A technology leader's guide to operating like a digital native
+teaser: "Why can't your enterprise move like a digital native?"
 toc: true
 ---
 
