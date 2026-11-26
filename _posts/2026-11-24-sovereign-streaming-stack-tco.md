@@ -11,7 +11,7 @@ image: assets/blog-images/sovereign-streaming-stack-tco/hero.svg
 featured: true
 weight: 8
 hidden: false
-teaser: "Are you overpaying for managed Kafka?"
+teaser: "But do the economics of streaming hold up?"
 description: 'Kafka TCO compared: when self-hosting Kafka on Kubernetes beats managed
   Kafka services and BYOC, where the bill goes, and when self-hosting doesn''t pay.'
 toc: true

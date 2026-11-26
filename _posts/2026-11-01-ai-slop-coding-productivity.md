@@ -10,7 +10,7 @@ image: assets/blog-images/ai-slop-coding-productivity/hero.svg
 featured: true
 weight: 1
 hidden: false
-teaser: "If agents write all the code, what are your engineers for?"
+teaser: "What does the future of software engineering look like?"
 description: Does AI coding pay off? With coding agents writing the code, the engineering
   left is verification, a higher experience bar and eval-driven domain work.
 toc: false

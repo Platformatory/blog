@@ -11,7 +11,7 @@ image: assets/blog-images/ai-sovereignty-intelligence-utility/hero.svg
 featured: true
 weight: 2
 hidden: false
-teaser: "Can you call yourself sovereign if your intelligence runs on someone else's GPUs?"
+teaser: "What happens when someone else shuts off access to intelligence?"
 description: "What sovereign AI means for technical leaders: what to rent, own and build, and why operational sovereignty comes first and costs less than the plans."
 toc: false
 ---

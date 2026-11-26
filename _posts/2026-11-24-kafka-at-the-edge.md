@@ -10,7 +10,7 @@ image: assets/blog-images/kafka-at-the-edge/hero.svg
 featured: true
 weight: 9
 hidden: false
-teaser: "Why run a Kafka cluster at the edge when one node does the job?"
+teaser: "Should you consider a streaming protocol for your IoT edge?"
 description: 'Kafka at the edge for IoT: why a single-node Kafka-protocol log beats
   an MQTT broker plus bridge for plants, stores and vehicles with unreliable uplinks.'
 toc: true
