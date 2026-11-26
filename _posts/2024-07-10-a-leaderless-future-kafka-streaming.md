@@ -6,7 +6,7 @@ categories: [Kafka, Distributed Systems, Real-time, Platform Engineering]
 image: assets/blog-images/kafka-leaderless-future/hero.svg
 featured: true
 hidden: false
-teaser: "Kafka got the fundamentals right, but on the cloud it costs more than it needs to. The Kafka protocol on object storage is where streaming is heading."
+teaser: "Why is Kafka on the cloud still paying to replicate data the object store already keeps safe?"
 description: "Why Kafka is moving to leaderless brokers on object storage: what Kafka got right, how TCO drives the shift, and where value in streaming moves next."
 toc: true
 weight: -1

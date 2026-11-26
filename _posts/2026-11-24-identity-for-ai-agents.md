@@ -11,8 +11,7 @@ image: assets/blog-images/identity-for-ai-agents/hero.svg
 featured: true
 weight: 7
 hidden: false
-teaser: An agent can pass every zero-trust check and still do an attacker's work,
-  so its authority has to narrow at every hop.
+teaser: "What stops an agent that passes every zero-trust check from working for an attacker?"
 description: How to authenticate and authorize AI agents across MCP tool calls and
   A2A delegation, with one policy enforced in the traffic plane every agent call crosses.
 toc: true

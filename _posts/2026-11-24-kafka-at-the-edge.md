@@ -10,8 +10,7 @@ image: assets/blog-images/kafka-at-the-edge/hero.svg
 featured: true
 weight: 9
 hidden: false
-teaser: Edge uplinks fail. A single-node Kafka-protocol log rides out the outage and
-  keeps the ecosystem, by dropping the consensus a single node never needed.
+teaser: "Why run a Kafka cluster at the edge when one node does the job?"
 description: 'Kafka at the edge for IoT: why a single-node Kafka-protocol log beats
   an MQTT broker plus bridge for plants, stores and vehicles with unreliable uplinks.'
 toc: true

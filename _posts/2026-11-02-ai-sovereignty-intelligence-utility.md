@@ -11,10 +11,8 @@ image: assets/blog-images/ai-sovereignty-intelligence-utility/hero.svg
 featured: true
 weight: 2
 hidden: false
-teaser: When everyone needs intelligence, sovereignty is a matter of architecture
-  and economics. The floor to own is operational, and costs less than the plans.
-description: When everyone needs intelligence, sovereignty is a matter of architecture
-  and economics. The floor to own is operational, and costs less than the plans.
+teaser: "Can you call yourself sovereign if your intelligence runs on someone else's GPUs?"
+description: "What sovereign AI means for technical leaders: what to rent, own and build, and why operational sovereignty comes first and costs less than the plans."
 toc: false
 ---
 

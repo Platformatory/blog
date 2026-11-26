@@ -1,7 +1,6 @@
 ---
 layout: post
-title: 'Self-Hosting Token Machines: AI & GPU Infra 101 for Distributed Training &
-  Inference'
+title: "Running a Private AI Estate: Self-Hosting LLMs from One GPU to a Cluster"
 author: p6
 categories:
 - AI
@@ -12,10 +11,8 @@ image: assets/blog-images/self-hosting-llms-air-gapped/hero.svg
 featured: true
 weight: 3
 hidden: false
-teaser: Out of GPU poverty, every team asks whether it can serve intelligence itself.
-  Working out how, from one box to a cluster that trains, leads to a platform.
-description: Out of GPU poverty, every team asks whether it can serve intelligence
-  itself. Working out how, from one box to a cluster that trains, leads to a platform.
+teaser: "Why would anyone run their own GPUs when tokens are this cheap?"
+description: "How to run a private AI estate: self-hosting LLMs from one GPU server to an air-gapped cluster for training and inference, and the platform around it."
 toc: false
 ---
 

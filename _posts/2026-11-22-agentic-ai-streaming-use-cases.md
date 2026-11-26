@@ -11,8 +11,7 @@ image: assets/blog-images/agentic-ai-streaming-use-cases/hero.svg
 featured: true
 weight: 6
 hidden: false
-teaser: Most of this year's agentic streaming launches repackage patterns Kafka users
-  already run. A few things agents change really are new.
+teaser: "How much of this year's agentic streaming hype is old Kafka patterns in new packaging?"
 description: Which of 2026's agentic AI launches for Kafka and Flink are new, which
   repackage old streaming patterns, and what to build or buy instead.
 toc: true

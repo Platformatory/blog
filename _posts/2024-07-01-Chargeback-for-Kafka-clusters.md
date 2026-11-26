@@ -6,7 +6,7 @@ categories: [Kafka, Kafka Operations, Cost, Platform Engineering]
 image: assets/blog-images/kafka_chargeback_blog/hero.svg
 featured: true
 hidden: false
-teaser: Solving for cost attribution and chargeback in Multi-tenant Kafka clusters
+teaser: "Who's actually paying for your shared Kafka cluster?"
 toc: true
 weight: -3
 

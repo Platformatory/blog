@@ -12,10 +12,8 @@ image: assets/blog-images/oracle-cdc-revisited/hero.svg
 featured: true
 weight: 4
 hidden: false
-teaser: Oracle CDC now has four capture paths, and what really separates them is where
-  an open transaction waits until it commits.
-description: Oracle CDC now has four capture paths, and what really separates them
-  is where an open transaction waits until it commits.
+teaser: "Where is your open transaction hiding while your CDC pipeline waits?"
+description: "Comparing Oracle CDC capture paths into Kafka with XStream and Debezium: where open transactions wait, recovery SLO headroom and licensing cost."
 toc: false
 ---
 
